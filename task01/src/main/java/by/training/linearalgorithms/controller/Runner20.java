@@ -8,7 +8,7 @@ public class Runner20 {
         return Math.pow(circumference, 2) / (4 * Math.PI);
     }
 
-    public static double readCircumference() throws InputMismatchException {
+    public static double readCircumference() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter circumference - positive double:");
         return scanner.nextDouble();
