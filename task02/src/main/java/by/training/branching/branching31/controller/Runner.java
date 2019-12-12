@@ -1,8 +1,8 @@
-package by.training.branching.controller;
+package by.training.branching.branching31.controller;
 
 import java.util.Scanner;
 
-public class Runner31 {
+public class Runner {
     public static void check(double a, double b, double x, double y, double z) {
         if ((x <= a && y <= b) || (y <= a && x <= b) || (x <= a && z <= b) ||
                 (z <= a && x <= b) || (y <= a && z <= b) || (z <= a && y <= b))

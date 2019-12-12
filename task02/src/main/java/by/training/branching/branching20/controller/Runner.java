@@ -1,8 +1,8 @@
-package by.training.branching.controller;
+package by.training.branching.branching20.controller;
 
 import java.util.Scanner;
 
-public class Runner20 {
+public class Runner {
     public static void findDividends(int a, int b, int c, int k) {
         System.out.println("Dividends:");
         if (a % k == 0)

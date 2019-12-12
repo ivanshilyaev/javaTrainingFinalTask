@@ -1,8 +1,8 @@
-package by.training.branching.controller;
+package by.training.branching.branching21.controller;
 
 import java.util.Scanner;
 
-public class Runner21 {
+public class Runner {
     public static void flatter() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Кто ты: мальчик или девочка? Введи Д или М");

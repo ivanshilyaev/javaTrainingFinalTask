@@ -1,4 +1,4 @@
-package by.training.branching.controller;
+package by.training.branching.branching10.bean;
 
 public class Circle implements Comparable<Circle> {
     private double x;
