@@ -1,9 +1,9 @@
-package by.training.linearalgorithms.controller;
+package by.training.linearalgorithms.linearalgorithms31.controller;
 
 import java.io.*;
 
-public class Runner31 {
-    private static String directory = System.getProperty("user.home");
+public class Runner {
+    private static String directory = "/Users/ivansilaev/Desktop/javaTraining/task01/src/main/java/by/training/linearalgorithms/linearalgorithms31/resources";
     private static String inputFilename = "input.txt";
     private static String outputFilename = "output.txt";
     private static String absoluteInputFilename = directory + File.separator + inputFilename;

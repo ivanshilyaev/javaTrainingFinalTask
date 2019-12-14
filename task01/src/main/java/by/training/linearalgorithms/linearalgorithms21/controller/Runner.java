@@ -1,9 +1,9 @@
-package by.training.linearalgorithms.controller;
+package by.training.linearalgorithms.linearalgorithms21.controller;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Runner21 {
+public class Runner {
     public static double readData() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter double in \"nnn.ddd\" format:");

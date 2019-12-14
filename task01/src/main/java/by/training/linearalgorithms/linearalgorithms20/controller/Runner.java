@@ -1,9 +1,9 @@
-package by.training.linearalgorithms.controller;
+package by.training.linearalgorithms.linearalgorithms20.controller;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Runner20 {
+public class Runner {
     public static double findAreaByCircumference(double circumference) {
         return Math.pow(circumference, 2) / (4 * Math.PI);
     }
