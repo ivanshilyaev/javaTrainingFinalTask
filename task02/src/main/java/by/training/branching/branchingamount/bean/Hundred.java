@@ -1,6 +1,7 @@
 package by.training.branching.branchingamount.bean;
 
 public enum Hundred {
+    ZERO(""),
     ONE("сто"),
     TWO("двести"),
     THREE("триста"),

@@ -13,7 +13,7 @@ public class Runner {
             Season season = new SeasonCommand().exec(data);
             System.out.println(season.toString());
         } catch (InputMismatchException | NumberFormatException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Incorrect data");
         }
     }
 }

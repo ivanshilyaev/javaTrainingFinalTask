@@ -9,8 +9,7 @@ public class Runner {
     public static void main(String[] args) {
         try {
             String data = new ReadData().read();
-            String result = new AmountCommand().exec(data);
-            System.out.println(result);
+            System.out.println(new AmountCommand().exec(data));
         } catch (InputMismatchException | NumberFormatException e) {
             System.out.println(e.getMessage());
         }

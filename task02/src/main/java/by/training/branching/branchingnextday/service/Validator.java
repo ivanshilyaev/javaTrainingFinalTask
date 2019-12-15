@@ -17,7 +17,8 @@ public class Validator {
                 break;
             }
             case 2: {
-                if ((year % 4 != 0 && day > 28) || (year % 400 != 0 && day > 29))
+                if ((!((year % 4 == 0) && (year % 400 != 0)) && day > 28)
+                        || (((year % 4 == 0) && (year % 400 != 0)) && day > 29))
                     return false;
                 break;
             }

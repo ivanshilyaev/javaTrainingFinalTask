@@ -1,11 +1,16 @@
 package by.training.branching.branchingnextday.controller;
 
+import by.training.branching.branchingnextday.service.IllegalDateException;
 import by.training.branching.branchingnextday.service.NextDayCommand;
 import by.training.branching.branchingnextday.view.ReadDate;
 
 public class Runner {
     public static void main(String[] args) {
-        String data = new ReadDate().read();
-        new NextDayCommand().exec(data);
+        try {
+            String data = new ReadDate().read();
+            System.out.println(new NextDayCommand().exec(data));
+        } catch (IllegalDateException | NumberFormatException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
