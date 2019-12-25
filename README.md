@@ -9,6 +9,8 @@
 -  [Task 4 (decomposition)](https://github.com/ivanshilyaev/javaTraining/tree/master/task04)
 -  [Task 5 (one-dimensional arrays)](https://github.com/ivanshilyaev/javaTraining/tree/master/task05)
 -  [Task 6 (sortings)](https://github.com/ivanshilyaev/javaTraining/tree/master/task06)
+-  [Task 7 (two-dimensional arrays)](https://github.com/ivanshilyaev/javaTraining/tree/master/task07)
+-  [Task 8 (oop)](https://github.com/ivanshilyaev/javaTraining/tree/master/task08)
 ---
 
 by [@ivanshilyaev](https://github.com/ivanshilyaev), 2019-2020
