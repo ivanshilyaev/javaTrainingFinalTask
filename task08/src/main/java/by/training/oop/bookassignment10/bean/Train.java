@@ -7,8 +7,11 @@ public class Train {
     private String destination;
     private int trainNumber;
     private Date departureTime;
-    private Map<Seat, Integer> numberOfSeats;
+    private EnumMap<Seat, Integer> numberOfSeats;
     private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+    public Train() {
+    }
 
     public Train(String destination) {
         this.destination = destination;
@@ -19,7 +22,7 @@ public class Train {
         this.destination = destination;
         this.trainNumber = trainNumber;
         this.departureTime = departureTime;
-        numberOfSeats = new HashMap<>();
+        numberOfSeats = new EnumMap<>(Seat.class);
         numberOfSeats.put(Seat.COMMON, common);
         numberOfSeats.put(Seat.COMPARTMENT, compartment);
         numberOfSeats.put(Seat.OPEN_COUPES, openCoupes);
@@ -54,7 +57,7 @@ public class Train {
         this.departureTime = departureTime;
     }
 
-    public void setNumberOfSeats(Map<Seat, Integer> numberOfSeats) {
+    public void setNumberOfSeats(EnumMap<Seat, Integer> numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
