@@ -8,7 +8,11 @@ public class Train {
     private int trainNumber;
     private Date departureTime;
     private Map<Seat, Integer> numberOfSeats;
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+    public Train(String destination) {
+        this.destination = destination;
+    }
 
     public Train(String destination, int trainNumber, Date departureTime,
                  int common, int compartment, int openCoupes, int luxury) {
