@@ -8,7 +8,7 @@ public class Train {
     private int trainNumber;
     private Date departureTime;
     private EnumMap<Seat, Integer> numberOfSeats;
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
     public Train() {
     }

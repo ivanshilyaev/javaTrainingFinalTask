@@ -20,7 +20,7 @@ public class ConsoleHelper {
     private static String luxurySeatsStr = "Luxury seats: ";
 
     private static Scanner scanner = new Scanner(System.in);
-    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
     public void printTrain(Train train) {
         System.out.println(train);
@@ -32,6 +32,10 @@ public class ConsoleHelper {
             System.out.println(train);
         }
         System.out.println();
+    }
+
+    public void printString(String message) {
+        System.out.println(message);
     }
 
     private EnumMap<Seat, Integer> readSeats() {
