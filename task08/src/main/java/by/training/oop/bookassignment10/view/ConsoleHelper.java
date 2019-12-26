@@ -1,5 +1,6 @@
 package by.training.oop.bookassignment10.view;
 
+import by.training.oop.bookassignment10.Validator;
 import by.training.oop.bookassignment10.bean.Seat;
 import by.training.oop.bookassignment10.bean.Train;
 import by.training.oop.bookassignment10.view.exception.InvalidParameterException;
@@ -66,6 +67,9 @@ public class ConsoleHelper {
             System.out.print(departureTimeStr);
             train.setDepartureTime(formatter.parse(scanner.nextLine()));
             train.setNumberOfSeats(readSeats());
+            if (!Validator.isValid(train)) {
+                throw new InvalidParameterException("Validation error");
+            }
         } catch (ParseException | NumberFormatException e) {
             throw new InvalidParameterException("Invalid parameter", e.getCause());
         }

@@ -35,7 +35,7 @@ public class TrainListCommand {
         int count = 0;
         for (Train train : trains) {
             if (train.getDestination().equalsIgnoreCase(destination)
-                    && train.getDepartureTime().compareTo(date) < 0) {
+                    && train.getDepartureTime().compareTo(date) > 0) {
                 ++count;
             }
         }
@@ -46,7 +46,7 @@ public class TrainListCommand {
         int j = 0;
         for (Train train : trains) {
             if (train.getDestination().equalsIgnoreCase(destination)
-                    && train.getDepartureTime().compareTo(date) < 0) {
+                    && train.getDepartureTime().compareTo(date) > 0) {
                 result[j++] = train;
             }
         }

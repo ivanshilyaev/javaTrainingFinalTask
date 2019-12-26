@@ -41,7 +41,7 @@ public class Runner {
                         " after which you'd line to search the train");
                 Train[] list2 = listCommand.getListOfSuitableTrains(trains, destination, date);
                 printCommand.printTrains(list2, "List of trains, going to a given destination" +
-                        " and living after a given day:");
+                        " and living after a given date:");
                 //consoleHelper.printTrains(list2, "List of trains, going to a given destination" +
                 //        " and living after a given day:");
             } catch (ServiceException e) {

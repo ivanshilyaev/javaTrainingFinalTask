@@ -1,5 +1,6 @@
 package by.training.oop.bookassignment10.dao;
 
+import by.training.oop.bookassignment10.Validator;
 import by.training.oop.bookassignment10.bean.Seat;
 import by.training.oop.bookassignment10.bean.Train;
 import by.training.oop.bookassignment10.dao.exception.DAOException;
@@ -29,7 +30,7 @@ public class TrainReader {
         Train[] trains = new Train[entries.length];
         try {
             for (int i = 0; i < trains.length; ++i) {
-                String[] array = entries[i].split("[^a-zA-Z0-9:.]");
+                String[] array = entries[i].split("[^a-zA-Z0-9:.\\-]");
                 trains[i] = new Train();
                 trains[i].setDestination(array[0]);
                 trains[i].setTrainNumber(Integer.parseInt(array[1]));
@@ -44,6 +45,9 @@ public class TrainReader {
                 numberOfSeats.put(Seat.OPEN_COUPES, openCoupes);
                 numberOfSeats.put(Seat.LUXURY, luxury);
                 trains[i].setNumberOfSeats(numberOfSeats);
+                if (!Validator.isValid(trains[i])) {
+                    throw new DAOException("Validation error");
+                }
             }
         } catch (ParseException | NumberFormatException e) {
             throw new DAOException("Invalid parameter", e.getCause());
