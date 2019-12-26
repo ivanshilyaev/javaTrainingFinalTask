@@ -6,6 +6,7 @@ import by.training.oop.bookassignment10.view.exception.InvalidParameterException
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class ConsoleHelper {
     private static String destinationStr = "Destination: ";
     private static String trainNumberStr = "Train number: ";
     private static String departureTimeStr = "Departure time in format " +
-            "dd.mm.yyyy HH:mm:ss : ";
+            "dd.mm.yyyy HH:mm : ";
     private static String commonSeatsStr = "Common seats: ";
     private static String compartmentSeatsStr = "Compartment seats: ";
     private static String openCoupesStr = "Open coupes: ";
@@ -74,5 +75,14 @@ public class ConsoleHelper {
     public String readLine(String message) {
         System.out.println(message);
         return scanner.nextLine();
+    }
+
+    public Date readDate(String message) throws InvalidParameterException {
+        System.out.println(message);
+        try {
+            return formatter.parse(scanner.nextLine());
+        } catch (ParseException e) {
+            throw new InvalidParameterException("Invalid date", e.getCause());
+        }
     }
 }
