@@ -17,7 +17,8 @@ public class Runner {
         ConsoleHelper consoleHelper = new ConsoleHelper();
         TrainListCommand command = new TrainListCommand();
         try {
-            Train[] trains = creator.createTrainArray(10);
+            //Train[] trains = creator.createRandomTrainArray(10);
+            Train[] trains = creator.readTrainArrayFromFile();
             consoleHelper.printTrains(trains, "Train array:");
 
             // #1 list of trains, going to a given destination

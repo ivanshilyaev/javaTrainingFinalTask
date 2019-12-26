@@ -2,6 +2,8 @@ package by.training.oop.bookassignment10.service.creator;
 
 import by.training.oop.bookassignment10.bean.Seat;
 import by.training.oop.bookassignment10.bean.Train;
+import by.training.oop.bookassignment10.dao.TrainReader;
+import by.training.oop.bookassignment10.dao.exception.DAOException;
 import by.training.oop.bookassignment10.service.creator.exception.CreationException;
 
 import java.util.*;
@@ -36,7 +38,7 @@ public class TrainCreator {
         train.setNumberOfSeats(numberOfSeats);
     }
 
-    public Train[] createTrainArray(int size) throws CreationException {
+    public Train[] createRandomTrainArray(int size) throws CreationException {
         Train[] trains = new Train[10];
         CityCreator cityCreator = new CityCreator();
         for (int i = 0; i < 10; ++i) {
@@ -44,5 +46,14 @@ public class TrainCreator {
             fillRandomly(trains[i]);
         }
         return trains;
+    }
+
+    public Train[] readTrainArrayFromFile() throws CreationException {
+        TrainReader reader = new TrainReader();
+        try {
+            return reader.readTrains();
+        } catch (DAOException e) {
+            throw new CreationException("Couldn't create an object");
+        }
     }
 }
