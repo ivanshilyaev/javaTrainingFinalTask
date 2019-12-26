@@ -70,4 +70,9 @@ public class ConsoleHelper {
         }
         return train;
     }
+
+    public String readLine(String message) {
+        System.out.println(message);
+        return scanner.nextLine();
+    }
 }
