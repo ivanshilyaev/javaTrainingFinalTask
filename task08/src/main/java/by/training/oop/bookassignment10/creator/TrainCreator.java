@@ -1,10 +1,11 @@
-package by.training.oop.bookassignment10.service.creator;
+package by.training.oop.bookassignment10.creator;
 
 import by.training.oop.bookassignment10.bean.Train;
+import by.training.oop.bookassignment10.dao.DAOFactory;
 import by.training.oop.bookassignment10.dao.TrainReader;
 import by.training.oop.bookassignment10.dao.exception.DAOException;
 import by.training.oop.bookassignment10.service.FillRandom;
-import by.training.oop.bookassignment10.service.creator.exception.CreationException;
+import by.training.oop.bookassignment10.creator.exception.CreationException;
 
 public class TrainCreator {
     public Train[] createRandomTrainArray(int size) throws CreationException {
@@ -19,7 +20,8 @@ public class TrainCreator {
     }
 
     public Train[] readTrainArrayFromFile() throws CreationException {
-        TrainReader reader = new TrainReader();
+        DAOFactory daoObjectFactory = DAOFactory.getInstance();
+        TrainReader reader = daoObjectFactory.getTrainReader();
         try {
             return reader.readTrains();
         } catch (DAOException e) {

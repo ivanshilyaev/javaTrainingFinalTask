@@ -1,6 +1,6 @@
 package by.training.oop.bookassignment10.view;
 
-import by.training.oop.bookassignment10.Validator;
+import by.training.oop.bookassignment10.validator.Validator;
 import by.training.oop.bookassignment10.bean.Seat;
 import by.training.oop.bookassignment10.bean.Train;
 import by.training.oop.bookassignment10.view.exception.InvalidParameterException;

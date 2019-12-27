@@ -1,12 +1,14 @@
-package by.training.oop.bookassignment10.service.creator;
+package by.training.oop.bookassignment10.creator;
 
 import by.training.oop.bookassignment10.dao.CityReader;
+import by.training.oop.bookassignment10.dao.DAOFactory;
 import by.training.oop.bookassignment10.dao.exception.DAOException;
-import by.training.oop.bookassignment10.service.creator.exception.CreationException;
+import by.training.oop.bookassignment10.creator.exception.CreationException;
 
 public class CityCreator {
     public String getRandomCity() throws CreationException {
-        CityReader reader = new CityReader();
+        DAOFactory daoObjectFactory = DAOFactory.getInstance();
+        CityReader reader = daoObjectFactory.getCityReader();
         try {
             return reader.readRandomCity();
         } catch (DAOException e) {

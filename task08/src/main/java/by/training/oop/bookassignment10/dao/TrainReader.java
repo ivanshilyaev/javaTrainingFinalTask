@@ -1,10 +1,9 @@
 package by.training.oop.bookassignment10.dao;
 
-import by.training.oop.bookassignment10.Validator;
+import by.training.oop.bookassignment10.validator.Validator;
 import by.training.oop.bookassignment10.bean.Seat;
 import by.training.oop.bookassignment10.bean.Train;
 import by.training.oop.bookassignment10.dao.exception.DAOException;
-import by.training.oop.bookassignment10.view.exception.InvalidParameterException;
 
 import java.io.IOException;
 import java.nio.file.Files;

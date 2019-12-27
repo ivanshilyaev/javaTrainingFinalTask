@@ -1,4 +1,4 @@
-package by.training.oop.bookassignment10.service.creator.exception;
+package by.training.oop.bookassignment10.creator.exception;
 
 public class CreationException extends Exception {
     public CreationException() {
