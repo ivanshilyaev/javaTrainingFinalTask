@@ -57,8 +57,8 @@ public class Train {
         this.departureTime = departureTime;
     }
 
-    public void setNumberOfSeats(EnumMap<Seat, Integer> numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
+    public void setNumberOfSeats(Map<Seat, Integer> numberOfSeats) {
+        this.numberOfSeats = (EnumMap<Seat, Integer>) numberOfSeats;
     }
 
     @Override

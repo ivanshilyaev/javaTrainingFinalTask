@@ -6,4 +6,3 @@ Train: destination = 'Puebla', trainNumber = 212, departureTime = 08.03.2021 13:
 
 List of trains with common seats, going to a given destination:
 Train: destination = 'ACCRA', trainNumber = 855, departureTime = 24.11.2021 15:30, numberOfSeats = {COMMON=6, COMPARTMENT=64, OPEN_COUPES=3, LUXURY=49}
-
