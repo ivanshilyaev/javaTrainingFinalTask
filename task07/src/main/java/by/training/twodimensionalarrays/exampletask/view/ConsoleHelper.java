@@ -19,6 +19,18 @@ public class ConsoleHelper {
         System.out.println(message);
     }
 
+    public int readInt() {
+        System.out.println("Enter int:");
+        int i = 0;
+        try {
+            i = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("An error occurred while reading int. Try again:");
+            readInt();
+        }
+        return i;
+    }
+
     public String readString() {
         return scanner.nextLine();
     }
