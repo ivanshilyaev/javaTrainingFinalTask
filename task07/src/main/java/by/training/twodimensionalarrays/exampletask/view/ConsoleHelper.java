@@ -5,11 +5,13 @@ import by.training.twodimensionalarrays.exampletask.bean.exception.MatrixExcepti
 import by.training.twodimensionalarrays.exampletask.parser.Parser;
 import by.training.twodimensionalarrays.exampletask.parser.exception.ParserException;
 import by.training.twodimensionalarrays.exampletask.view.exception.ViewException;
+import by.training.twodimensionalarrays.validation.Validator;
 
 import java.util.Scanner;
 
 public class ConsoleHelper {
     Scanner scanner = new Scanner(System.in);
+    Validator validator = new Validator();
 
     public void printMatrix(Matrix matrix) {
         System.out.println(matrix);
@@ -29,6 +31,15 @@ public class ConsoleHelper {
             readInt();
         }
         return i;
+    }
+
+    public int readIndex(int matrixSize) {
+        int index = readInt();
+        while (!validator.checkIndex(index, matrixSize)) {
+            System.out.println("Invalid index. Try again:");
+            index = readInt();
+        }
+        return index;
     }
 
     public String readString() {

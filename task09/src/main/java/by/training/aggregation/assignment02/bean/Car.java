@@ -1,17 +1,31 @@
 package by.training.aggregation.assignment02.bean;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class Car {
     private String model;
     private String color;
-    public Wheel[] wheels = new Wheel[4];
-    public Engine engine;
+    private int wheelNumber;
+    private List<Wheel> wheels;
+    private Engine engine;
 
-    public Car(String model, String color) {
+    public Car(String model, String color, int wheelNumber) {
         this.model = model;
         this.color = color;
+        this.wheelNumber = wheelNumber;
+        wheels = new LinkedList<>();
+        for (int i = 0; i < wheelNumber; ++i) {
+            wheels.add(new Wheel(19, WheelType.SUMMER));
+        }
+        engine = new Engine(300);
+    }
+
+    public String move() {
+        return engine.start() + "\n" + "The car is moving";
+    }
+
+    public String fillUp() {
+        return "The car has been filled up (recharged)";
     }
 
     public String getModel() {
@@ -22,6 +36,18 @@ public class Car {
         return color;
     }
 
+    public Wheel getWheel(int number) {
+        return wheels.get(number);
+    }
+
+    public int calculateWheelNumber() {
+        return wheels.size();
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
     public void setModel(String model) {
         this.model = model;
     }
@@ -30,22 +56,31 @@ public class Car {
         this.color = color;
     }
 
+    public void setWheel(int number, Wheel wheel) {
+        wheels.set(number, wheel);
+        // колесо, которое было заменено, исчезает ¯\_(ツ)_/¯
+        // можно продумать другой сценарий
+        // (например, склад колёс и тд)
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return model.equalsIgnoreCase(car.model) &&
-                color.equalsIgnoreCase(car.color) &&
-                Arrays.equals(wheels, car.wheels) &&
-                engine.equals(car.engine);
+        return Objects.equals(model, car.model) &&
+                Objects.equals(color, car.color) &&
+                Objects.equals(wheels, car.wheels) &&
+                Objects.equals(engine, car.engine);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(model, color, engine);
-        result = 31 * result + Arrays.hashCode(wheels);
-        return result;
+        return Objects.hash(model, color, wheels, engine);
     }
 
     @Override
@@ -53,7 +88,7 @@ public class Car {
         return "Car: " +
                 "model = '" + model + '\'' +
                 ", color = '" + color + '\'' +
-                ", wheels = " + Arrays.toString(wheels) +
+                ", wheels = " + wheels +
                 ", engine = " + engine;
     }
 }

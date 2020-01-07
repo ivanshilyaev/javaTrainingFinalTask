@@ -9,12 +9,12 @@ public class Engine {
         this.power = power;
     }
 
-    public void start() {
-
+    public String start() {
+        return "The engine is running";
     }
 
-    public void stop() {
-
+    public String stop() {
+        return "The engine has been stopped";
     }
 
     public int getPower() {
