@@ -33,6 +33,16 @@ public class ConsoleHelper {
         return i;
     }
 
+    public int readEvenInt() {
+        System.out.println("Enter even int:");
+        int i = readInt();
+        while (i % 2 == 1) {
+            System.out.println("Int must be even. Try again:");
+            i = readInt();
+        }
+        return i;
+    }
+
     public int readIndex(int matrixSize) {
         int index = readInt();
         while (!validator.checkIndex(index, matrixSize)) {
