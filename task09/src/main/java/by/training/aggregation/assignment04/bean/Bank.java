@@ -8,12 +8,18 @@ import java.util.List;
  * Всего три валюты => не более трёх счетов */
 
 public class Bank {
+    private String name;
     private List<BankAccount> accounts;
     private boolean sort;
 
-    public Bank() {
+    public Bank(String name) {
+        this.name = name;
         accounts = new LinkedList<>();
         sort = false;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<BankAccount> getAccounts() {
@@ -27,6 +33,10 @@ public class Bank {
     public void sortAccounts() {
         Collections.sort(accounts);
         sort = true;
+    }
+
+    public void addAccount(BankAccount account) {
+        accounts.add(account);
     }
 
     public int calculateAccountNumber() {

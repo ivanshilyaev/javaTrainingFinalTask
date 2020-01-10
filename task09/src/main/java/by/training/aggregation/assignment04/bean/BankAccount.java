@@ -54,6 +54,13 @@ public class BankAccount implements Comparable<BankAccount> {
         setActive(true);
     }
 
+    public void put(double addSum) {
+        sum += addSum;
+    }
+
+    public void withdraw(double addSum) {
+        sum -= addSum;
+    }
 
     @Override
     public int compareTo(BankAccount o) {

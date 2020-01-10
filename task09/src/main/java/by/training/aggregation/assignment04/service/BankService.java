@@ -30,14 +30,16 @@ public final class BankService {
     }
 
     /* Блокируем аккаунты, сумма на которых меньше -1000$ */
-    public void blockAccounts(Bank bank) {
+    public void blockAccounts(Bank bank) throws ServiceException {
         AmountFactory factory = AmountFactory.getInstance();
         USDAmount usdAmount = factory.getUsdAmount();
         for (BankAccount account : bank.getAccounts()) {
             if (usdAmount.exchangeSumToUSD(account) < -1000) {
                 account.block();
+                return;
             }
         }
+        throw new ServiceException("No such account");
     }
 
     public double getTotalAmount(Bank bank, String name, Currency currency) {
@@ -89,5 +91,25 @@ public final class BankService {
             default:
                 return 0;
         }
+    }
+
+    public void putMoney(Bank bank, String name, Currency currency, double addSum) throws ServiceException {
+        for (BankAccount account : bank.getAccounts()) {
+            if (account.getName().equalsIgnoreCase(name) && account.getCurrency() == currency) {
+                account.put(addSum);
+                return;
+            }
+        }
+        throw new ServiceException("No such account");
+    }
+
+    public void withdrawMoney(Bank bank, String name, Currency currency, double addSum) throws ServiceException {
+        for (BankAccount account : bank.getAccounts()) {
+            if (account.getName().equalsIgnoreCase(name) && account.getCurrency() == currency) {
+                account.withdraw(addSum);
+                return;
+            }
+        }
+        throw new ServiceException("No such account");
     }
 }
