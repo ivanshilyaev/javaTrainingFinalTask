@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/* Клиент может иметь в банке не более одного счёта в заданной валюте.
+ * Всего три валюты => не более трёх счетов */
+
 public class Bank {
     private List<BankAccount> accounts;
     private boolean sort;

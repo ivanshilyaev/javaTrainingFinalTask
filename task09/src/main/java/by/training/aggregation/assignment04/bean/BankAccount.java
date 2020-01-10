@@ -1,9 +1,14 @@
 package by.training.aggregation.assignment04.bean;
 
+/* Счета сортируются по сумме (в долларах) */
+
+import java.util.Formatter;
+import java.util.Objects;
+
 public class BankAccount implements Comparable<BankAccount> {
     private String name;
     private Currency currency;
-    private int sum;
+    private double sum;
     private boolean active;
 
     public BankAccount(String name, Currency currency, int sum) {
@@ -21,7 +26,7 @@ public class BankAccount implements Comparable<BankAccount> {
         return currency;
     }
 
-    public int getSum() {
+    public double getSum() {
         return sum;
     }
 
@@ -81,5 +86,34 @@ public class BankAccount implements Comparable<BankAccount> {
                 break;
         }
         return Double.compare(sum1, sum2);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BankAccount account = (BankAccount) o;
+        return Double.compare(account.sum, sum) == 0 &&
+                active == account.active &&
+                Objects.equals(name, account.name) &&
+                currency == account.currency;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, currency, sum, active);
+    }
+
+    @Override
+    public String toString() {
+        Formatter formatter = new Formatter();
+        String sumString = formatter.format("%.2f", sum).toString();
+        formatter.close();
+        return "BankAccount{" +
+                "name='" + name + '\'' +
+                ", currency=" + currency +
+                ", sum=" + sumString +
+                ", active=" + active +
+                '}';
     }
 }

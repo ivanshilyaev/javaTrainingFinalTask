@@ -2,7 +2,16 @@ package by.training.aggregation.assignment02.view;
 
 import java.util.Scanner;
 
-public class ConsoleHelper {
+public final class ConsoleHelper {
+    private static final ConsoleHelper INSTANCE = new ConsoleHelper();
+
+    private ConsoleHelper() {
+    }
+
+    public static ConsoleHelper getInstance() {
+        return INSTANCE;
+    }
+
     private Scanner scanner = new Scanner(System.in);
 
     public boolean hasNext() {

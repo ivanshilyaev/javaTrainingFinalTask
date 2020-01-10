@@ -8,9 +8,8 @@ import by.training.aggregation.assignment02.view.ConsoleHelper;
 
 public class Runner {
     public static void main(String[] args) {
-        ConsoleHelper consoleHelper = new ConsoleHelper();
+        ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
         Car car = new Car("Ford", "gray", 4);
-        ;
         consoleHelper.writeLine(car.toString());
         CarService service = new CarService();
         Wheel wheel = new Wheel(19, WheelType.STUDDED);
