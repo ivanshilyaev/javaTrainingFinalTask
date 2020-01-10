@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 
-public class MatrixCreator {
+public class MatrixFiller {
     public void fillRandomized(Matrix matrix, int start, int finish) {
         int v = matrix.getVerticalSize();
         int h = matrix.getHorizontalSize();

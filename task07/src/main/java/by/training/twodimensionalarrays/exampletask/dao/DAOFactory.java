@@ -1,6 +1,6 @@
 package by.training.twodimensionalarrays.exampletask.dao;
 
-public class DAOFactory {
+public final class DAOFactory {
     public static final DAOFactory instance = new DAOFactory();
 
     private final MatrixReader matrixReader = new MatrixReader();

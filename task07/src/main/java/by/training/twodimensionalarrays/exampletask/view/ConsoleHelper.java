@@ -5,11 +5,20 @@ import by.training.twodimensionalarrays.exampletask.bean.exception.MatrixExcepti
 import by.training.twodimensionalarrays.exampletask.parser.Parser;
 import by.training.twodimensionalarrays.exampletask.parser.exception.ParserException;
 import by.training.twodimensionalarrays.exampletask.view.exception.ViewException;
-import by.training.twodimensionalarrays.validation.Validator;
+import by.training.twodimensionalarrays.exampletask.validation.Validator;
 
 import java.util.Scanner;
 
 public class ConsoleHelper {
+    private static final ConsoleHelper INSTANCE = new ConsoleHelper();
+
+    private ConsoleHelper() {
+    }
+
+    public static ConsoleHelper getInstance() {
+        return INSTANCE;
+    }
+
     Scanner scanner = new Scanner(System.in);
     Validator validator = new Validator();
 

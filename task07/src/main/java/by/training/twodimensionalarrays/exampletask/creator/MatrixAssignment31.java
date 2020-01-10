@@ -3,8 +3,9 @@ package by.training.twodimensionalarrays.exampletask.creator;
 import by.training.twodimensionalarrays.exampletask.bean.Matrix;
 import by.training.twodimensionalarrays.exampletask.bean.exception.MatrixException;
 
-public class MatrixAssignment31 {
-    public Matrix createMatrix() {
+public class MatrixAssignment31 implements CreateMatrixCommand {
+    @Override
+    public Matrix createMatrix(int n, int m) {
         Matrix matrix = null;
         try {
             matrix = new Matrix(100, 10);

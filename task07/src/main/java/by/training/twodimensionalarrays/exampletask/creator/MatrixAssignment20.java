@@ -3,11 +3,12 @@ package by.training.twodimensionalarrays.exampletask.creator;
 import by.training.twodimensionalarrays.exampletask.bean.Matrix;
 import by.training.twodimensionalarrays.exampletask.bean.exception.MatrixException;
 
-public class MatrixAssignment20 {
-    public Matrix createMatrix(int n) {
+public class MatrixAssignment20 implements CreateMatrixCommand {
+    @Override
+    public Matrix createMatrix(int n, int m) {
         Matrix matrix = null;
         try {
-            matrix = new Matrix(n, n);
+            matrix = new Matrix(n, m);
             for (int i = 0; i < n / 2; ++i) {
                 for (int j = 0; j < i + 1; ++j) {
                     matrix.setElement(i, j, 1);
