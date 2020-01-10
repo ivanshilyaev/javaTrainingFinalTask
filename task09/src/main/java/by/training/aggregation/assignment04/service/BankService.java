@@ -5,7 +5,16 @@ import by.training.aggregation.assignment04.bean.BankAccount;
 import by.training.aggregation.assignment04.bean.Currency;
 import by.training.aggregation.assignment04.service.exception.ServiceException;
 
-public class BankService {
+public final class BankService {
+    private static final BankService INSTANCE = new BankService();
+
+    private BankService() {
+    }
+
+    public static BankService getInstance() {
+        return INSTANCE;
+    }
+
     public BankAccount getAccount(Bank bank, String name, Currency currency)
             throws ServiceException {
         for (BankAccount account : bank.getAccounts()) {
@@ -18,6 +27,17 @@ public class BankService {
 
     public void sortAccounts(Bank bank) {
         bank.sortAccounts();
+    }
+
+    /* Блокируем аккаунты, сумма на которых меньше -1000$ */
+    public void blockAccounts(Bank bank) {
+        AmountFactory factory = AmountFactory.getInstance();
+        USDAmount usdAmount = factory.getUsdAmount();
+        for (BankAccount account : bank.getAccounts()) {
+            if (usdAmount.exchangeSumToUSD(account) < -1000) {
+                account.block();
+            }
+        }
     }
 
     public double getTotalAmount(Bank bank, String name, Currency currency) {
