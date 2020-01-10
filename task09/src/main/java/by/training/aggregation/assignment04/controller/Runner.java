@@ -5,6 +5,8 @@ import by.training.aggregation.assignment04.bean.BankAccount;
 import by.training.aggregation.assignment04.bean.Currency;
 import by.training.aggregation.assignment04.controller.command.Command;
 import by.training.aggregation.assignment04.controller.command.exception.CommandException;
+import by.training.aggregation.assignment04.service.BankService;
+import by.training.aggregation.assignment04.service.exception.ServiceException;
 import by.training.aggregation.assignment04.view.ConsoleHelper;
 
 public class Runner {
@@ -30,6 +32,79 @@ public class Runner {
     public static void main(String[] args) {
         Runner runner = new Runner();
         ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
+        BankService bankService = BankService.getInstance();
         Bank bank = runner.getTestData();
+        consoleHelper.showMenu();
+        try {
+            while (true) {
+                String choice = consoleHelper.runDialog();
+                switch (choice) {
+                    case "1": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        consoleHelper.writeMessage(bankService.getAccount(bank, name, currency).toString());
+                        break;
+                    }
+                    case "2": {
+                        bankService.sortAccounts(bank);
+                        break;
+                    }
+                    case "3": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        // shouldn't be used this way ¯\_(ツ)_/¯
+                        consoleHelper.writeSum(runner.getAmount("GET_TOTAL_AMOUNT", bank, name, currency));
+                        break;
+                    }
+                    case "4": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        // shouldn't be used this way ¯\_(ツ)_/¯
+                        consoleHelper.writeSum(runner.getAmount("GET_TOTAL_POSITIVE_AMOUNT", bank, name, currency));
+                        break;
+                    }
+                    case "5": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        // shouldn't be used this way ¯\_(ツ)_/¯
+                        consoleHelper.writeSum(runner.getAmount("GET_TOTAL_NEGATIVE_AMOUNT", bank, name, currency));
+                        break;
+                    }
+                    case "6": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        double addSum = consoleHelper.readSum();
+                        bankService.putMoney(bank, name, currency, addSum);
+                        break;
+                    }
+                    case "7": {
+                        String name = consoleHelper.readName();
+                        Currency currency = consoleHelper.readCurrency();
+                        double addSum = consoleHelper.readSum();
+                        bankService.withdrawMoney(bank, name, currency, addSum);
+                        break;
+                    }
+                    case "8": {
+                        bankService.blockAccounts(bank);
+                        break;
+                    }
+                    case "9": {
+                        consoleHelper.writeMessage(bank.getName() + ":");
+                        for (BankAccount account : bank.getAccounts()) {
+                            consoleHelper.writeMessage(account.toString());
+                        }
+                        break;
+                    }
+                    case "e": {
+                        return;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            }
+        } catch (ServiceException | CommandException e) {
+            consoleHelper.writeMessage("Error while processing command");
+        }
     }
 }

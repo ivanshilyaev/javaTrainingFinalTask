@@ -117,10 +117,10 @@ public class BankAccount implements Comparable<BankAccount> {
         String sumString = formatter.format("%.2f", sum).toString();
         formatter.close();
         return "BankAccount{" +
-                "name='" + name + '\'' +
-                ", currency=" + currency +
-                ", sum=" + sumString +
-                ", active=" + active +
+                "name = '" + name + '\'' +
+                ", currency = " + currency +
+                ", sum = " + sumString +
+                ", active = " + active +
                 '}';
     }
 }
