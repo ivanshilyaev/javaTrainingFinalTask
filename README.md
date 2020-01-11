@@ -12,6 +12,7 @@
 -  [Task 7 (two-dimensional arrays)](https://github.com/ivanshilyaev/javaTraining/tree/master/task07)
 -  [Task 8 (oop)](https://github.com/ivanshilyaev/javaTraining/tree/master/task08)
 -  [Task 9 (aggregation & composition)](https://github.com/ivanshilyaev/javaTraining/tree/master/task09)
+-  [Task 10 (final task 1)](https://github.com/ivanshilyaev/javaTraining/tree/master/task10)
 ---
 
 by [@ivanshilyaev](https://github.com/ivanshilyaev), 2019-2020
