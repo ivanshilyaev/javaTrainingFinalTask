@@ -20,4 +20,8 @@ public final class PaymentService {
                              int quantity) {
         payment.addCommodity(name, price, discount, quantity);
     }
+
+    public String getPaymentCheque(Payment payment) {
+        return payment.getCheque();
+    }
 }

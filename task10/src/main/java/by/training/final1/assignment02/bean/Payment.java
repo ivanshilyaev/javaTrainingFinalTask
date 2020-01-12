@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Payment {
     private List<Commodity> shoppingList;
+    private static final String CHEQUE_DELIMITER = "==============================";
 
     public Payment() {
         shoppingList = new LinkedList<>();
@@ -147,9 +148,30 @@ public class Payment {
         shoppingList.add(commodity);
     }
 
-    public void printShoppingList() {
+    public double calculateTotalAmount() {
+        double total = 0;
         for (Commodity commodity : shoppingList) {
-            System.out.println(commodity);
+            total += commodity.getAmount();
         }
+        return total;
+    }
+
+    public String getCheque() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        builder.append("CHEQUE").append('\n');
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        for (Commodity commodity : shoppingList) {
+            builder.append("Barcode: ").append(commodity.barcode).append('\n');
+            builder.append("Name: ").append(commodity.name).append('\n');
+            builder.append("Price: ").append(String.format("%.2f", commodity.price)).append('\n');
+            builder.append("Discount: ").append(String.format("%.2f", commodity.discount)).append('\n');
+            builder.append("Quantity: ").append(commodity.quantity).append('\n');
+            builder.append("Amount: ").append(String.format("%.2f", commodity.amount)).append('\n');
+            builder.append(CHEQUE_DELIMITER).append('\n');
+        }
+        builder.append("Total: ").append(String.format("%.2f", calculateTotalAmount())).append('\n');
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        return builder.toString();
     }
 }

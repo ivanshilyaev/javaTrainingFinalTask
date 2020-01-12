@@ -19,11 +19,25 @@ public final class ConsoleHelper {
     }
 
     public int readInt() {
-        return scanner.nextInt();
+        int result;
+        try {
+            result = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            printMessage("Wrong data. Try again:");
+            result = readInt();
+        }
+        return result;
     }
 
     public double readDouble() {
-        return scanner.nextDouble();
+        double result;
+        try {
+            result = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            printMessage("Wrong data. Try again:");
+            result = readDouble();
+        }
+        return result;
     }
 
     public String readName() {

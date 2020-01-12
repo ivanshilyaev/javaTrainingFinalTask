@@ -16,6 +16,6 @@ public class Runner {
             int quantity = consoleHelper.readQuantity();
             service.addCommodity(payment, name, price, discount, quantity);
         }
-        payment.printShoppingList();
+        consoleHelper.printMessage(service.getPaymentCheque(payment));
     }
 }
