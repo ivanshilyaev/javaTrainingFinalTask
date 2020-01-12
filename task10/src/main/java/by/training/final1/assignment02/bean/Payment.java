@@ -39,6 +39,16 @@ public class Payment {
             amount = calculateAmount();
         }
 
+        public Commodity(String barcode, String name, double price, double discount,
+                         int quantity) {
+            this.barcode = barcode;
+            this.name = name;
+            this.price = price;
+            this.discount = discount;
+            this.quantity = quantity;
+            this.amount = calculateAmount();
+        }
+
         public String generateBarcode() {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < 3; ++i) {
@@ -145,6 +155,12 @@ public class Payment {
 
     public void addCommodity(String name, double price, double discount, int quantity) {
         Commodity commodity = new Commodity(name, price, discount, quantity);
+        shoppingList.add(commodity);
+    }
+
+    public void addCommodity(String barcode, String name, double price, double discount,
+                             int quantity) {
+        Commodity commodity = new Commodity(barcode, name, price, discount, quantity);
         shoppingList.add(commodity);
     }
 
