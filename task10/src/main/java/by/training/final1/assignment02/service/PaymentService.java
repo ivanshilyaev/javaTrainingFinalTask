@@ -35,7 +35,7 @@ public final class PaymentService {
             for (String line : data) {
                 String[] array = line.split(" ");
                 /*
-                 * all the parameters except amount
+                 * all the parameters except amount.
                  * amount is calculated
                  */
                 if (array.length != 5) {

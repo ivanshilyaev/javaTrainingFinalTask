@@ -13,6 +13,32 @@ Name: milk
 Price: 5.00
 Discount: 0.03
 Quantity: 3
+Amount: 4.97
+==============================
+Barcode: EVW-ztg-5648
+Name: eggs
+Price: 2.00
+Discount: 0.01
+Quantity: 10
+Amount: 1.99
+==============================
+Total: 16.91
+==============================
+==============================
+CHEQUE
+==============================
+Barcode: VCH-men-8274
+Name: cheese
+Price: 10.00
+Discount: 0.05
+Quantity: 1
+Amount: 9.95
+==============================
+Barcode: HDL-hkr-7814
+Name: milk
+Price: 5.00
+Discount: 0.03
+Quantity: 3
 Amount: 14.91
 ==============================
 Barcode: EVW-ztg-5648

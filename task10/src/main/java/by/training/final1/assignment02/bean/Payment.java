@@ -31,22 +31,16 @@ public class Payment {
         }
 
         public Commodity(String name, double price, double discount, int quantity) {
-            barcode = generateBarcode();
-            this.name = name;
-            this.price = price;
-            this.discount = discount;
+            this(name, price, discount);
             this.quantity = quantity;
             amount = calculateAmount();
         }
 
         public Commodity(String barcode, String name, double price, double discount,
                          int quantity) {
+            this(name, price, discount, quantity);
             this.barcode = barcode;
-            this.name = name;
-            this.price = price;
-            this.discount = discount;
-            this.quantity = quantity;
-            this.amount = calculateAmount();
+            amount = calculateAmount();
         }
 
         public String generateBarcode() {
