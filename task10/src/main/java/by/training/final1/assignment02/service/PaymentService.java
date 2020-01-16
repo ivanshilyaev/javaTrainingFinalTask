@@ -3,6 +3,7 @@ package by.training.final1.assignment02.service;
 import by.training.final1.assignment02.bean.Commodity;
 import by.training.final1.assignment02.bean.Payment;
 import by.training.final1.assignment02.service.exception.ServiceException;
+import by.training.final1.assignment02.service.validator.Validator;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -27,8 +28,9 @@ public final class PaymentService {
     public void addCommodities(Payment payment, File file) throws ServiceException {
         ReadCommoditiesCommand command = ReadCommoditiesCommand.getInstance();
         Commodity[] commodities = command.read(file);
-        // validating!
+        Validator validator = new Validator();
         for (Commodity commodity : commodities) {
+            validator.validate(commodity);
             payment.getBasket().addCommodity(commodity);
         }
     }
