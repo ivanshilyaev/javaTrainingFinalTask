@@ -4,6 +4,8 @@ import by.training.final1.assignment02.bean.Payment;
 import by.training.final1.assignment02.service.exception.ServiceException;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public final class PaymentService {
     private static final PaymentService INSTANCE = new PaymentService();
@@ -13,6 +15,12 @@ public final class PaymentService {
 
     public static PaymentService getInstance() {
         return INSTANCE;
+    }
+
+    public static double round(double value, int places) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public void addCommodity(Payment payment, String name, double price, double discount) {
