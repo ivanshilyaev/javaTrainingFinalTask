@@ -50,16 +50,6 @@ public final class ConsoleHelper {
         return readDouble();
     }
 
-    public double readDiscount() {
-        System.out.print("Discount: ");
-        return readDouble();
-    }
-
-    public int readQuantity() {
-        System.out.print("Quantity: ");
-        return readInt();
-    }
-
     public void printMessage(String message) {
         System.out.println(message);
     }

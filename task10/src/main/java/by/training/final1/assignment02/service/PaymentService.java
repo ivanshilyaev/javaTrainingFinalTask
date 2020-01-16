@@ -8,9 +8,11 @@ import by.training.final1.assignment02.service.validator.Validator;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 
 public final class PaymentService {
     private static final PaymentService INSTANCE = new PaymentService();
+    private static final String CHEQUE_DELIMITER = "==============================";
 
     private PaymentService() {
     }
@@ -35,7 +37,47 @@ public final class PaymentService {
         }
     }
 
+    /*
+     * 5 per cent discount,
+     * but not more than 2$
+     */
+    private double calculateDiscount(Commodity commodity) {
+        return Math.min(2.0, PaymentService.round(0.05 * commodity.getPrice(), 2));
+    }
+
+    public double calculateAmount(Payment payment, Commodity commodity) {
+        return (commodity.getPrice() - calculateDiscount(commodity))
+                * payment.getBasket().getShoppingList().get(commodity);
+    }
+
+    public double calculateTotalAmount(Payment payment) {
+        double total = 0;
+        for (Commodity commodity : payment.getBasket().getShoppingList().keySet()) {
+            total += calculateAmount(payment, commodity);
+        }
+        return total;
+    }
+
     public String getPaymentCheque(Payment payment) {
-        return payment.getCheque();
+        StringBuilder builder = new StringBuilder();
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        builder.append("CHEQUE").append('\n');
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        for (Commodity commodity : payment.getBasket().getShoppingList().keySet()) {
+            builder.append("Barcode: ").append(commodity.getBarcode()).append('\n');
+            builder.append("Name: ").append(commodity.getName()).append('\n');
+            builder.append("Price: ").append(commodity.getPrice()).append('\n');
+            builder.append("Discount: ").append(calculateDiscount(commodity)).append('\n');
+            builder.append("Quantity: ").append(payment.getBasket().getShoppingList().get(commodity)).append('\n');
+            builder.append("Amount: ").append(calculateAmount(payment, commodity)).append('\n');
+            builder.append(CHEQUE_DELIMITER).append('\n');
+        }
+        builder.append("Total: ").append(calculateTotalAmount(payment)).append('\n');
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        builder.append("Cashier: ").append(payment.getCashierName()).append('\n');
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        builder.append("Time: ").append(formatter.format(payment.getPurchaseTime())).append('\n');
+        builder.append(CHEQUE_DELIMITER).append('\n');
+        return builder.toString();
     }
 }
