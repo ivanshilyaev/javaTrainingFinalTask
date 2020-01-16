@@ -15,8 +15,9 @@ public class Commodity {
     }
 
     public Commodity(String barcode, String name, double price) {
-        this(name, price);
         this.barcode = barcode;
+        this.name = name;
+        this.price = price;
     }
 
     public String generateBarcode() {

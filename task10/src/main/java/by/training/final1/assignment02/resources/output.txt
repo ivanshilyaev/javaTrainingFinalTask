@@ -1,52 +1,30 @@
 ==============================
 CHEQUE
 ==============================
-Barcode: VCH-men-8274
-Name: cheese
-Price: 10.00
-Discount: 0.05
-Quantity: 1
-Amount: 9.95
-==============================
 Barcode: HDL-hkr-7814
 Name: milk
-Price: 5.00
-Discount: 0.03
-Quantity: 3
-Amount: 4.97
+Price: 5.0
+Discount: 0.25
+Quantity: 1
+Amount: 4.75
 ==============================
 Barcode: EVW-ztg-5648
 Name: eggs
-Price: 2.00
-Discount: 0.01
-Quantity: 10
-Amount: 1.99
-==============================
-Total: 16.91
-==============================
-==============================
-CHEQUE
+Price: 2.0
+Discount: 0.1
+Quantity: 1
+Amount: 1.9
 ==============================
 Barcode: VCH-men-8274
 Name: cheese
-Price: 10.00
-Discount: 0.05
+Price: 10.0
+Discount: 0.5
 Quantity: 1
-Amount: 9.95
+Amount: 9.5
 ==============================
-Barcode: HDL-hkr-7814
-Name: milk
-Price: 5.00
-Discount: 0.03
-Quantity: 3
-Amount: 14.91
+Total: 16.15
 ==============================
-Barcode: EVW-ztg-5648
-Name: eggs
-Price: 2.00
-Discount: 0.01
-Quantity: 10
-Amount: 19.90
+Cashier: Shilyaev I.V.
+Time: 16.01.2020 18:15:17
 ==============================
-Total: 44.76
-==============================
+

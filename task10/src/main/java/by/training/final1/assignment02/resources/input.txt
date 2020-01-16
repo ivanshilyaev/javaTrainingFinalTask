@@ -1,3 +1,3 @@
-VCH-men-8274 cheese 10 0.05 1
-HDL-hkr-7814 milk 5 0.03 3
-EVW-ztg-5648 eggs 2 0.01 10
+VCH-men-8274 cheese 10
+HDL-hkr-7814 milk 5
+EVW-ztg-5648 eggs 2

@@ -9,9 +9,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class FileWriter {
-    public void writeData(String data, File file) throws DAOException {
+    public void writeData(String[] data, File file) throws DAOException {
         try {
-            Files.write(Paths.get(file.getAbsolutePath()), data.getBytes(), StandardOpenOption.APPEND);
+            for (String datum : data) {
+                Files.write(Paths.get(file.getAbsolutePath()),
+                        (datum + '\n').getBytes(), StandardOpenOption.APPEND);
+            }
         } catch (IOException e) {
             throw new DAOException("Couldn't write to file", e.getCause());
         }

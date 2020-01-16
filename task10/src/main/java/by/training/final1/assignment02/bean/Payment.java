@@ -4,6 +4,7 @@ import by.training.final1.assignment02.service.PaymentService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Payment {
@@ -22,6 +23,10 @@ public class Payment {
             return shoppingList;
         }
 
+        public Basket() {
+            shoppingList = new HashMap<>();
+        }
+
         public void addCommodity(Commodity commodity) {
             if (shoppingList.containsKey(commodity)) {
                 shoppingList.put(commodity, shoppingList.get(commodity) + 1);
@@ -31,10 +36,14 @@ public class Payment {
         }
     }
 
-    public Payment(String cashierName, Date purchaseTime) {
+    public Payment() {
         basket = new Basket();
-        this.cashierName = cashierName;
-        this.purchaseTime = purchaseTime;
+        cashierName = "Shilyaev I.V.";
+        purchaseTime = new Date();
+    }
+
+    public Basket getBasket() {
+        return basket;
     }
 
     public String getCashierName() {
@@ -44,6 +53,9 @@ public class Payment {
     public Date getPurchaseTime() {
         return purchaseTime;
     }
+
+
+    // services should do all of it!!!
 
     /*
      * 5 per cent discount,

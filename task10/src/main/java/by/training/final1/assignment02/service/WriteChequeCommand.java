@@ -12,7 +12,7 @@ public class WriteChequeCommand {
         DAOFactory daoFactory = DAOFactory.getInstance();
         FileWriter fileWriter = daoFactory.getFileWriter();
         try {
-            fileWriter.writeData(cheque, file);
+            fileWriter.writeData(new String[]{cheque}, file);
         } catch (DAOException e) {
             throw new ServiceException("Couldn't write data", e.getCause());
         }
