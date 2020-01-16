@@ -2,8 +2,8 @@ package by.training.final1.assignment04.dao;
 
 public final class DAOFactory {
     private static final DAOFactory INSTANCE = new DAOFactory();
-    private final TreasuresReader treasuresReader = new TreasuresReader();
-    private final TreasuresWriter treasuresWriter = new TreasuresWriter();
+    private final FileReader fileReader = new FileReader();
+    private final FileWriter fileWriter = new FileWriter();
 
     private DAOFactory() {
     }
@@ -12,11 +12,11 @@ public final class DAOFactory {
         return INSTANCE;
     }
 
-    public TreasuresReader getTreasuresReader() {
-        return treasuresReader;
+    public FileReader getFileReader() {
+        return fileReader;
     }
 
-    public TreasuresWriter getTreasuresWriter() {
-        return treasuresWriter;
+    public FileWriter getFileWriter() {
+        return fileWriter;
     }
 }

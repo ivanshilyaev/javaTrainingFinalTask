@@ -8,8 +8,8 @@ public class Cave {
     private List<Treasure> treasures;
     public static final int QUANTITY = 100;
 
-    public Cave(ArrayList<Treasure> treasures) {
-        this.treasures = treasures;
+    public Cave() {
+        treasures = new ArrayList<>();
     }
 
     public List<Treasure> getTreasures() {
