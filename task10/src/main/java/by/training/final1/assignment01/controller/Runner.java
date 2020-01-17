@@ -17,15 +17,15 @@ public class Runner {
                 new TrainingDirectory("/Users/ivansilaev/Desktop/test/hello");
         TrainingFile file1 = new TextTrainingFile(directory1, "input.txt");
         try {
-            //directoryService.create(directory1);
-            //fileService.create(file1);
-            //fileService.delete(file1);
-            //directoryService.delete(directory1);
+            directoryService.create(directory1);
+            fileService.create(file1);
             fileService.append(file1, new String[]{"hello", "world"});
             String[] content = fileService.getContent(file1);
             for (String line : content) {
                 consoleHelper.printMessage(line);
             }
+            fileService.delete(file1);
+            directoryService.delete(directory1);
         } catch (ServiceException e) {
             consoleHelper.printMessage(e.getMessage());
         }

@@ -50,10 +50,14 @@ public class FileService {
         }
     }
 
+    /*
+     * for txt files only
+     */
     public String[] getContent(TrainingFile file) throws ServiceException {
         if (!(file instanceof TextTrainingFile)) {
             throw new ServiceException("Couldn't get content: not a txt file");
         }
+        parser.parseTxtFileName(file.getName());
         File temp = new File(file.getDirectory().getName() + DEL
                 + file.getName());
         DAOFactory daoFactory = DAOFactory.getInstance();
@@ -65,10 +69,14 @@ public class FileService {
         }
     }
 
+    /*
+     * for txt files only
+     */
     public void append(TrainingFile file, String[] text) throws ServiceException {
         if (!(file instanceof TextTrainingFile)) {
             throw new ServiceException("Couldn't append to file: not a txt file");
         }
+        parser.parseTxtFileName(file.getName());
         File temp = new File(file.getDirectory().getName() + DEL
                 + file.getName());
         DAOFactory daoFactory = DAOFactory.getInstance();
