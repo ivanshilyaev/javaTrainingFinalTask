@@ -1,7 +1,7 @@
 package by.training.final1.assignment04.service.perser;
 
-import by.training.final1.assignment02.service.exception.ServiceException;
 import by.training.final1.assignment04.bean.Treasure;
+import by.training.final1.assignment04.service.exception.ServiceException;
 
 public class Parser {
     public Treasure parseString(String data) throws ServiceException {
