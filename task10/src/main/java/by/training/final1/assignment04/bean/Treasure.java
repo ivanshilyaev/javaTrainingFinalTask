@@ -43,10 +43,10 @@ public class Treasure implements Comparable<Treasure> {
 
     @Override
     public String toString() {
-        return "Treasure{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+        return "Treasure: " +
+                "name = " + name +
+                ", price = " + price +
+                ';';
     }
 
     @Override

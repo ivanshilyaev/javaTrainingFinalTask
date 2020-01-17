@@ -26,6 +26,9 @@ public class Runner {
             caveService.addTreasures(cave, new File(FILE_IN));
             String[] listOfCommands = caveService.readListOfCommands(new File(COMMANDS));
             for (String item : listOfCommands) {
+                caveService.writeResponse("Request:", outFile);
+                caveService.writeResponse(item, outFile);
+                caveService.writeResponse("Response:", outFile);
                 String[] array = item.split(" ");
                 Command command = commandProvider.getCommand(array[0]);
                 List<Treasure> treasures;
@@ -34,7 +37,10 @@ public class Runner {
                 } else {
                     treasures = command.exec(cave, Integer.parseInt(array[1]));
                 }
-                caveService.writeResponse(treasures.toString(), outFile);
+                for (Treasure treasure : treasures) {
+                    caveService.writeResponse(treasure.toString(), outFile);
+                }
+                caveService.writeResponse("\n", outFile);
             }
         } catch (ServiceException e) {
             consoleHelper.printMessage(e.getMessage());
