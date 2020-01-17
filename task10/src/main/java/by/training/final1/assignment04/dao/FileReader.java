@@ -1,6 +1,6 @@
 package by.training.final1.assignment04.dao;
 
-import by.training.final1.assignment02.dao.exception.DAOException;
+import by.training.final1.assignment04.dao.exception.DAOException;
 
 import java.io.File;
 import java.io.IOException;
