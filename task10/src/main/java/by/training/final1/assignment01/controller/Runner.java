@@ -14,10 +14,11 @@ public class Runner {
         ConsoleHelper consoleHelper = new ConsoleHelper();
         TrainingDirectory directory1 =
                 new TrainingDirectory("/Users/ivansilaev/Desktop/test/hello");
-        TrainingFile file1 = new TrainingFile(directory1, "input.txt");
+        TrainingFile file1 = new TrainingFile(directory1, "hello.world");
         try {
-            directoryService.createNewDirectory(directory1);
-            fileService.create(file1);
+            //directoryService.create(directory1);
+            //fileService.delete(file1);
+            directoryService.delete(directory1);
         } catch (ServiceException e) {
             consoleHelper.printMessage(e.getMessage());
         }
