@@ -7,16 +7,16 @@ import informationhandlinglight.training.by.bean.TextComposite;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParagraphParser implements Parser {
-    Parser sentenceParser = new SentenceParser();
+public class SentenceParser implements Parser {
+    Parser lexemeParser = new LexemeParser();
 
     @Override
     public TextComponent parse(String text) {
-        TextComponent component = new TextComposite(Level.PARAGRAPH);
-        Pattern pattern = Pattern.compile(Level.SENTENCE.getPattern());
+        TextComponent component = new TextComposite(Level.SENTENCE);
+        Pattern pattern = Pattern.compile(Level.LEXEME.getPattern());
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            component.add(sentenceParser.parse(matcher.group()));
+            component.add(lexemeParser.parse(matcher.group()));
         }
         return component;
     }

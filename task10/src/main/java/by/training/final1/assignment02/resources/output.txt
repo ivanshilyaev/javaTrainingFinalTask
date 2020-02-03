@@ -5,8 +5,8 @@ Barcode: HDL-hkr-7814
 Name: milk
 Price: 5.0
 Discount: 0.25
-Quantity: 1
-Amount: 4.75
+Quantity: 3
+Amount: 14.25
 ==============================
 Barcode: EVW-ztg-5648
 Name: eggs
@@ -19,12 +19,12 @@ Barcode: VCH-men-8274
 Name: cheese
 Price: 10.0
 Discount: 0.5
-Quantity: 1
-Amount: 9.5
+Quantity: 2
+Amount: 19.0
 ==============================
-Total: 16.15
+Total: 35.15
 ==============================
 Cashier: Shilyaev I.V.
-Time: 16.01.2020 18:48:14
+Time: 21.01.2020 19:20:48
 ==============================
 

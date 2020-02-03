@@ -10,7 +10,7 @@ public enum Level {
 
     private String pattern;
 
-    private Level(String pattern) {
+    Level(String pattern) {
         this.pattern = pattern;
     }
 
