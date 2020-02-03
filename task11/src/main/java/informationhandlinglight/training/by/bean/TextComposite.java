@@ -11,6 +11,10 @@ public class TextComposite implements TextComponent {
         this.level = level;
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     @Override
     public void add(TextComponent component) {
         components.add(component);
