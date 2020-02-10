@@ -6,6 +6,7 @@ public enum Level {
     SENTENCE("[a-zA-Z][^.?!]*[.?!]"),
     LEXEME("\\S+"),
     WORD("\\w+"),
+    MARK("\\p{Punct}"),
     SYMBOL("\\S");
 
     private String pattern;

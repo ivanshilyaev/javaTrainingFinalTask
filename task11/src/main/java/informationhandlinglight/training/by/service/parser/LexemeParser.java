@@ -1,7 +1,6 @@
 package informationhandlinglight.training.by.service.parser;
 
 import informationhandlinglight.training.by.bean.Level;
-import informationhandlinglight.training.by.bean.SymbolLeaf;
 import informationhandlinglight.training.by.bean.TextComponent;
 import informationhandlinglight.training.by.bean.TextComposite;
 
@@ -10,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class LexemeParser implements Parser {
     Parser wordParser = new WordParser();
+    Parser markParser = new MarkParser();
 
     @Override
     public TextComponent parse(String text) {
@@ -19,9 +19,9 @@ public class LexemeParser implements Parser {
         while (matcher.find()) {
             component.add(wordParser.parse(matcher.group()));
         }
-        matcher.usePattern(Pattern.compile(Level.SYMBOL.getPattern()));
+        matcher.usePattern(Pattern.compile(Level.MARK.getPattern()));
         while (matcher.find()) {
-            component.add(new SymbolLeaf(matcher.group().charAt(0)));
+            component.add(markParser.parse(matcher.group()));
         }
         return component;
     }
