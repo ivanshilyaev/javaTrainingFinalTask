@@ -8,16 +8,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SentenceParser implements Parser {
-    Parser lexemeParser = new LexemeParser();
+    private Parser parser;
+
+    public SentenceParser(Parser parser) {
+        this.parser = parser;
+    }
 
     @Override
     public TextComponent parse(String text) {
-        TextComponent component = new TextComposite(Level.SENTENCE);
-        Pattern pattern = Pattern.compile(Level.LEXEME.getPattern());
-        Matcher matcher = pattern.matcher(text);
-        while (matcher.find()) {
-            component.add(lexemeParser.parse(matcher.group()));
+        if (parser != null) {
+            return parser.parse(text);
+        } else {
+            TextComponent component = new TextComposite(Level.SENTENCE);
+            Parser lexemeParser = new LexemeParser();
+            Pattern pattern = Pattern.compile(Level.LEXEME.getPattern());
+            Matcher matcher = pattern.matcher(text);
+            while (matcher.find()) {
+                component.add(lexemeParser.parse(matcher.group()));
+            }
+            return component;
         }
-        return component;
     }
 }

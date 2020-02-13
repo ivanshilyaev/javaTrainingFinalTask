@@ -15,6 +15,14 @@ public class TextComposite implements TextComponent {
         return level;
     }
 
+    public List<TextComponent> getComponents() {
+        return components;
+    }
+
+    public int getComponentsSize() {
+        return components.size();
+    }
+
     @Override
     public void add(TextComponent component) {
         components.add(component);
