@@ -39,7 +39,14 @@ public class SortingCommand {
         }
     }
 
-    public void sortLexemesByNumberOfGivenCharacter(TextComponent component, char symbol) {
-
+    public void sortLexemesByNumberOfGivenCharacter(TextComponent component, final char symbol) {
+        Collections.sort(((TextComposite) component).getComponents(),
+                new Comparator<TextComponent>() {
+                    @Override
+                    public int compare(TextComponent o1, TextComponent o2) {
+                        return (int) (o1.restore().toString().chars().filter(ch -> ch == symbol).count() -
+                                o2.restore().toString().chars().filter(ch -> ch == symbol).count());
+                    }
+                });
     }
 }

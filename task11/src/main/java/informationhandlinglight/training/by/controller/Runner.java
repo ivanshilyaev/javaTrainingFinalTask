@@ -41,9 +41,26 @@ public class Runner {
         sortingCommand.sortParagraphsByNumberOfSentences(component);
          */
 
+        /*
+         * 2
         SortingCommand sortingCommand = new SortingCommand();
         sortingCommand.sortWordsInSentenceByLength(component);
+         */
 
-        System.out.println(component.restore().toString());
+        /*
+         * 3
+         */
+
+        SentenceParser sentenceParser1 = new SentenceParser(null);
+        ParagraphParser paragraphParser1 = new ParagraphParser(sentenceParser1);
+        TextParser textParser1 = new TextParser(paragraphParser1);
+        TextComponent component1 = textParser1.parse(text.toString());
+
+        System.out.println(component1.restore().toString());
+
+        SortingCommand sortingCommand = new SortingCommand();
+        sortingCommand.sortLexemesByNumberOfGivenCharacter(component1, 'a');
+
+        System.out.println(component1.restore().toString());
     }
 }
