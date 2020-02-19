@@ -2,26 +2,22 @@ package informationhandlinglight.training.by.controller;
 
 import informationhandlinglight.training.by.bean.TextComponent;
 import informationhandlinglight.training.by.bean.TextComposite;
+import informationhandlinglight.training.by.service.ReadCommand;
 import informationhandlinglight.training.by.service.SortingCommand;
 import informationhandlinglight.training.by.service.parser.ParagraphParser;
 import informationhandlinglight.training.by.service.parser.SentenceParser;
 import informationhandlinglight.training.by.service.parser.TextParser;
 
-import java.util.Scanner;
-
 public class Runner {
     private static final String DEL = "---";
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder text = new StringBuilder();
-        while (scanner.hasNext()) {
-            text.append(scanner.nextLine()).append("\r\n");
-        }
+        ReadCommand readCommand = new ReadCommand();
+        String text = readCommand.exec();
         SentenceParser sentenceParser = new SentenceParser(null);
         ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
         TextParser textParser = new TextParser(null);
-        TextComponent component = textParser.parse(text.toString());
+        TextComponent component = textParser.parse(text);
 
         /*
         TextComposite textComposite = (TextComposite) textParser.parse(text.toString());
@@ -54,7 +50,7 @@ public class Runner {
         SentenceParser sentenceParser1 = new SentenceParser(null);
         ParagraphParser paragraphParser1 = new ParagraphParser(sentenceParser1);
         TextParser textParser1 = new TextParser(paragraphParser1);
-        TextComponent component1 = textParser1.parse(text.toString());
+        TextComponent component1 = textParser1.parse(text);
 
         System.out.println(component1.restore().toString());
 
