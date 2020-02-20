@@ -2,7 +2,7 @@ package by.training.demoThreads.assignment09;
 
 public class Store {
     int counter = 0;
-    final int N = 0;
+    final int N = 5;
 
     synchronized int put() {
         if (counter <= N) {

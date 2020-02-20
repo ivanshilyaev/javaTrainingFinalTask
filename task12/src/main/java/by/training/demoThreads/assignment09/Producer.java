@@ -4,7 +4,8 @@ public class Producer extends Thread {
     Store store;
     int product = 5;
 
-    Producer(Store store) {
+    Producer(String name, Store store) {
+        super(name);
         this.store = store;
     }
 
@@ -13,7 +14,7 @@ public class Producer extends Thread {
         try {
             while (product > 0) {
                 product -= store.put();
-                System.out.println("производителю осталось произвести " + product +
+                System.out.println("производителю " + getName() + " осталось произвести " + product +
                         " товар(ов)");
                 sleep(100);
             }
