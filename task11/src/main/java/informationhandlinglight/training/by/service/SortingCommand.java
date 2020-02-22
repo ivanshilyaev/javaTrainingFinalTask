@@ -10,7 +10,7 @@ public class SortingCommand {
     public void sortParagraphsByNumberOfSentences(TextComponent component) {
         /*
          * 1. собрать текст на уровне абзацев
-         * 2. отсортировать абзацы по количеству предлож
+         * 2. отсортировать абзацы по количеству предложений
          * 3. распарсить текст
          */
         Collections.sort(((TextComposite) component).getComponents(),

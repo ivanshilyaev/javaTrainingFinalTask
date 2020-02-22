@@ -1,62 +1,64 @@
 package informationhandlinglight.training.by.controller;
 
 import informationhandlinglight.training.by.bean.TextComponent;
-import informationhandlinglight.training.by.bean.TextComposite;
 import informationhandlinglight.training.by.service.ReadCommand;
 import informationhandlinglight.training.by.service.SortingCommand;
 import informationhandlinglight.training.by.service.parser.ParagraphParser;
 import informationhandlinglight.training.by.service.parser.SentenceParser;
 import informationhandlinglight.training.by.service.parser.TextParser;
 
-public class Runner {
-    private static final String DEL = "---";
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
+public class Runner {
     public static void main(String[] args) {
         ReadCommand readCommand = new ReadCommand();
         String text = readCommand.exec();
-        SentenceParser sentenceParser = new SentenceParser(null);
-        ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
-        TextParser textParser = new TextParser(null);
-        TextComponent component = textParser.parse(text);
+        System.out.println("Source text:");
+        System.out.println(text);
 
-        /*
-        TextComposite textComposite = (TextComposite) textParser.parse(text.toString());
-        for (int i = 0; i < textComposite.getComponentsSize(); ++i) {
-            System.out.println(textComposite.getChild(i).restore());
-            System.out.println(DEL);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1 - sort paragraphs by number of sentences");
+        System.out.println("2 - sort words in sentence by length");
+        System.out.println("3 - sort lexemes by number of a given character");
+        System.out.println("Your choice:");
+        int ch = 0;
+        try {
+            ch = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Incorrect choice");
+            System.exit(1);
         }
-        for (int i = 0; i < ((TextComposite) component).getComponentsSize(); ++i) {
-            System.out.println(((TextComposite) component.getChild(i)).getComponentsSize());
+        switch (ch) {
+            case 1: {
+                TextParser textParser = new TextParser(null);
+                TextComponent component = textParser.parse(text);
+                SortingCommand sortingCommand = new SortingCommand();
+                sortingCommand.sortParagraphsByNumberOfSentences(component);
+                System.out.println(component.restore());
+                break;
+            }
+            case 2: {
+                TextParser textParser = new TextParser(null);
+                TextComponent component = textParser.parse(text);
+                SortingCommand sortingCommand = new SortingCommand();
+                sortingCommand.sortWordsInSentenceByLength(component);
+                System.out.println(component.restore());
+                break;
+            }
+            case 3: {
+                SentenceParser sentenceParser = new SentenceParser(null);
+                ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
+                TextParser textParser = new TextParser(paragraphParser);
+                TextComponent component = textParser.parse(text);
+                SortingCommand sortingCommand = new SortingCommand();
+                sortingCommand.sortLexemesByNumberOfGivenCharacter(component, 'a');
+                System.out.println(component.restore().toString());
+                break;
+            }
+            default: {
+                System.out.println("Incorrect choice");
+            }
         }
-
-         */
-
-        /*
-         * 1
-        SortingCommand sortingCommand = new SortingCommand();
-        sortingCommand.sortParagraphsByNumberOfSentences(component);
-         */
-
-        /*
-         * 2
-        SortingCommand sortingCommand = new SortingCommand();
-        sortingCommand.sortWordsInSentenceByLength(component);
-         */
-
-        /*
-         * 3
-         */
-
-        SentenceParser sentenceParser1 = new SentenceParser(null);
-        ParagraphParser paragraphParser1 = new ParagraphParser(sentenceParser1);
-        TextParser textParser1 = new TextParser(paragraphParser1);
-        TextComponent component1 = textParser1.parse(text);
-
-        System.out.println(component1.restore().toString());
-
-        SortingCommand sortingCommand = new SortingCommand();
-        sortingCommand.sortLexemesByNumberOfGivenCharacter(component1, 'a');
-
-        System.out.println(component1.restore().toString());
     }
 }
