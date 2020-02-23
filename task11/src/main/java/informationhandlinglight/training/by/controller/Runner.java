@@ -3,17 +3,28 @@ package informationhandlinglight.training.by.controller;
 import informationhandlinglight.training.by.bean.TextComponent;
 import informationhandlinglight.training.by.service.ReadCommand;
 import informationhandlinglight.training.by.service.SortingCommand;
+import informationhandlinglight.training.by.service.exception.ServiceException;
 import informationhandlinglight.training.by.service.parser.ParagraphParser;
 import informationhandlinglight.training.by.service.parser.SentenceParser;
 import informationhandlinglight.training.by.service.parser.TextParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Runner {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public static void main(String[] args) {
         ReadCommand readCommand = new ReadCommand();
-        String text = readCommand.exec();
+        String text = null;
+        try {
+            text = readCommand.exec();
+        } catch (ServiceException e) {
+            LOGGER.fatal(e.getMessage());
+            System.exit(1);
+        }
         System.out.println("Source text:");
         System.out.println(text);
 
@@ -27,6 +38,7 @@ public class Runner {
             ch = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Incorrect choice");
+            LOGGER.error("Can't handle input ");
             System.exit(1);
         }
         switch (ch) {
@@ -58,6 +70,7 @@ public class Runner {
             }
             default: {
                 System.out.println("Incorrect choice");
+                LOGGER.error("Incorrect input ");
             }
         }
     }
