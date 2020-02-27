@@ -1,6 +1,7 @@
-package by.training.demothreads.matrix.service;
+package by.training.demothreads.matrix.service.v1;
 
 import by.training.demothreads.matrix.bean.Matrix;
+import by.training.demothreads.matrix.bean.exception.MatrixException;
 
 public class MatrixFiller extends Thread {
     private Matrix matrix;
@@ -19,7 +20,11 @@ public class MatrixFiller extends Thread {
     @Override
     public void run() {
         for (int i = a; i < b; ++i) {
-            matrix.setElement(i, i, value);
+            try {
+                matrix.setElement(i, i, value);
+            } catch (MatrixException e) {
+                e.printStackTrace();
+            }
             System.out.println("In " + getName() + " thread");
         }
     }

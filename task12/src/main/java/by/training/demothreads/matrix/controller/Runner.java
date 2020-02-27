@@ -2,7 +2,7 @@ package by.training.demothreads.matrix.controller;
 
 import by.training.demothreads.matrix.bean.Matrix;
 import by.training.demothreads.matrix.bean.exception.MatrixException;
-import by.training.demothreads.matrix.service.MatrixFiller;
+import by.training.demothreads.matrix.service.v1.MatrixFiller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

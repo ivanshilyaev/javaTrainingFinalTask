@@ -1,15 +1,15 @@
-package by.training.demothreads.matrix.bean;
+package by.training.demothreads.matrixelement.bean;
 
 import by.training.demothreads.matrix.bean.exception.MatrixException;
 
-public class Matrix {
-    private int[][] a;
+public class ElementMatrix {
+    private Element[][] a;
 
-    public Matrix(int n, int m) throws MatrixException {
+    public ElementMatrix(int n, int m) throws MatrixException {
         if (n < 1 || m < 1) {
             throw new MatrixException("Invalid size");
         }
-        a = new int[n][m];
+        a = new Element[n][m];
     }
 
     public int getVerticalSize() {
@@ -20,7 +20,7 @@ public class Matrix {
         return a[0].length;
     }
 
-    public int getElement(int i, int j) throws MatrixException {
+    public Element getElement(int i, int j) throws MatrixException {
         if (checkRange(i, j)) {
             return a[i][j];
         }
@@ -29,7 +29,11 @@ public class Matrix {
 
     public void setElement(int i, int j, int value) throws MatrixException {
         if (checkRange(i, j)) {
-            a[i][j] = value;
+            if (a[i][j] != null) {
+                a[i][j].setValue(value);
+            } else {
+                a[i][j] = new Element(value);
+            }
         } else {
             throw new MatrixException("Invalid index");
         }
@@ -39,9 +43,9 @@ public class Matrix {
     public String toString() {
         StringBuilder builder = new StringBuilder("Matrix: " + getVerticalSize() + "x"
                 + getHorizontalSize() + "\n");
-        for (int[] row : a) {
-            for (int value : row) {
-                builder.append(value).append(" ");
+        for (Element[] row : a) {
+            for (Element element : row) {
+                builder.append(element.getValue()).append(" ");
             }
             builder.append("\n");
         }
