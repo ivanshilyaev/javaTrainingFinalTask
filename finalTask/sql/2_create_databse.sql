@@ -1,5 +1,5 @@
 CREATE DATABASE account_db;
-CREATE USER application IDENTIFIED BY "some_password";
+CREATE USER 'application' IDENTIFIED BY "some_password";
 
 GRANT SELECT,INSERT,UPDATE,DELETE
 ON account_db.*
