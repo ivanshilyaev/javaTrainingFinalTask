@@ -32,7 +32,7 @@ public class Runner {
                 ThreadDiagonalFiller filler = new ThreadDiagonalFiller(matrix, i + 1);
                 filler.setPriority(1 + random.nextInt(10));
                 System.out.println(filler.getName());
-                System.out.println(filler.getPriority());
+                System.out.println("Priority: " + filler.getPriority());
                 threads.add(filler);
             }
             for (Thread thread : threads) {
@@ -44,9 +44,6 @@ public class Runner {
             thread.join();
 
             System.out.println(matrix);
-            for (int i = 0; i < matrix.getVerticalSize(); ++i) {
-                System.out.println(matrix.getElement(i, i).getNumberOfChanges());
-            }
         } catch (MatrixException e) {
             e.printStackTrace();
         } catch (ServiceException e) {
