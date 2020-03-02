@@ -13,6 +13,10 @@
 -  [Task 8 (oop)](https://github.com/ivanshilyaev/javaTraining/tree/master/task08)
 -  [Task 9 (aggregation & composition)](https://github.com/ivanshilyaev/javaTraining/tree/master/task09)
 -  [Task 10 (final task 1)](https://github.com/ivanshilyaev/javaTraining/tree/master/task10)
+-  [Task 11 (ihl)](https://github.com/ivanshilyaev/javaTraining/tree/master/task11)
+-  [Task 12 (multithreading)](https://github.com/ivanshilyaev/javaTraining/tree/master/task12)
+-  [Task 13 (xml)](https://github.com/ivanshilyaev/javaTraining/tree/master/task13)
+-  [Final task](https://github.com/ivanshilyaev/javaTraining/tree/master/finalTask)
 ---
 
 by [@ivanshilyaev](https://github.com/ivanshilyaev), 2019-2020
