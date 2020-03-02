@@ -11,6 +11,13 @@ public class User extends Entity {
     private String name;
     private String patronymic;
 
+    public User() {
+    }
+
+    public User(int id) {
+        super(id);
+    }
+
     public User(int id, String login, char[] password, Role role,
                 String surname, String name, String patronymic) {
         super(id);
