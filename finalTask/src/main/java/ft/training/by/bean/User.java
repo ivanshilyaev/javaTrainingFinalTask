@@ -3,8 +3,7 @@ package ft.training.by.bean;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class User {
-    private int id;
+public class User extends Entity {
     private String login;
     private char[] password;
     private Role role;
@@ -12,30 +11,15 @@ public class User {
     private String name;
     private String patronymic;
 
-    public User() {
-    }
-
-    public User(int id) {
-        this.id = id;
-    }
-
     public User(int id, String login, char[] password, Role role,
                 String surname, String name, String patronymic) {
-        this.id = id;
+        super(id);
         this.login = login;
         this.password = password;
         this.role = role;
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLogin() {
@@ -91,28 +75,26 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                login.equals(user.login) &&
+        return Objects.equals(login, user.login) &&
                 Arrays.equals(password, user.password) &&
                 role == user.role &&
-                surname.equals(user.surname) &&
-                name.equals(user.name) &&
-                patronymic.equals(user.patronymic);
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(patronymic, user.patronymic);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, login, role, surname, name, patronymic);
+        int result = Objects.hash(login, role, surname, name, patronymic);
         result = 31 * result + Arrays.hashCode(password);
         return result;
     }
 
-    // переписать
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
+                "id=" + getId() + '\'' +
+                "login='" + login + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", role=" + role +
                 ", surname='" + surname + '\'' +
