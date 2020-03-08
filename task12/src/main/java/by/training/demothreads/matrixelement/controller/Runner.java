@@ -3,9 +3,11 @@ package by.training.demothreads.matrixelement.controller;
 import by.training.demothreads.matrix.bean.exception.MatrixException;
 import by.training.demothreads.matrixelement.bean.ElementMatrix;
 import by.training.demothreads.matrixelement.service.CheckFiller;
-import by.training.demothreads.matrixelement.service.ElementMatrixFiller;
+import by.training.demothreads.matrixelement.service.ReadingCommand;
 import by.training.demothreads.matrixelement.service.ThreadDiagonalFiller;
 import by.training.demothreads.matrixelement.service.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +20,15 @@ import java.util.Random;
  */
 
 public class Runner {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public static void main(String[] args) {
         try {
             int n = 12;
             int threadNumber = 4;
             ElementMatrix matrix = new ElementMatrix(n, n);
-            ElementMatrixFiller matrixFiller = new ElementMatrixFiller();
-            matrixFiller.emptyMatrix(matrix);
+            ReadingCommand command = new ReadingCommand();
+            command.exec(matrix);
 
             List<Thread> threads = new ArrayList<>();
             Random random = new Random();
@@ -44,12 +48,8 @@ public class Runner {
             thread.join();
 
             System.out.println(matrix);
-        } catch (MatrixException e) {
-            e.printStackTrace();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (MatrixException | ServiceException | InterruptedException e) {
+            LOGGER.error(e.getMessage());
         }
     }
 }

@@ -20,9 +20,7 @@ public class ThreadDiagonalFiller extends Thread {
             Random random = new Random();
             for (int j = 0; j < matrix.getVerticalSize(); ++j) {
                 int i = random.nextInt(matrix.getVerticalSize() - 1);
-                if (matrix.getElement(i, i).getNumberOfChanges() == 0) {
                     matrix.setElement(i, i, value);
-                }
             }
         } catch (MatrixException e) {
             e.printStackTrace();

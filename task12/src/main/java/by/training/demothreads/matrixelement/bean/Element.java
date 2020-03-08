@@ -15,8 +15,10 @@ public class Element {
 
     public void setValue(int value) {
         locker.lock();
-        this.value = value;
-        ++numberOfChanges;
+        if (numberOfChanges == 0) {
+            this.value = value;
+            ++numberOfChanges;
+        }
         locker.unlock();
     }
 
