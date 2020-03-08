@@ -14,14 +14,12 @@ public class SymbolLeaf implements TextComponent {
 
     @Override
     public void add(TextComponent component) {
-        LOGGER.error("Adding component to a symbol");
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Adding component to a symbol");
     }
 
     @Override
     public void remove(TextComponent component) {
-        LOGGER.error("Removing component from a symbol");
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Removing component from a symbol");
     }
 
     @Override
@@ -31,7 +29,6 @@ public class SymbolLeaf implements TextComponent {
 
     @Override
     public TextComponent getChild(int index) {
-        LOGGER.error("Getting child from a symbol");
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Getting child from a symbol");
     }
 }

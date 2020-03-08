@@ -4,9 +4,7 @@ import informationhandlinglight.training.by.bean.TextComponent;
 import informationhandlinglight.training.by.service.ReadCommand;
 import informationhandlinglight.training.by.service.SortingCommand;
 import informationhandlinglight.training.by.service.exception.ServiceException;
-import informationhandlinglight.training.by.service.parser.ParagraphParser;
-import informationhandlinglight.training.by.service.parser.SentenceParser;
-import informationhandlinglight.training.by.service.parser.TextParser;
+import informationhandlinglight.training.by.service.parser.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,9 +66,18 @@ public class Runner {
                 System.out.println(component.restore().toString());
                 break;
             }
+            case 4: {
+                //LexemeParser lexemeParser = new LexemeParser();
+                SentenceParser sentenceParser = new SentenceParser(null);
+                //ParagraphParser paragraphParser = new ParagraphParser(sentenceParser);
+                TextParser textParser = new TextParser(sentenceParser);
+                TextComponent component = textParser.parse(text);
+                System.out.println(component.restore().toString());
+                break;
+            }
             default: {
                 System.out.println("Incorrect choice");
-                LOGGER.error("Incorrect input ");
+                LOGGER.error("Incorrect input");
             }
         }
     }
