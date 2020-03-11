@@ -10,7 +10,6 @@ public class Runner {
     public static void main(String[] args) {
         AbstractDAO userdao = new UserDAO();
         List<User> list = userdao.findAll();
-
         if (!list.isEmpty()) {
             for (User user : list) {
                 System.out.println(user);

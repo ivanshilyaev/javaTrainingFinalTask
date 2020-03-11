@@ -3,6 +3,8 @@ package ft.training.by.dao;
 import ft.training.by.bean.Role;
 import ft.training.by.bean.User;
 import ft.training.by.service.ConnectorDB;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends AbstractDAO<Integer, User> {
-    public static final String SQL_SELECT_ALL_USERS = "SELECT * FROM user";
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final String SQL_SELECT_ALL_USERS =
+            "SELECT id, login, password, role, surname, name, patronymic FROM user;";
 
     @Override
     public List<User> findAll() {
@@ -38,14 +43,10 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                                 break;
                             }
                             case 1: {
-                                user.setRole(Role.LEADER);
-                                break;
-                            }
-                            case 2: {
                                 user.setRole(Role.ADMINISTRATOR);
                                 break;
                             }
-                            case 3: {
+                            case 2: {
                                 user.setRole(Role.TUTOR);
                                 break;
                             }
@@ -61,14 +62,18 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                     if (resultSet != null) {
                         resultSet.close();
                     } else {
-                        System.err.println("Ошибка во время чтения из БД");
+                        LOGGER.error("Error while reading from DB");
                     }
                 }
             } finally {
-                close(statement);
+                if (statement != null) {
+                    close(statement);
+                } else {
+                    LOGGER.error("Error while reading from DB");
+                }
             }
         } catch (SQLException e) {
-            System.err.println("DB connection error: " + e.getMessage());
+            LOGGER.error("DB connection error: " + e.getMessage());
         } finally {
             close(connection);
         }
