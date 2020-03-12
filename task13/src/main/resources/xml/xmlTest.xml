@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<student>
-
-</student>
+<?xml version ="1.0" encoding = "UTF 8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://www.training.by/entities"
+          xsi:schemaLocation="http://www.training.by/entities xsdTest.xsd">
+    <user role="0">
+        <id>1</id>
+        <login>1823127</login>
+        <password>11111</password>
+        <surname>Шиляев</surname>
+        <name>Иван</name>
+        <patronymic>Владимирович</patronymic>
+    </user>
+</entities>

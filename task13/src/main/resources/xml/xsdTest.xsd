@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.training.by/entities"
+        xmlns:tns="http://www.training.by/entities"
+        elementFormDefault="qualified">
+
+    <element name="entities">
+        <complexType>
+            <sequence>
+                <element ref="tns:entity"
+                         minOccurs="1"
+                         maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="entity" type="tns:Entity" abstract="true"/>
+    <element name="user" type="tns:User" substitutionGroup="tns:entity"/>
+
+    <complexType name="Entity">
+        <sequence>
+            <element name="id" type="int"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="User">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="login" type="string"/>
+                    <element name="password" type="string"/>
+                    <element name="surname" type="string"/>
+                    <element name="name" type="string"/>
+                    <element name="patronymic" type="string"/>
+                </sequence>
+                <attribute name="role" type="int" use="required">
+                    <simpleType>
+                        <restriction base="int">
+                            <enumeration value="0"/>
+                            <enumeration value="1"/>
+                            <enumeration value="2"/>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+            </extension>
+        </complexContent>
+    </complexType>
+</schema>
