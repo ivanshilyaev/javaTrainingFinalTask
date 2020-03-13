@@ -1,10 +1,12 @@
 CREATE DATABASE account_db;
-CREATE USER 'application' IDENTIFIED BY "some_password";
+create user application@localhost identified by 'application_password';
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON account_db.*
+TO application@localhost;
+
+create user account_user@localhost identified by 'user_password';
 
 GRANT SELECT,INSERT,UPDATE,DELETE
 ON account_db.*
 TO account_user@localhost;
-
-GRANT SELECT,INSERT,UPDATE,DELETE
-ON account_db.*
-TO account_user@'%'
