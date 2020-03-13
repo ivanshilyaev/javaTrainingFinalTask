@@ -2,12 +2,28 @@
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns="http://www.training.by/entities"
           xsi:schemaLocation="http://www.training.by/entities xsdTest.xsd">
-    <user role="0">
+    <student>
         <id>1</id>
-        <login>1823127</login>
-        <password>11111</password>
-        <surname>Шиляев</surname>
-        <name>Иван</name>
-        <patronymic>Владимирович</patronymic>
-    </user>
+        <user role="0">
+            <id>1</id>
+            <login>1283127</login>
+            <password>11111</password>
+            <surname>Shilyaev</surname>
+            <name>Ivan</name>
+            <patronymic>Vladimirovich</patronymic>
+        </user>
+        <subgroup>
+            <id>1</id>
+            <subgroup_number>b</subgroup_number>
+            <group>
+                <id>1</id>
+                <group_number>2</group_number>
+                <course_number>9</course_number>
+                <faculty>
+                    <id>1</id>
+                    <name>FAMCS</name>
+                </faculty>
+            </group>
+        </subgroup>
+    </student>
 </entities>

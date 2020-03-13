@@ -15,6 +15,10 @@
     </element>
     <element name="entity" type="tns:Entity" abstract="true"/>
     <element name="user" type="tns:User" substitutionGroup="tns:entity"/>
+    <element name="faculty" type="tns:Faculty" substitutionGroup="tns:entity"/>
+    <element name="group" type="tns:Group" substitutionGroup="tns:entity"/>
+    <element name="subgroup" type="tns:Subgroup" substitutionGroup="tns:entity"/>
+    <element name="student" type="tns:Student" substitutionGroup="tns:entity"/>
 
     <complexType name="Entity">
         <sequence>
@@ -41,6 +45,50 @@
                         </restriction>
                     </simpleType>
                 </attribute>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Faculty">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="name" type="string"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Group">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="group_number" type="int"/>
+                    <element name="course_number" type="int"/>
+                    <element name="faculty" type="tns:Faculty"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Subgroup">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="subgroup_number" type="string"/>
+                    <element name="group" type="tns:Group"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Student">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="user" type="tns:User"/>
+                    <element name="subgroup" type="tns:Subgroup"/>
+                </sequence>
             </extension>
         </complexContent>
     </complexType>
