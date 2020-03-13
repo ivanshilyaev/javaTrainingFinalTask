@@ -12,17 +12,15 @@ CREATE TABLE user (
 	role TINYINT NOT NULL CHECK (role IN (0, 1, 2)),
 	surname VARCHAR(255) NOT NULL,
 	name VARCHAR(255) NOT NULL,
-	patronymic VARCHAR(255) NOT NULL, -- отчество
+	patronymic VARCHAR(255) NOT NULL,
 	CONSTRAINT pk_user PRIMARY KEY (id)
 );
 
 /*
  * таблицы-справочники:
- * - время начала пар, продолжительность пар и перерывов
- * (для вычисления времени начала и конца пары)
  * - диспилины
- * - преподаватели
  * - факультет
+ * - аудитории
  */
 
  CREATE TABLE subject (
@@ -33,7 +31,7 @@ CREATE TABLE user (
 
 CREATE TABLE classroom (
     id INTEGER NOT NULL AUTO_INCREMENT,
-    number INTEGER NOT NULL,
+    number CHAR(32) NOT NULL,
     capacity INTEGER NOT NULL,
     /*
 	 * 0 - семианрская (Type.SEMINAR)
@@ -51,24 +49,24 @@ CREATE TABLE classroom (
 CREATE TABLE faculty (
     id INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    dean VARCHAR(255) NOT NULL,
     CONSTRAINT pk_faculty PRIMARY KEY (id)
 );
 
 CREATE TABLE ugroup (
-    id INTEGER NOT NULL,
-    course INTEGER NOT NULL,
+    id INTEGER NOT NULL AUTO_INCREMENT ,
+    group_number INTEGER NOT NULL, 
+    course_number INTEGER NOT NULL,
     faculty_id INTEGER NOT NULL,
-    CONSTRAINT pk_group PRIMARY KEY (id, course),
+    CONSTRAINT pk_group PRIMARY KEY (id),
     CONSTRAINT fk_group_faculty FOREIGN KEY (faculty_id) REFERENCES faculty (id)
 );
 
 CREATE TABLE subgroup (
     id INTEGER NOT NULL AUTO_INCREMENT,
+    subgroup_number CHAR NOT NULL,
     group_id INTEGER NOT NULL,
-    group_course INTEGER NOT NULL,
     CONSTRAINT pk_subgroup PRIMARY KEY (id),
-    CONSTRAINT fk_subgroup_group FOREIGN KEY (group_id, group_course) REFERENCES ugroup (id, course)
+    CONSTRAINT fk_subgroup_group FOREIGN KEY (group_id) REFERENCES ugroup (id)
 );
 
 CREATE TABLE timetable (
@@ -87,9 +85,8 @@ CREATE TABLE timetable (
 	/*
 	 * 0 - лекция (Type.LECTURE)
 	 * 1 - практическое занятие (Type.PRACTICE)
-	 * 2 - семинар (Type.SEMINAR)
 	 */
-	type TINYINT NOT NULL CHECK (type IN (0, 1, 2)),
+	type TINYINT NOT NULL CHECK (type IN (0, 1)),
 	classroom_id INTEGER NOT NULL,
 	tutor_id INTEGER NOT NULL,
 	CONSTRAINT pk_timetable PRIMARY KEY (id),
@@ -98,8 +95,10 @@ CREATE TABLE timetable (
 );
 
 CREATE TABLE timetable_group (
+	id INTEGER NOT NULL AUTO_INCREMENT,
     timetable_id INTEGER NOT NULL,
     subgroup_id INTEGER NOT NULL,
+    CONSTRAINT pk_timetable_group PRIMARY KEY (id),
     CONSTRAINT fk_timetable_group_timetable FOREIGN KEY (timetable_id)
         REFERENCES timetable (id),
     CONSTRAINT fk_timetable_group_subgroup FOREIGN KEY (subgroup_id)
@@ -107,7 +106,7 @@ CREATE TABLE timetable_group (
 );
 
 CREATE TABLE student (
-	id INTEGER NOT NULL, -- номер студенческого билета
+	id INTEGER NOT NULL AUTO_INCREMENT,
 	subgroup_id INTEGER NOT NULL,
 	user_id INTEGER NOT NULL,
 	CONSTRAINT pk_student PRIMARY KEY (id),
@@ -136,5 +135,5 @@ CREATE TABLE leader (
     id INTEGER NOT NULL AUTO_INCREMENT,
     student_id INTEGER NOT NULL,
     CONSTRAINT pk_leader PRIMARY KEY (id),
-    CONSTRAINT fk_leader_student FOREIGN KEY (student_id) REFERENCES student (id)
+	CONSTRAINT fk_leader_student FOREIGN KEY (student_id) REFERENCES student (id)
 );
