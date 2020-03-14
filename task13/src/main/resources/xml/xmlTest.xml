@@ -1,7 +1,7 @@
-<?xml version ="1.0" encoding = "UTF 8"?>
-<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns="http://www.training.by/entities"
-          xsi:schemaLocation="http://www.training.by/entities xsdTest.xsd">
+<?xml version ="1.0" encoding = "UTF-8"?>
+<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://www.training.by/students"
+          xsi:schemaLocation="http://www.training.by/students xsdTest.xsd">
     <student>
         <id>1</id>
         <user role="0">
@@ -17,8 +17,8 @@
             <subgroup_number>b</subgroup_number>
             <group>
                 <id>1</id>
-                <group_number>2</group_number>
-                <course_number>9</course_number>
+                <group_number>9</group_number>
+                <course_number>2</course_number>
                 <faculty>
                     <id>1</id>
                     <name>FAMCS</name>
@@ -26,4 +26,54 @@
             </group>
         </subgroup>
     </student>
-</entities>
+
+    <student>
+        <id>1</id>
+        <user role="0">
+            <id>2</id>
+            <login>1234567</login>
+            <password>11111</password>
+            <surname>Berkovich</surname>
+            <name>Pavel</name>
+            <patronymic>Alexandrovich</patronymic>
+        </user>
+        <subgroup>
+            <id>2</id>
+            <subgroup_number>a</subgroup_number>
+            <group>
+                <id>1</id>
+                <group_number>9</group_number>
+                <course_number>2</course_number>
+                <faculty>
+                    <id>1</id>
+                    <name>FAMCS</name>
+                </faculty>
+            </group>
+        </subgroup>
+    </student>
+
+    <student>
+        <id>3</id>
+        <user role="0">
+            <id>3</id>
+            <login>7654321</login>
+            <password>11111</password>
+            <surname>Zalomov</surname>
+            <name>Danil</name>
+            <patronymic>Pavlovich</patronymic>
+        </user>
+        <subgroup>
+            <id>2</id>
+            <subgroup_number>a</subgroup_number>
+            <group>
+                <id>1</id>
+                <group_number>9</group_number>
+                <course_number>2</course_number>
+                <faculty>
+                    <id>1</id>
+                    <name>FAMCS</name>
+                </faculty>
+            </group>
+        </subgroup>
+    </student>
+</students>

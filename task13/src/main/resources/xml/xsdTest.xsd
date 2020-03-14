@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.training.by/entities"
-        xmlns:tns="http://www.training.by/entities"
+        targetNamespace="http://www.training.by/students"
+        xmlns:tns="http://www.training.by/students"
         elementFormDefault="qualified">
 
-    <element name="entities">
+    <element name="students">
         <complexType>
             <sequence>
                 <element ref="tns:entity"
-                         minOccurs="1"
                          maxOccurs="unbounded"/>
             </sequence>
         </complexType>
     </element>
+
     <element name="entity" type="tns:Entity" abstract="true"/>
     <element name="user" type="tns:User" substitutionGroup="tns:entity"/>
     <element name="faculty" type="tns:Faculty" substitutionGroup="tns:entity"/>
@@ -36,7 +36,7 @@
                     <element name="name" type="string"/>
                     <element name="patronymic" type="string"/>
                 </sequence>
-                <attribute name="role" type="int" use="required">
+                <attribute name="role" use="required">
                     <simpleType>
                         <restriction base="int">
                             <enumeration value="0"/>

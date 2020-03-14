@@ -1,4 +1,4 @@
-package xmltask.bsu.by;
+package xmltask.bsu.by.internationalization;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
