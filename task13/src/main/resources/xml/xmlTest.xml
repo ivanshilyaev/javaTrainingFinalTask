@@ -14,11 +14,11 @@
         </user>
         <subgroup>
             <id>1</id>
-            <subgroup_number>b</subgroup_number>
+            <subgroupNumber>b</subgroupNumber>
             <group>
                 <id>1</id>
-                <group_number>9</group_number>
-                <course_number>2</course_number>
+                <groupNumber>9</groupNumber>
+                <courseNumber>2</courseNumber>
                 <faculty>
                     <id>1</id>
                     <name>FAMCS</name>
@@ -39,11 +39,11 @@
         </user>
         <subgroup>
             <id>2</id>
-            <subgroup_number>a</subgroup_number>
+            <subgroupNumber>a</subgroupNumber>
             <group>
                 <id>1</id>
-                <group_number>9</group_number>
-                <course_number>2</course_number>
+                <groupNumber>9</groupNumber>
+                <courseNumber>2</courseNumber>
                 <faculty>
                     <id>1</id>
                     <name>FAMCS</name>
@@ -64,11 +64,11 @@
         </user>
         <subgroup>
             <id>2</id>
-            <subgroup_number>a</subgroup_number>
+            <subgroupNumber>a</subgroupNumber>
             <group>
                 <id>1</id>
-                <group_number>9</group_number>
-                <course_number>2</course_number>
+                <groupNumber>9</groupNumber>
+                <courseNumber>2</courseNumber>
                 <faculty>
                     <id>1</id>
                     <name>FAMCS</name>

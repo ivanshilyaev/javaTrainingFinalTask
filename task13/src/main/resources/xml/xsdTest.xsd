@@ -7,7 +7,7 @@
     <element name="students">
         <complexType>
             <sequence>
-                <element ref="tns:entity"
+                <element ref="tns:student"
                          maxOccurs="unbounded"/>
             </sequence>
         </complexType>
@@ -63,8 +63,8 @@
         <complexContent>
             <extension base="tns:Entity">
                 <sequence>
-                    <element name="group_number" type="int"/>
-                    <element name="course_number" type="int"/>
+                    <element name="groupNumber" type="int"/>
+                    <element name="courseNumber" type="int"/>
                     <element name="faculty" type="tns:Faculty"/>
                 </sequence>
             </extension>
@@ -75,7 +75,7 @@
         <complexContent>
             <extension base="tns:Entity">
                 <sequence>
-                    <element name="subgroup_number" type="string"/>
+                    <element name="subgroupNumber" type="string"/>
                     <element name="group" type="tns:Group"/>
                 </sequence>
             </extension>

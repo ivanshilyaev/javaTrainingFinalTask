@@ -46,7 +46,7 @@ public class MarshalMain {
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(students,
-                    new FileOutputStream("/Users/ivansilaev/Desktop/xmlTest.xml"));
+                    new FileOutputStream("/Users/ivansilaev/Desktop/javaTraining/task13/src/main/resources/xml/bookTest.xml"));
             marshaller.marshal(students, System.out);
         } catch (FileNotFoundException e) {
             LOGGER.error("XML-file can't be created");
