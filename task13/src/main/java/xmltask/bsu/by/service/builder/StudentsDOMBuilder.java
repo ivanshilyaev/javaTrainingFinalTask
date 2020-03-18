@@ -1,4 +1,4 @@
-package xmltask.bsu.by.service;
+package xmltask.bsu.by.service.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class StudentsDOMBuilder {
+public class StudentsDOMBuilder extends AbstractStudentsBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private Set<Student> students;

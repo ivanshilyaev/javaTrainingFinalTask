@@ -1,4 +1,4 @@
-package xmltask.bsu.by.controller;
+package xmltask.bsu.by.example;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
