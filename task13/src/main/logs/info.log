@@ -1,3 +1,10 @@
 [ERROR] 2020-03-18 12:25:25.612 [main] UnMarshalMain - Invalid JAXB-content
 [ERROR] 2020-03-18 12:25:29.337 [main] UnMarshalMain - Invalid JAXB-content
 [ERROR] 2020-03-18 12:29:50.605 [main] UnMarshalMain - Invalid JAXB-content
+[ERROR] 2020-03-18 13:41:19.645 [main] StudentsSAXBuilder - /Users/ivansilaev/Desktop/javaTraining/task13/main/resources/xml/bookTest.xml (No such file or directory)
+[ERROR] 2020-03-18 16:11:33.306 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""
+[ERROR] 2020-03-18 16:11:33.310 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""
+[ERROR] 2020-03-18 16:11:33.311 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""
+[ERROR] 2020-03-18 16:13:53.814 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""
+[ERROR] 2020-03-18 16:13:53.834 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""
+[ERROR] 2020-03-18 16:13:53.834 [main] StudentsDOMBuilder - NumberFormatException while building student: For input string: ""

@@ -71,7 +71,7 @@ public class Group extends Entity {
     public String toString() {
         return "Group{" +
                 "groupNumber=" + groupNumber +
-                "courseNumber=" + courseNumber +
+                ", courseNumber=" + courseNumber +
                 ", faculty=" + faculty.toString() +
                 '}';
     }
