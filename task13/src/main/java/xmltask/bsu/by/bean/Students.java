@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement
+@XmlRootElement(name = "students")
 public class Students {
     @XmlElement(name = "student")
     private List<Student> list = new ArrayList<>();
