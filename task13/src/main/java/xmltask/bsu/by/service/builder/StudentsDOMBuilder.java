@@ -13,26 +13,26 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentsDOMBuilder extends AbstractStudentsBuilder {
-    private static final Logger LOGGER = LogManager.getLogger();
+    //private static final Logger LOGGER = LogManager.getLogger();
 
-    private Set<Student> students;
+    private List<Student> students;
     private DocumentBuilder documentBuilder;
 
     public StudentsDOMBuilder() {
-        students = new HashSet<>();
+        students = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             documentBuilder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            LOGGER.error("Configuration parser error: " + e.getMessage());
+            //LOGGER.error("Configuration parser error: " + e.getMessage());
         }
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
@@ -48,9 +48,9 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
                 students.add(student);
             }
         } catch (SAXException e) {
-            LOGGER.error("Parsing failure: " + e.getMessage());
+            //LOGGER.error("Parsing failure: " + e.getMessage());
         } catch (IOException e) {
-            LOGGER.error("File or I/O error: " + e.getMessage());
+            //LOGGER.error("File or I/O error: " + e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
                     break;
             }
         } catch (NumberFormatException e) {
-            LOGGER.error("NumberFormatException while building student: " + e.getMessage());
+            //LOGGER.error("NumberFormatException while building student: " + e.getMessage());
         }
         student.getUser().setId(Integer.parseInt(getElementTextContent(userElement, "id")));
         student.getUser().setLogin(getElementTextContent(userElement, "login"));

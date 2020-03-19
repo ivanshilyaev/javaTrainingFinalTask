@@ -12,21 +12,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentsStAXBuilder extends AbstractStudentsBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private Set<Student> students;
+    private List<Student> students;
     private XMLInputFactory inputFactory;
 
     public StudentsStAXBuilder() {
-        students = new HashSet<>();
+        students = new ArrayList<>();
         inputFactory = XMLInputFactory.newInstance();
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 

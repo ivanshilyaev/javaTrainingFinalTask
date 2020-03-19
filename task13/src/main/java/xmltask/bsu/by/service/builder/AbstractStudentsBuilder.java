@@ -2,18 +2,19 @@ package xmltask.bsu.by.service.builder;
 
 import xmltask.bsu.by.bean.Student;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public abstract class AbstractStudentsBuilder {
     // not final, because is usually used in subclasses
-    protected Set<Student> students;
+    protected List<Student> students;
 
     public AbstractStudentsBuilder() {
-        students = new HashSet<>();
+        students = new ArrayList<>();
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 

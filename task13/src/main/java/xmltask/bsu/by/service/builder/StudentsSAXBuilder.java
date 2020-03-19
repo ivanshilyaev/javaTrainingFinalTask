@@ -11,12 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 
 public class StudentsSAXBuilder extends AbstractStudentsBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private Set<Student> students;
+    private List<Student> students;
     private StudentHandler studentHandler;
     private XMLReader reader;
 
@@ -34,7 +34,7 @@ public class StudentsSAXBuilder extends AbstractStudentsBuilder {
         }
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 

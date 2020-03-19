@@ -5,23 +5,23 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import xmltask.bsu.by.bean.*;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class StudentHandler extends DefaultHandler {
-    private Set<Student> students;
+    private List<Student> students;
     private Student currentStudent;
     private StudentEnum currentClassEnum;
     private StudentEnum currentEnum;
     private EnumSet<StudentEnum> withText;
 
     public StudentHandler() {
-        students = new HashSet<>();
+        students = new ArrayList<>();
         withText = EnumSet.range(StudentEnum.ID, StudentEnum.COURSENUMBER);
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
