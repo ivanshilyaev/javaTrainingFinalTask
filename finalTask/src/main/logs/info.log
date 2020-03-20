@@ -1,3 +1,1 @@
-[ERROR] 2020-03-13 12:47:47.800 [main] UserDAO - DB connection error: Access denied for user 'account_user'@'localhost' (using password: YES)
-[ERROR] 2020-03-13 12:48:27.926 [main] UserDAO - DB connection error: Access denied for user 'account_user'@'localhost' (using password: YES)
-[ERROR] 2020-03-13 12:49:44.252 [main] UserDAO - DB connection error: Access denied for user 'account_user'@'localhost' to database 'account_db'
+[ERROR] 2020-03-20 20:35:55.115 [main] GroupDAO - DB connection error: Column Index out of range, 4 > 3. 

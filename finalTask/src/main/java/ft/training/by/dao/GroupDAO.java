@@ -1,7 +1,7 @@
 package ft.training.by.dao;
 
-import ft.training.by.bean.Role;
-import ft.training.by.bean.User;
+import ft.training.by.bean.Faculty;
+import ft.training.by.bean.Group;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
@@ -14,15 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO extends AbstractDAO<Integer, User> {
+public class GroupDAO extends AbstractDAO<Integer, Group> {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_USERS =
-            "SELECT id, login, password, role, surname, name, patronymic FROM user;";
+    public static final String SQL_SELECT_ALL_GROUPS =
+            "SELECT id, group_number, course_number, faculty_id FROM ugroup;";
 
     @Override
-    public List<User> findAll() throws DAOException {
-        List<User> users = new ArrayList<>();
+    public List<Group> findAll() throws DAOException {
+        List<Group> groups = new ArrayList<>();
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -31,17 +31,15 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
                     while (resultSet.next()) {
-                        User user = new User();
-                        fillUser(resultSet, user);
-                        users.add(user);
+                        Group group = new Group();
+                        fillGroup(group, resultSet);
+                        groups.add(group);
                     }
                 } finally {
                     if (resultSet != null) {
                         resultSet.close();
-                    } else {
-                        LOGGER.error("Error while reading from DB");
                     }
                 }
             } finally {
@@ -54,12 +52,12 @@ public class UserDAO extends AbstractDAO<Integer, User> {
         } finally {
             close(connection);
         }
-        return users;
+        return groups;
     }
 
     @Override
-    public User findEntityById(Integer id) throws DAOException {
-        User user = null;
+    public Group findEntityById(Integer id) throws DAOException {
+        Group group = null;
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -68,18 +66,16 @@ public class UserDAO extends AbstractDAO<Integer, User> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
                     while (resultSet.next()) {
                         if (resultSet.getInt(1) == id) {
-                            user = new User();
-                            fillUser(resultSet, user);
+                            group = new Group();
+                            fillGroup(group, resultSet);
                         }
                     }
                 } finally {
                     if (resultSet != null) {
                         resultSet.close();
-                    } else {
-                        LOGGER.error("Error while reading from DB");
                     }
                 }
             } finally {
@@ -92,7 +88,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
         } finally {
             close(connection);
         }
-        return user;
+        return group;
     }
 
     @Override
@@ -101,43 +97,26 @@ public class UserDAO extends AbstractDAO<Integer, User> {
     }
 
     @Override
-    public boolean delete(User entity) {
+    public boolean delete(Group entity) {
         return false;
     }
 
     @Override
-    public boolean create(User entity) {
+    public boolean create(Group entity) {
         return false;
     }
 
     @Override
-    public User update(User entity) {
+    public Group update(Group entity) {
         return null;
     }
 
-    private void fillUser(ResultSet resultSet, User user) throws SQLException {
-        user.setId(resultSet.getInt(1));
-        user.setLogin(resultSet.getString(2));
-        user.setPassword(resultSet.getString(3).toCharArray());
-        int ch = resultSet.getInt(4);
-        switch (ch) {
-            case 0: {
-                user.setRole(Role.STUDENT);
-                break;
-            }
-            case 1: {
-                user.setRole(Role.ADMINISTRATOR);
-                break;
-            }
-            case 2: {
-                user.setRole(Role.TUTOR);
-                break;
-            }
-            default:
-                break;
-        }
-        user.setSurname(resultSet.getString(5));
-        user.setName(resultSet.getString(6));
-        user.setPatronymic(resultSet.getString(7));
+    private void fillGroup(Group group, ResultSet resultSet) throws SQLException, DAOException {
+        group.setId(resultSet.getInt(1));
+        group.setGroupNumber(resultSet.getInt(2));
+        group.setCourseNumber(resultSet.getInt(3));
+        int facultyID = resultSet.getInt(4);
+        Faculty faculty = new FacultyDAO().findEntityById(facultyID);
+        group.setFaculty(faculty);
     }
 }

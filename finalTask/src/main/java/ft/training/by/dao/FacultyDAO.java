@@ -56,8 +56,40 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
     }
 
     @Override
-    public Faculty findEntityById(Integer id) {
-        return null;
+    public Faculty findEntityById(Integer id) throws DAOException {
+        Faculty faculty = null;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = null;
+                try {
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_FACULTIES);
+                    while (resultSet.next()) {
+                        if (resultSet.getInt(1) == id) {
+                            faculty = new Faculty();
+                            faculty.setId(resultSet.getInt(1));
+                            faculty.setName(resultSet.getString(2));
+                        }
+                    }
+                } finally {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    }
+                }
+            } finally {
+                if (statement != null) {
+                    close(statement);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error: " + e.getMessage());
+        } finally {
+            close(connection);
+        }
+        return faculty;
     }
 
     @Override
