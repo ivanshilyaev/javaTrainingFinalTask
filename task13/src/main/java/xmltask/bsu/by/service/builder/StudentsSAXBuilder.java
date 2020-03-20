@@ -38,7 +38,7 @@ public class StudentsSAXBuilder extends AbstractStudentsBuilder {
         return students;
     }
 
-    public void buildSetStudents(String fileName) {
+    public void buildListStudents(String fileName) {
         try {
             reader.parse(fileName);
         } catch (IOException e) {

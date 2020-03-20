@@ -30,7 +30,7 @@ public class StudentsStAXBuilder extends AbstractStudentsBuilder {
         return students;
     }
 
-    public void buildSetStudents(String fileName) {
+    public void buildListStudents(String fileName) {
         FileInputStream inputStream = null;
         XMLStreamReader reader;
         String name;

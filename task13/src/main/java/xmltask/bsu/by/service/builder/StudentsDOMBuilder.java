@@ -14,12 +14,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StudentsDOMBuilder extends AbstractStudentsBuilder {
     //private static final Logger LOGGER = LogManager.getLogger();
 
-    private List<Student> students;
     private DocumentBuilder documentBuilder;
 
     public StudentsDOMBuilder() {
@@ -32,11 +30,7 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
         }
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void buildSetStudents(String fileName) {
+    public void buildListStudents(String fileName) {
         Document document;
         try {
             document = documentBuilder.parse(fileName);

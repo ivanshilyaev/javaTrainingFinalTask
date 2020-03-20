@@ -1,20 +1,16 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Table</title>
 </head>
 <body>
 <table>
-    <c:forEach var="student" items="${requestScope.list}" varStatus="status">
+    <c:forEach var="student" items="${requestScope.list}">
         <tr>
-            <td>${ student }</td>
-            <td>${ student.id }</td>
+            <td><c:out value="${ student }"/></td>
         </tr>
     </c:forEach>
-    <tr>
-        <p>hello world</p>
-    </tr>
 </table>
 </body>
 </html>

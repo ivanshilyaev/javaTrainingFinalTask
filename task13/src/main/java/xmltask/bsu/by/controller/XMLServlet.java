@@ -30,8 +30,9 @@ public class XMLServlet extends HttpServlet {
         String button = req.getParameter("button");
         BuildCommand command = new BuildCommand();
         List<Student> list = command.exec(button);
-        req.setAttribute("list", list);
+        System.out.println(button);
         System.out.println(list);
+        req.setAttribute("list", list);
         req.getRequestDispatcher("result.jsp").forward(req, resp);
     }
 }

@@ -9,7 +9,9 @@ public class BuildCommand {
     public List<Student> exec(String parser) {
         StudentBuilderFactory factory = new StudentBuilderFactory();
         AbstractStudentsBuilder builder = factory.createStudentBuilder(parser);
-        builder.buildSetStudents("src/main/resources/xml/bookTest.xml");
+        builder.buildListStudents(
+                "/Users/ivansilaev/Desktop/javaTraining/task13/src/main/resources/xml/bookTest.xml"
+        );
         return builder.getStudents();
     }
 }
