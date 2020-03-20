@@ -13,21 +13,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StudentsStAXBuilder extends AbstractStudentsBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private List<Student> students;
     private XMLInputFactory inputFactory;
 
     public StudentsStAXBuilder() {
         students = new ArrayList<>();
         inputFactory = XMLInputFactory.newInstance();
-    }
-
-    public List<Student> getStudents() {
-        return students;
     }
 
     public void buildListStudents(String fileName) {

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class StudentsDOMBuilder extends AbstractStudentsBuilder {
-    //private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private DocumentBuilder documentBuilder;
 
@@ -26,7 +26,7 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
         try {
             documentBuilder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            //LOGGER.error("Configuration parser error: " + e.getMessage());
+            LOGGER.error("Configuration parser error: " + e.getMessage());
         }
     }
 
@@ -42,9 +42,9 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
                 students.add(student);
             }
         } catch (SAXException e) {
-            //LOGGER.error("Parsing failure: " + e.getMessage());
+            LOGGER.error("Parsing failure: " + e.getMessage());
         } catch (IOException e) {
-            //LOGGER.error("File or I/O error: " + e.getMessage());
+            LOGGER.error("File or I/O error: " + e.getMessage());
         }
     }
 
