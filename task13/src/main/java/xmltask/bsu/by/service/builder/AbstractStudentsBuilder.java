@@ -2,6 +2,7 @@ package xmltask.bsu.by.service.builder;
 
 import xmltask.bsu.by.bean.Student;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,5 +18,5 @@ public abstract class AbstractStudentsBuilder {
         return students;
     }
 
-    abstract public void buildListStudents(String fileName);
+    abstract public void buildListStudents(InputStream inputStream);
 }

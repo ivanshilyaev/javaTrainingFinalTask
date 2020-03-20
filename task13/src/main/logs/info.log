@@ -1,2 +1,4 @@
 [INFO ] 2020-03-20 11:22:52.634 [main] Runner - Success
 [INFO ] 2020-03-20 11:26:30.841 [main] Runner - Success
+[ERROR] 2020-03-20 19:04:19.236 [http-nio-8078-exec-4] StudentsSAXBuilder - Premature end of file.
+[ERROR] 2020-03-20 19:06:18.218 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.

@@ -11,7 +11,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
-import java.util.zip.InflaterInputStream;
 
 public class StudentsSAXBuilder extends AbstractStudentsBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -35,18 +34,6 @@ public class StudentsSAXBuilder extends AbstractStudentsBuilder {
 
     public void buildListStudents(InputStream inputStream) {
         try {
-            InputSource inputSource = new InputSource(new BufferedInputStream(inputStream));
-            reader.parse(inputSource);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        } catch (SAXException e) {
-            LOGGER.error(e.getMessage());
-        }
-        students = studentHandler.getStudents();
-    }
-
-    public void buildListStudents(String fileName) {
-        try (InputStream inputStream = new FileInputStream(new File(fileName));) {
             InputSource inputSource = new InputSource(new BufferedInputStream(inputStream));
             reader.parse(inputSource);
         } catch (IOException e) {

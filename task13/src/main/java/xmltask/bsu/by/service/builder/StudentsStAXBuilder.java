@@ -8,10 +8,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class StudentsStAXBuilder extends AbstractStudentsBuilder {
@@ -24,12 +21,10 @@ public class StudentsStAXBuilder extends AbstractStudentsBuilder {
         inputFactory = XMLInputFactory.newInstance();
     }
 
-    public void buildListStudents(String fileName) {
-        FileInputStream inputStream = null;
+    public void buildListStudents(InputStream inputStream) {
         XMLStreamReader reader;
         String name;
         try {
-            inputStream = new FileInputStream(new File(fileName));
             reader = inputFactory.createXMLStreamReader(inputStream);
             while (reader.hasNext()) {
                 int type = reader.next();
@@ -43,16 +38,6 @@ public class StudentsStAXBuilder extends AbstractStudentsBuilder {
             }
         } catch (XMLStreamException ex) {
             LOGGER.error("StAX parsing error! " + ex.getMessage());
-        } catch (FileNotFoundException ex) {
-            LOGGER.error("File " + fileName + " not found! " + ex.getMessage());
-        } finally {
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            } catch (IOException e) {
-                System.err.println("Impossible close file " + fileName + " : " + e);
-            }
         }
     }
 

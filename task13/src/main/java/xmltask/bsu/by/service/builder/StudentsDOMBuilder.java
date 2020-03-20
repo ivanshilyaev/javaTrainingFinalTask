@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class StudentsDOMBuilder extends AbstractStudentsBuilder {
@@ -30,10 +31,10 @@ public class StudentsDOMBuilder extends AbstractStudentsBuilder {
         }
     }
 
-    public void buildListStudents(String fileName) {
+    public void buildListStudents(InputStream inputStream) {
         Document document;
         try {
-            document = documentBuilder.parse(fileName);
+            document = documentBuilder.parse(inputStream);
             Element root = document.getDocumentElement();
             NodeList studentsList = root.getElementsByTagName("student");
             for (int i = 0; i < studentsList.getLength(); ++i) {
