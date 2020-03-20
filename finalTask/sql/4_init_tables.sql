@@ -47,7 +47,7 @@ VALUES
 ('a', 1),
 ('b', 1);
 
-INSERT INTO student
+INSERT INTO student (id, subgroup_id, user_id)
 VALUES
 (1, 1, 1),
 (2, 1, 2),

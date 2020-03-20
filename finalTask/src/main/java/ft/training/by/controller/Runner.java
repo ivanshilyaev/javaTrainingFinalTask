@@ -1,9 +1,6 @@
 package ft.training.by.controller;
 
-import ft.training.by.bean.Faculty;
-import ft.training.by.bean.Group;
-import ft.training.by.bean.Subgroup;
-import ft.training.by.bean.User;
+import ft.training.by.bean.*;
 import ft.training.by.dao.*;
 import ft.training.by.dao.exception.DAOException;
 
@@ -12,11 +9,11 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) {
 //        try {
-//            AbstractDAO subgroupDAO = new SubgroupDAO();
-//            List<Subgroup> list = subgroupDAO.findAll();
+//            AbstractDAO studentDAO = new StudentDAO();
+//            List<Student> list = studentDAO.findAll();
 //            if (!list.isEmpty()) {
-//                for (Subgroup subgroup : list) {
-//                    System.out.println(subgroup);
+//                for (Student student : list) {
+//                    System.out.println(student);
 //                }
 //            }
 //        } catch (DAOException e) {
@@ -24,10 +21,10 @@ public class Runner {
 //        }
 
         try {
-            AbstractDAO subgroupDAO = new SubgroupDAO();
-            Subgroup subgroup = (Subgroup) subgroupDAO.findEntityById(2);
-            if (subgroup != null) {
-                System.out.println(subgroup.getSubgroupNumber());
+            AbstractDAO studentDAO = new StudentDAO();
+            Student student = (Student) studentDAO.findEntityById(23);
+            if (student != null) {
+                System.out.println(student.getUser().getName());
             }
         } catch (DAOException e) {
             e.printStackTrace();

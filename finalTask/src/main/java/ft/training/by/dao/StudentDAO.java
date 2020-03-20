@@ -1,7 +1,8 @@
 package ft.training.by.dao;
 
-import ft.training.by.bean.Group;
+import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
+import ft.training.by.bean.User;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
@@ -14,15 +15,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
+public class StudentDAO extends AbstractDAO<Integer, Student> {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_SUBGROUPS =
-            "SELECT id, subgroup_number, group_id FROM subgroup;";
+    public static final String SQL_SELECT_ALL_STUDENTS =
+            "SELECT id, subgroup_id, user_id FROM student;";
 
     @Override
-    public List<Subgroup> findAll() throws DAOException {
-        List<Subgroup> subgroups = new ArrayList<>();
+    public List<Student> findAll() throws DAOException {
+        List<Student> students = new ArrayList<>();
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -31,11 +32,11 @@ public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_STUDENTS);
                     while (resultSet.next()) {
-                        Subgroup subgroup = new Subgroup();
-                        fillSubgroup(resultSet, subgroup);
-                        subgroups.add(subgroup);
+                        Student student = new Student();
+                        fillStudent(student, resultSet);
+                        students.add(student);
                     }
                 } finally {
                     if (resultSet != null) {
@@ -52,12 +53,12 @@ public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
         } finally {
             close(connection);
         }
-        return subgroups;
+        return students;
     }
 
     @Override
-    public Subgroup findEntityById(Integer id) throws DAOException {
-        Subgroup subgroup = null;
+    public Student findEntityById(Integer id) throws DAOException {
+        Student student = null;
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -66,11 +67,11 @@ public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_STUDENTS);
                     while (resultSet.next()) {
                         if (resultSet.getInt(1) == id) {
-                            subgroup = new Subgroup();
-                            fillSubgroup(resultSet, subgroup);
+                            student = new Student();
+                            fillStudent(student, resultSet);
                         }
                     }
                 } finally {
@@ -88,7 +89,7 @@ public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
         } finally {
             close(connection);
         }
-        return subgroup;
+        return student;
     }
 
     @Override
@@ -97,25 +98,27 @@ public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
     }
 
     @Override
-    public boolean delete(Subgroup entity) {
+    public boolean delete(Student entity) {
         return false;
     }
 
     @Override
-    public boolean create(Subgroup entity) {
+    public boolean create(Student entity) {
         return false;
     }
 
     @Override
-    public Subgroup update(Subgroup entity) {
+    public Student update(Student entity) {
         return null;
     }
 
-    private void fillSubgroup(ResultSet resultSet, Subgroup subgroup) throws SQLException, DAOException {
-        subgroup.setId(resultSet.getInt(1));
-        subgroup.setSubgroupNumber(resultSet.getString(2).charAt(0));
-        int groupID = resultSet.getInt(3);
-        Group group = new GroupDAO().findEntityById(groupID);
-        subgroup.setGroup(group);
+    private void fillStudent(Student student, ResultSet resultSet) throws SQLException, DAOException {
+        student.setId(resultSet.getInt(1));
+        int subgroupID = resultSet.getInt(2);
+        Subgroup subgroup = new SubgroupDAO().findEntityById(subgroupID);
+        student.setSubgroup(subgroup);
+        int userID = resultSet.getInt(3);
+        User user = new UserDAO().findEntityById(userID);
+        student.setUser(user);
     }
 }

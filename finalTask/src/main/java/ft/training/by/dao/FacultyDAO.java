@@ -33,8 +33,7 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                     resultSet = statement.executeQuery(SQL_SELECT_ALL_FACULTIES);
                     while (resultSet.next()) {
                         Faculty faculty = new Faculty();
-                        faculty.setId(resultSet.getInt(1));
-                        faculty.setName(resultSet.getString(2));
+                        fillFaculty(resultSet, faculty);
                         faculties.add(faculty);
                     }
                 } finally {
@@ -70,8 +69,7 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                     while (resultSet.next()) {
                         if (resultSet.getInt(1) == id) {
                             faculty = new Faculty();
-                            faculty.setId(resultSet.getInt(1));
-                            faculty.setName(resultSet.getString(2));
+                            fillFaculty(resultSet, faculty);
                         }
                     }
                 } finally {
@@ -110,5 +108,10 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
     @Override
     public Faculty update(Faculty entity) {
         return null;
+    }
+
+    private void fillFaculty(ResultSet resultSet, Faculty faculty) throws SQLException {
+        faculty.setId(resultSet.getInt(1));
+        faculty.setName(resultSet.getString(2));
     }
 }
