@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>Table</title>
     <style>
         table {
@@ -14,18 +15,22 @@
     </style>
 </head>
 <body>
-<table>
+<table class="table table-bordered">
+    <c:if test="${requestScope.list.size() != 0}">
+    <thead>
     <tr>
-        <td>ID</td>
-        <td>Login</td>
-        <td>Surname</td>
-        <td>Name</td>
-        <td>Patronymic</td>
-        <td>Course</td>
-        <td>Group</td>
-        <td>Subgroup</td>
-        <td>Faculty</td>
+        <th scope="col">ID</th>
+        <th scope="col">Login</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Name</th>
+        <th scope="col">Patronymic</th>
+        <th scope="col">Course</th>
+        <th scope="col">Group</th>
+        <th scope="col">Subgroup</th>
+        <th scope="col">Faculty</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach var="student" items="${requestScope.list}">
         <tr>
             <td><c:out value="${ student.id }"/></td>
@@ -39,6 +44,27 @@
             <td><c:out value="${ student.subgroup.group.faculty.name }"/></td>
         </tr>
     </c:forEach>
-</table>
+    <tr>
+        <td colspan="9">
+            <a href="index.jsp">Return to parsing page</a>
+        </td>
+    </tr>
+    </tbody>
+    </c:if>
+    <c:if test="${requestScope.list.size() == 0}">
+    <tbody>
+    <tr>
+        <td>
+            No file chosen or nothing to parse!
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="index.jsp">Return to parsing page</a>
+        </td>
+    </tr>
+    </tbody>
+    </c:if>
+    <table/>
 </body>
 </html>
