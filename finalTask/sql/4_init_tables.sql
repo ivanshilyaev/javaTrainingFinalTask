@@ -42,10 +42,10 @@ INSERT INTO ugroup (group_number, course_number, faculty_id)
 VALUES
 (9, 2, 1);
 
-INSERT INTO subgroup
+INSERT INTO subgroup (subgroup_number, group_id)
 VALUES
-(1, 9, 2),
-(2, 9, 2);
+('a', 1),
+('b', 1);
 
 INSERT INTO student
 VALUES
