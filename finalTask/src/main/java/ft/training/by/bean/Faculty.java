@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Faculty extends Entity {
     private String name;
-    private String dean;
 
     public Faculty() {
     }
@@ -13,10 +12,9 @@ public class Faculty extends Entity {
         super(id);
     }
 
-    public Faculty(int id, String name, String dean) {
+    public Faculty(int id, String name) {
         super(id);
         this.name = name;
-        this.dean = dean;
     }
 
     public String getName() {
@@ -27,33 +25,24 @@ public class Faculty extends Entity {
         this.name = name;
     }
 
-    public String getDean() {
-        return dean;
-    }
-
-    public void setDean(String dean) {
-        this.dean = dean;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return name.equals(faculty.name) &&
-                dean.equals(faculty.dean);
+        return name.equals(faculty.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, dean);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "Faculty{" +
+                "id=" + getId() + '\'' +
                 "name='" + name + '\'' +
-                ", dean='" + dean + '\'' +
                 '}';
     }
 }

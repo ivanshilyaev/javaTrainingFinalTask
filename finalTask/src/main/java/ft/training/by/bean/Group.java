@@ -14,7 +14,8 @@ public class Group extends Entity {
         super(id);
     }
 
-    public Group(int groupNumber, int courseNumber, Faculty faculty) {
+    public Group(int id, int groupNumber, int courseNumber, Faculty faculty) {
+        setId(id);
         this.groupNumber = groupNumber;
         this.courseNumber = courseNumber;
         this.faculty = faculty;
@@ -62,6 +63,7 @@ public class Group extends Entity {
     @Override
     public String toString() {
         return "Group{" +
+                "id=" + getId() + '\'' +
                 "groupNumber=" + groupNumber +
                 "courseNumber=" + courseNumber +
                 ", faculty=" + faculty.toString() +

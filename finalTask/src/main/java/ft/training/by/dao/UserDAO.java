@@ -2,6 +2,7 @@ package ft.training.by.dao;
 
 import ft.training.by.bean.Role;
 import ft.training.by.bean.User;
+import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
             "SELECT id, login, password, role, surname, name, patronymic FROM user;";
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
         Connection connection = null;
         try {
@@ -68,8 +69,6 @@ public class UserDAO extends AbstractDAO<Integer, User> {
             } finally {
                 if (statement != null) {
                     close(statement);
-                } else {
-                    LOGGER.error("Error while reading from DB");
                 }
             }
         } catch (SQLException e) {

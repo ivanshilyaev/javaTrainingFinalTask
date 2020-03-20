@@ -1,6 +1,9 @@
 package ft.training.by.dao;
 
 import ft.training.by.bean.Entity;
+import ft.training.by.dao.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,7 +11,9 @@ import java.sql.Statement;
 import java.util.List;
 
 public abstract class AbstractDAO<K, T extends Entity> {
-    public abstract List<T> findAll();
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public abstract List<T> findAll() throws DAOException;
 
     public abstract T findEntityById(K id);
 
@@ -24,16 +29,16 @@ public abstract class AbstractDAO<K, T extends Entity> {
         try {
             statement.close();
         } catch (SQLException e) {
-            // logging
+            LOGGER.error("Couldn't close statement: " + e.getMessage());
         }
     }
 
-    public void close(Connection connection) {
+    public void close(Connection connection) throws DAOException {
         if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
-                // throwing exception
+                throw new DAOException("Couldn't read data");
             }
         }
     }

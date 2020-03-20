@@ -13,7 +13,8 @@ public class Subgroup extends Entity {
         super(id);
     }
 
-    public Subgroup(char subgroupNumber, Group group) {
+    public Subgroup(int id, char subgroupNumber, Group group) {
+        super(id);
         this.subgroupNumber = subgroupNumber;
         this.group = group;
     }
@@ -51,6 +52,7 @@ public class Subgroup extends Entity {
     @Override
     public String toString() {
         return "Subgroup{" +
+                "id=" + getId() + '\'' +
                 "subgroupNumber=" + subgroupNumber +
                 ", group=" + group +
                 '}';
