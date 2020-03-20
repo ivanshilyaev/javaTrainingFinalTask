@@ -1,7 +1,14 @@
 package ft.training.by.bean;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Student", propOrder = {"user", "subgroup"})
 public class Student extends Entity {
     private User user;
     private Subgroup subgroup;
@@ -13,7 +20,8 @@ public class Student extends Entity {
         super(id);
     }
 
-    public Student(User user, Subgroup subgroup) {
+    public Student(int id, User user, Subgroup subgroup) {
+        super(id);
         this.user = user;
         this.subgroup = subgroup;
     }
@@ -51,7 +59,6 @@ public class Student extends Entity {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + getId() + '\'' +
                 "user=" + user +
                 ", subgroup=" + subgroup +
                 '}';

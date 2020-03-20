@@ -1,1 +1,2 @@
 [ERROR] 2020-03-20 20:35:55.115 [main] GroupDAO - DB connection error: Column Index out of range, 4 > 3. 
+[INFO ] 2020-03-20 21:12:00.866 [main] Runner - Success

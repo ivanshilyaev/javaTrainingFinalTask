@@ -1,7 +1,14 @@
 package ft.training.by.bean;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "faculty", propOrder = {"name"})
 public class Faculty extends Entity {
     private String name;
 
@@ -41,7 +48,6 @@ public class Faculty extends Entity {
     @Override
     public String toString() {
         return "Faculty{" +
-                "id=" + getId() + '\'' +
                 "name='" + name + '\'' +
                 '}';
     }

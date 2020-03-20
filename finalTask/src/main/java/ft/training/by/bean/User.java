@@ -1,11 +1,18 @@
 package ft.training.by.bean;
 
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Arrays;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "User", propOrder = {"login", "password", "role", "surname", "name", "patronymic"})
 public class User extends Entity {
     private String login;
+    @XmlJavaTypeAdapter(value = CharArrayAdapter.class, type = char[].class)
     private char[] password;
+    @XmlAttribute(required = true)
     private Role role;
     private String surname;
     private String name;

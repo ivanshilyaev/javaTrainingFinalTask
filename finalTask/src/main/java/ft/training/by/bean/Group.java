@@ -1,7 +1,14 @@
 package ft.training.by.bean;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "group", propOrder = {"groupNumber", "courseNumber", "faculty"})
 public class Group extends Entity {
     private int groupNumber;
     private int courseNumber;
@@ -15,7 +22,7 @@ public class Group extends Entity {
     }
 
     public Group(int id, int groupNumber, int courseNumber, Faculty faculty) {
-        setId(id);
+        super(id);
         this.groupNumber = groupNumber;
         this.courseNumber = courseNumber;
         this.faculty = faculty;
@@ -63,9 +70,8 @@ public class Group extends Entity {
     @Override
     public String toString() {
         return "Group{" +
-                "id=" + getId() + '\'' +
                 "groupNumber=" + groupNumber +
-                "courseNumber=" + courseNumber +
+                ", courseNumber=" + courseNumber +
                 ", faculty=" + faculty.toString() +
                 '}';
     }
