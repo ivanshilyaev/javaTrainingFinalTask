@@ -31,9 +31,9 @@ public class XMLServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         InputStream inputStream = req.getPart("file").getInputStream();
-        String button = req.getParameter("button");
+        String parser = req.getParameter("item");
         BuildCommand command = new BuildCommand();
-        List<Student> list = command.exec(button, inputStream);
+        List<Student> list = command.exec(parser, inputStream);
         req.setAttribute("list", list);
         req.getRequestDispatcher("result.jsp").forward(req, resp);
     }

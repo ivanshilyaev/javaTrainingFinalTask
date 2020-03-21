@@ -30,9 +30,14 @@ public class StudentsStAXBuilder extends AbstractStudentsBuilder {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = reader.getLocalName();
-                    if (StudentEnum.valueOf(name.toUpperCase()) == StudentEnum.STUDENT) {
-                        Student st = buildStudent(reader);
-                        students.add(st);
+                    try {
+                        if (StudentEnum.valueOf(name.toUpperCase()) == StudentEnum.STUDENT) {
+                            Student st = buildStudent(reader);
+                            students.add(st);
+                        }
+                    } catch (Exception e) {
+                        LOGGER.error("Couldn't parse file");
+                        return;
                     }
                 }
             }

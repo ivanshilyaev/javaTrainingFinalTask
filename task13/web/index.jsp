@@ -10,9 +10,12 @@
     Select a file to upload <br/>
     <form name="Upload" action="parse" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" size="50"/> <br><br>
-        <input type="submit" class="btn btn-primary" name="button" value="SAX"/>
-        <input type="submit" class="btn btn-primary" name="button" value="DOM"/>
-        <input type="submit" class="btn btn-primary" name="button" value="StAX"/>
+        <select name="item">
+            <option value="sax">SAX</option>
+            <option value="dom">DOM</option>
+            <option value="stax">StAX</option>
+        </select> <br><br>
+        <input type="submit" class="btn btn-primary" name="button" value="Parse"/>
     </form>
 </div>
 </body>

@@ -1,12 +1,8 @@
-[INFO ] 2020-03-20 11:22:52.634 [main] Runner - Success
-[INFO ] 2020-03-20 11:26:30.841 [main] Runner - Success
-[ERROR] 2020-03-20 19:04:19.236 [http-nio-8078-exec-4] StudentsSAXBuilder - Premature end of file.
-[ERROR] 2020-03-20 19:06:18.218 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.
-[ERROR] 2020-03-20 19:15:18.466 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.
-[ERROR] 2020-03-20 19:15:42.171 [http-nio-8078-exec-10] StudentsSAXBuilder - Premature end of file.
-[ERROR] 2020-03-20 19:16:09.952 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.
-[ERROR] 2020-03-20 22:30:03.046 [http-nio-8078-exec-9] StudentsStAXBuilder - StAX parsing error! ParseError at [row,col]:[1,1]
+[ERROR] 2020-03-21 10:48:34.054 [http-nio-8078-exec-6] StudentsSAXBuilder - Premature end of file.
+[ERROR] 2020-03-21 10:55:22.560 [http-nio-8078-exec-4] StudentsSAXBuilder - Premature end of file.
+[ERROR] 2020-03-21 10:55:30.176 [http-nio-8078-exec-6] StudentsDOMBuilder - Parsing failure: Premature end of file.
+[ERROR] 2020-03-21 10:55:33.240 [http-nio-8078-exec-9] StudentsStAXBuilder - StAX parsing error! ParseError at [row,col]:[1,1]
 Message: Premature end of file.
-[ERROR] 2020-03-20 23:38:29.777 [http-nio-8078-exec-7] StudentsDOMBuilder - Parsing failure: Premature end of file.
-[ERROR] 2020-03-20 23:40:46.776 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.
-[ERROR] 2020-03-20 23:41:39.098 [http-nio-8078-exec-4] StudentsDOMBuilder - Parsing failure: Premature end of file.
+[ERROR] 2020-03-21 10:55:39.630 [http-nio-8078-exec-1] StudentsSAXBuilder - Couldn't parse file
+[ERROR] 2020-03-21 10:55:52.863 [http-nio-8078-exec-6] StudentsSAXBuilder - Couldn't parse file
+[ERROR] 2020-03-21 10:56:00.145 [http-nio-8078-exec-9] StudentsStAXBuilder - Couldn't parse file

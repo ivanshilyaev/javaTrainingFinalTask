@@ -57,9 +57,13 @@ public class StudentHandler extends DefaultHandler {
             currentStudent.getSubgroup().getGroup().setFaculty(new Faculty());
             currentClassEnum = StudentEnum.valueOf(qName.toUpperCase());
         } else {
-            StudentEnum temp = StudentEnum.valueOf(qName.toUpperCase());
-            if (withText.contains(temp)) {
-                currentEnum = StudentEnum.valueOf(qName.toUpperCase());
+            try {
+                StudentEnum temp = StudentEnum.valueOf(qName.toUpperCase());
+                if (withText.contains(temp)) {
+                    currentEnum = StudentEnum.valueOf(qName.toUpperCase());
+                }
+            } catch (Exception e) {
+                throw new SAXException("Couldn't parse file");
             }
         }
     }
