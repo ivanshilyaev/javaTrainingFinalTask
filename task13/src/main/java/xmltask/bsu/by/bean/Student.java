@@ -55,7 +55,7 @@ public class Student extends Entity {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "\nStudent{" +
                 "user=" + user +
                 ", subgroup=" + subgroup +
                 '}';

@@ -1,5 +1,7 @@
 package xmltask.bsu.by.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import xmltask.bsu.by.bean.Student;
 import xmltask.bsu.by.service.BuildCommand;
 
@@ -16,6 +18,13 @@ import java.util.List;
 @WebServlet("/parse")
 @MultipartConfig
 public class XMLServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    @Override
+    public void init() throws ServletException {
+        LOGGER.info("Servlet started");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -31,6 +40,7 @@ public class XMLServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         InputStream inputStream = req.getPart("file").getInputStream();
+
         String parser = req.getParameter("item");
         BuildCommand command = new BuildCommand();
         List<Student> list = command.exec(parser, inputStream);
