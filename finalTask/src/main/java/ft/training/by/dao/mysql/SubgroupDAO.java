@@ -1,6 +1,7 @@
-package ft.training.by.dao;
+package ft.training.by.dao.mysql;
 
-import ft.training.by.bean.Faculty;
+import ft.training.by.bean.Group;
+import ft.training.by.bean.Subgroup;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
@@ -13,15 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
+public class SubgroupDAO extends AbstractDAO<Integer, Subgroup> {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_FACULTIES =
-            "SELECT id, name FROM faculty;";
+    public static final String SQL_SELECT_ALL_SUBGROUPS =
+            "SELECT id, subgroup_number, group_id FROM subgroup;";
 
     @Override
-    public List<Faculty> findAll() throws DAOException {
-        List<Faculty> faculties = new ArrayList<>();
+    public List<Subgroup> findAll() throws DAOException {
+        List<Subgroup> subgroups = new ArrayList<>();
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -30,11 +31,11 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_FACULTIES);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
                     while (resultSet.next()) {
-                        Faculty faculty = new Faculty();
-                        fillFaculty(resultSet, faculty);
-                        faculties.add(faculty);
+                        Subgroup subgroup = new Subgroup();
+                        fillSubgroup(resultSet, subgroup);
+                        subgroups.add(subgroup);
                     }
                 } finally {
                     if (resultSet != null) {
@@ -47,16 +48,16 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("DB connection error: " + e.getMessage());
+            LOGGER.error("DB connection error", e);
         } finally {
             close(connection);
         }
-        return faculties;
+        return subgroups;
     }
 
     @Override
-    public Faculty findEntityById(Integer id) throws DAOException {
-        Faculty faculty = null;
+    public Subgroup findEntityById(Integer id) throws DAOException {
+        Subgroup subgroup = null;
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -65,11 +66,11 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_FACULTIES);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
                     while (resultSet.next()) {
                         if (resultSet.getInt(1) == id) {
-                            faculty = new Faculty();
-                            fillFaculty(resultSet, faculty);
+                            subgroup = new Subgroup();
+                            fillSubgroup(resultSet, subgroup);
                         }
                     }
                 } finally {
@@ -83,11 +84,11 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("DB connection error: " + e.getMessage());
+            LOGGER.error("DB connection error", e);
         } finally {
             close(connection);
         }
-        return faculty;
+        return subgroup;
     }
 
     @Override
@@ -96,22 +97,25 @@ public class FacultyDAO extends AbstractDAO<Integer, Faculty> {
     }
 
     @Override
-    public boolean delete(Faculty entity) {
+    public boolean delete(Subgroup entity) {
         return false;
     }
 
     @Override
-    public boolean create(Faculty entity) {
+    public boolean create(Subgroup entity) {
         return false;
     }
 
     @Override
-    public Faculty update(Faculty entity) {
+    public Subgroup update(Subgroup entity) {
         return null;
     }
 
-    private void fillFaculty(ResultSet resultSet, Faculty faculty) throws SQLException {
-        faculty.setId(resultSet.getInt(1));
-        faculty.setName(resultSet.getString(2));
+    private void fillSubgroup(ResultSet resultSet, Subgroup subgroup) throws SQLException, DAOException {
+        subgroup.setId(resultSet.getInt(1));
+        subgroup.setSubgroupNumber(resultSet.getString(2).charAt(0));
+        int groupID = resultSet.getInt(3);
+        Group group = new GroupDAO().findEntityById(groupID);
+        subgroup.setGroup(group);
     }
 }

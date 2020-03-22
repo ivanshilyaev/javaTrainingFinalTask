@@ -1,4 +1,4 @@
-package ft.training.by.dao;
+package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Entity;
 import ft.training.by.dao.exception.DAOException;
@@ -15,7 +15,7 @@ public abstract class AbstractDAO<K, T extends Entity> {
 
     public abstract List<T> findAll() throws DAOException;
 
-    public abstract T findEntityById(K id) throws DAOException;
+    public abstract T findEntityById(K id) throws DAOException; // read
 
     public abstract boolean delete(K id);
 
@@ -29,7 +29,7 @@ public abstract class AbstractDAO<K, T extends Entity> {
         try {
             statement.close();
         } catch (SQLException e) {
-            LOGGER.error("Couldn't close statement: " + e.getMessage());
+            LOGGER.error("Couldn't close statement", e);
         }
     }
 

@@ -1,16 +1,12 @@
 package ft.training.by.controller;
 
 import ft.training.by.bean.*;
-import ft.training.by.dao.*;
 import ft.training.by.dao.exception.DAOException;
+import ft.training.by.dao.mysql.AbstractDAO;
+import ft.training.by.dao.mysql.StudentDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.List;
 
 public class Runner {
@@ -21,32 +17,13 @@ public class Runner {
         try {
             AbstractDAO studentDAO = new StudentDAO();
             list = studentDAO.findAll();
-//            if (!list.isEmpty()) {
-//                for (Student student : list) {
-//                    System.out.println(student);
-//                }
-//            }
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JAXBContext context = JAXBContext.newInstance(Students.class);
-            Marshaller marshaller = context.createMarshaller();
-            Students students = new Students();
-            if (list != null) {
-                students.setList(list);
+            if (!list.isEmpty()) {
+                for (Student student : list) {
+                    System.out.println(student);
+                }
             }
-
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(students,
-                    new FileOutputStream("/Users/ivansilaev/Desktop/javaTraining/task13/src/main/resources/xml/bookTest.xml"));
-            marshaller.marshal(students, System.out);
-            LOGGER.info("Success");
-        } catch (FileNotFoundException e) {
-            LOGGER.error("XML-file can't be created");
-        } catch (JAXBException e) {
-            LOGGER.error("Invalid JAXB-content");
+        } catch (DAOException e) {
+            LOGGER.info("failure", e);
         }
 
 //        try {

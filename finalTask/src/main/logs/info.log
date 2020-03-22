@@ -1,2 +1,27 @@
-[ERROR] 2020-03-20 20:35:55.115 [main] GroupDAO - DB connection error: Column Index out of range, 4 > 3. 
-[INFO ] 2020-03-20 21:12:00.866 [main] Runner - Success
+[ERROR] 2020-03-22 19:56:49.287 [main] StudentDAO - DB connection error: Access denied for user 'application'@'localhost' to database 'account_db'
+[INFO ] 2020-03-22 19:56:49.302 [main] Runner - success
+[ERROR] 2020-03-22 19:58:42.019 [main] StudentDAO - DB connection error: Access denied for user 'application'@'localhost' to database 'account_db'
+[INFO ] 2020-03-22 19:58:42.022 [main] Runner - success
+[ERROR] 2020-03-22 20:01:07.604 [main] StudentDAO - DB connection error: Access denied for user 'application'@'localhost' to database 'account_db'
+[INFO ] 2020-03-22 20:01:07.620 [main] Runner - success
+[ERROR] 2020-03-22 20:04:22.332 [main] StudentDAO - DB connection error: Access denied for user 'application@localhost'@'localhost' (using password: YES)
+[INFO ] 2020-03-22 20:04:22.335 [main] Runner - success
+[ERROR] 2020-03-22 20:05:42.627 [main] StudentDAO - DB connection error: Access denied for user 'application'@'localhost' to database 'account_db'
+[INFO ] 2020-03-22 20:05:42.631 [main] Runner - success
+[INFO ] 2020-03-22 20:08:56.927 [main] Runner - success
+[INFO ] 2020-03-22 20:09:56.449 [main] Runner - success
+[ERROR] 2020-03-22 20:20:11.164 [main] StudentDAO - DB connection error: Access denied for user 'applicatio'@'localhost' (using password: YES)
+[ERROR] 2020-03-22 20:21:10.249 [main] StudentDAO - DB connection error
+java.sql.SQLException: Access denied for user 'applicatio'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:836) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:456) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:197) ~[mysql-connector-java-8.0.19.jar:8.0.19]
+	at java.sql.DriverManager.getConnection(DriverManager.java:677) ~[java.sql:?]
+	at java.sql.DriverManager.getConnection(DriverManager.java:228) ~[java.sql:?]
+	at ft.training.by.service.ConnectorDB.getConnection(ConnectorDB.java:12) ~[classes/:?]
+	at ft.training.by.dao.mysql.StudentDAO.findAll(StudentDAO.java:29) [classes/:?]
+	at ft.training.by.controller.Runner.main(Runner.java:18) [classes/:?]

@@ -1,7 +1,7 @@
-package ft.training.by.dao;
+package ft.training.by.dao.mysql;
 
-import ft.training.by.bean.Faculty;
-import ft.training.by.bean.Group;
+import ft.training.by.bean.Role;
+import ft.training.by.bean.User;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
@@ -14,15 +14,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDAO extends AbstractDAO<Integer, Group> {
+public class UserDAO extends AbstractDAO<Integer, User> {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_GROUPS =
-            "SELECT id, group_number, course_number, faculty_id FROM ugroup;";
+    public static final String SQL_SELECT_ALL_USERS =
+            "SELECT id, login, password, role, surname, name, patronymic FROM user;";
 
     @Override
-    public List<Group> findAll() throws DAOException {
-        List<Group> groups = new ArrayList<>();
+    public List<User> findAll() throws DAOException {
+        List<User> users = new ArrayList<>();
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -31,15 +31,17 @@ public class GroupDAO extends AbstractDAO<Integer, Group> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
                     while (resultSet.next()) {
-                        Group group = new Group();
-                        fillGroup(group, resultSet);
-                        groups.add(group);
+                        User user = new User();
+                        fillUser(resultSet, user);
+                        users.add(user);
                     }
                 } finally {
                     if (resultSet != null) {
                         resultSet.close();
+                    } else {
+                        LOGGER.error("Error while reading from DB");
                     }
                 }
             } finally {
@@ -48,16 +50,16 @@ public class GroupDAO extends AbstractDAO<Integer, Group> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("DB connection error: " + e.getMessage());
+            LOGGER.error("DB connection error", e);
         } finally {
             close(connection);
         }
-        return groups;
+        return users;
     }
 
     @Override
-    public Group findEntityById(Integer id) throws DAOException {
-        Group group = null;
+    public User findEntityById(Integer id) throws DAOException {
+        User user = null;
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -66,16 +68,18 @@ public class GroupDAO extends AbstractDAO<Integer, Group> {
                 statement = connection.createStatement();
                 ResultSet resultSet = null;
                 try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
                     while (resultSet.next()) {
                         if (resultSet.getInt(1) == id) {
-                            group = new Group();
-                            fillGroup(group, resultSet);
+                            user = new User();
+                            fillUser(resultSet, user);
                         }
                     }
                 } finally {
                     if (resultSet != null) {
                         resultSet.close();
+                    } else {
+                        LOGGER.error("Error while reading from DB");
                     }
                 }
             } finally {
@@ -84,11 +88,11 @@ public class GroupDAO extends AbstractDAO<Integer, Group> {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("DB connection error: " + e.getMessage());
+            LOGGER.error("DB connection error", e);
         } finally {
             close(connection);
         }
-        return group;
+        return user;
     }
 
     @Override
@@ -97,26 +101,43 @@ public class GroupDAO extends AbstractDAO<Integer, Group> {
     }
 
     @Override
-    public boolean delete(Group entity) {
+    public boolean delete(User entity) {
         return false;
     }
 
     @Override
-    public boolean create(Group entity) {
+    public boolean create(User entity) {
         return false;
     }
 
     @Override
-    public Group update(Group entity) {
+    public User update(User entity) {
         return null;
     }
 
-    private void fillGroup(Group group, ResultSet resultSet) throws SQLException, DAOException {
-        group.setId(resultSet.getInt(1));
-        group.setGroupNumber(resultSet.getInt(2));
-        group.setCourseNumber(resultSet.getInt(3));
-        int facultyID = resultSet.getInt(4);
-        Faculty faculty = new FacultyDAO().findEntityById(facultyID);
-        group.setFaculty(faculty);
+    private void fillUser(ResultSet resultSet, User user) throws SQLException {
+        user.setId(resultSet.getInt(1));
+        user.setLogin(resultSet.getString(2));
+        user.setPassword(resultSet.getString(3).toCharArray());
+        int ch = resultSet.getInt(4);
+        switch (ch) {
+            case 0: {
+                user.setRole(Role.STUDENT);
+                break;
+            }
+            case 1: {
+                user.setRole(Role.ADMINISTRATOR);
+                break;
+            }
+            case 2: {
+                user.setRole(Role.TUTOR);
+                break;
+            }
+            default:
+                break;
+        }
+        user.setSurname(resultSet.getString(5));
+        user.setName(resultSet.getString(6));
+        user.setPatronymic(resultSet.getString(7));
     }
 }
