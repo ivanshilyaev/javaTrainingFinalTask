@@ -12,6 +12,7 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public final class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -21,7 +22,7 @@ public final class ConnectionPool {
     private String password;
     private int maxActive;
     private int maxWait;
-    private Lock locker;
+    private Lock locker = new ReentrantLock();
 
     private BlockingDeque<PooledConnection> freeConnections = new LinkedBlockingDeque<>();
     private Set<PooledConnection> usedConnections = new ConcurrentSkipListSet<>();
@@ -49,14 +50,14 @@ public final class ConnectionPool {
                     connection = createConnection();
                 } else {
                     LOGGER.error("Number of database connections is exceeded");
+                    locker.unlock();
                     throw new DAOException();
                 }
             } catch (InterruptedException | SQLException e) {
                 LOGGER.error("Impossible to connect to a database", e);
-            } finally {
-                locker.unlock();
             }
         }
+        locker.unlock();
         return connection;
     }
 
@@ -80,16 +81,14 @@ public final class ConnectionPool {
                 connection.getConnection().close();
             } catch (SQLException ex) {
             }
-        } finally {
-            locker.unlock();
         }
+        locker.unlock();
     }
 
-    public void init(String driverClass, String url, String username, String password, int startSize, int maxActive, int maxWait) throws DAOException {
+    public void init(String url, String username, String password, int startSize, int maxActive, int maxWait) throws DAOException {
         locker.lock();
         try {
             destroy();
-            Class.forName(driverClass);
             this.url = url;
             this.username = username;
             this.password = password;
@@ -98,12 +97,12 @@ public final class ConnectionPool {
             for (int counter = 0; counter < startSize; counter++) {
                 freeConnections.put(createConnection());
             }
-        } catch (ClassNotFoundException | SQLException | InterruptedException e) {
+        } catch (SQLException | InterruptedException e) {
             LOGGER.fatal("Impossible to initialize connection pool", e);
-            throw new DAOException(e);
-        } finally {
             locker.unlock();
+            throw new DAOException(e);
         }
+        locker.unlock();
     }
 
     public void destroy() {

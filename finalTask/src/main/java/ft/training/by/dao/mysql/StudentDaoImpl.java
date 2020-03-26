@@ -3,19 +3,18 @@ package ft.training.by.dao.mysql;
 import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
 import ft.training.by.bean.User;
+import ft.training.by.dao.StudentDao;
 import ft.training.by.dao.exception.DAOException;
-import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAO extends AbstractDAO<Integer, Student> {
+public class StudentDaoImpl extends DaoImpl implements StudentDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String SQL_SELECT_ALL_STUDENTS =
@@ -24,9 +23,7 @@ public class StudentDAO extends AbstractDAO<Integer, Student> {
     @Override
     public List<Student> findAll() throws DAOException {
         List<Student> students = new ArrayList<>();
-        Connection connection = null;
         try {
-            connection = ConnectorDB.getConnection();
             Statement statement = null;
             try {
                 statement = connection.createStatement();
@@ -51,7 +48,7 @@ public class StudentDAO extends AbstractDAO<Integer, Student> {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            close(connection);
+            closeConnection();
         }
         return students;
     }
@@ -59,9 +56,7 @@ public class StudentDAO extends AbstractDAO<Integer, Student> {
     @Override
     public Student findEntityById(Integer id) throws DAOException {
         Student student = null;
-        Connection connection = null;
         try {
-            connection = ConnectorDB.getConnection();
             Statement statement = null;
             try {
                 statement = connection.createStatement();
@@ -87,7 +82,7 @@ public class StudentDAO extends AbstractDAO<Integer, Student> {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            close(connection);
+            closeConnection();
         }
         return student;
     }
@@ -115,10 +110,14 @@ public class StudentDAO extends AbstractDAO<Integer, Student> {
     private void fillStudent(Student student, ResultSet resultSet) throws SQLException, DAOException {
         student.setId(resultSet.getInt(1));
         int subgroupID = resultSet.getInt(2);
-        Subgroup subgroup = new SubgroupDAO().findEntityById(subgroupID);
+        SubgroupDaoImpl subgroupDao = new SubgroupDaoImpl();
+        subgroupDao.setConnection(connection);
+        Subgroup subgroup = subgroupDao.findEntityById(subgroupID);
         student.setSubgroup(subgroup);
         int userID = resultSet.getInt(3);
-        User user = new UserDAO().findEntityById(userID);
+        UserDaoImpl userDao = new UserDaoImpl();
+        userDao.setConnection(connection);
+        User user = userDao.findEntityById(userID);
         student.setUser(user);
     }
 }

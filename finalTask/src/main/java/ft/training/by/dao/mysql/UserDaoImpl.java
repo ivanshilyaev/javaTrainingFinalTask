@@ -2,19 +2,18 @@ package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Role;
 import ft.training.by.bean.User;
+import ft.training.by.dao.UserDao;
 import ft.training.by.dao.exception.DAOException;
-import ft.training.by.service.ConnectorDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO extends AbstractDAO<Integer, User> {
+public class UserDaoImpl extends DaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String SQL_SELECT_ALL_USERS =
@@ -23,9 +22,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
-        Connection connection = null;
         try {
-            connection = ConnectorDB.getConnection();
             Statement statement = null;
             try {
                 statement = connection.createStatement();
@@ -52,7 +49,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            close(connection);
+            closeConnection();
         }
         return users;
     }
@@ -60,9 +57,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
     @Override
     public User findEntityById(Integer id) throws DAOException {
         User user = null;
-        Connection connection = null;
         try {
-            connection = ConnectorDB.getConnection();
             Statement statement = null;
             try {
                 statement = connection.createStatement();
@@ -90,7 +85,7 @@ public class UserDAO extends AbstractDAO<Integer, User> {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            close(connection);
+            closeConnection();
         }
         return user;
     }

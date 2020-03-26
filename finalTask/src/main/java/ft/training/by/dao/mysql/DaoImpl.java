@@ -1,6 +1,5 @@
 package ft.training.by.dao.mysql;
 
-import ft.training.by.bean.Entity;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,22 +7,15 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
-public abstract class AbstractDAO<K, T extends Entity> {
+public abstract class DaoImpl {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public abstract List<T> findAll() throws DAOException;
+    protected Connection connection;
 
-    public abstract T findEntityById(K id) throws DAOException; // read
-
-    public abstract boolean delete(K id);
-
-    public abstract boolean delete(T entity);
-
-    public abstract boolean create(T entity);
-
-    public abstract T update(T entity);
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     public void close(Statement statement) {
         try {
@@ -33,7 +25,7 @@ public abstract class AbstractDAO<K, T extends Entity> {
         }
     }
 
-    public void close(Connection connection) throws DAOException {
+    public void closeConnection() throws DAOException {
         if (connection != null) {
             try {
                 connection.close();
