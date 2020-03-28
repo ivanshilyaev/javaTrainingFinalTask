@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TransactionImpl implements Transaction {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static Map<Class<? extends Dao<?, ?>>, Class<? extends DaoImpl>> classes =
+    private static final Map<Class<? extends Dao<?, ?>>, Class<? extends DaoImpl>> classes =
             new ConcurrentHashMap<>();
 
     static {

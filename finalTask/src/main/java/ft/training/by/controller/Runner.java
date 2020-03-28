@@ -1,11 +1,16 @@
 package ft.training.by.controller;
 
+import ft.training.by.bean.Faculty;
 import ft.training.by.dao.StudentDao;
 import ft.training.by.dao.Transaction;
 import ft.training.by.dao.TransactionFactory;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.dao.pool.ConnectionPool;
+import ft.training.by.service.FacultyService;
+import ft.training.by.service.ServiceFactory;
+import ft.training.by.service.ServiceFactoryImpl;
+import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,12 +37,13 @@ public class Runner {
     public static void main(String[] args) {
         init();
         try {
-            TransactionFactory transactionFactory = new TransactionFactoryImpl();
-            Transaction transaction = transactionFactory.createTransaction();
-            StudentDao dao = transaction.createDao(StudentDao.class);
-            System.out.println(dao.findAll());
+            ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
+            FacultyService service = factory.createService(FacultyService.class);
+            System.out.println(service.findAll());
+        } catch (ServiceException e) {
+            e.printStackTrace();
         } catch (DAOException e) {
-            LOGGER.error("Failure");
+            e.printStackTrace();
         }
     }
 }
