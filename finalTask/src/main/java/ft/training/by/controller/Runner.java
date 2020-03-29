@@ -1,9 +1,5 @@
 package ft.training.by.controller;
 
-import ft.training.by.bean.Faculty;
-import ft.training.by.dao.StudentDao;
-import ft.training.by.dao.Transaction;
-import ft.training.by.dao.TransactionFactory;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.dao.pool.ConnectionPool;
@@ -24,7 +20,7 @@ public class Runner {
     public static final int DB_POOL_MAX_ACTIVE = 1000;
     public static final int DB_POOL_MAX_WAIT = 0;
 
-    private static void init() {
+    public static void initConnectionPool() {
         try {
             ConnectionPool.getInstance().init(DB_URL,
                     DB_LOGIN, DB_PASSWORD, DB_POOL_START_ACTIVE,
@@ -35,7 +31,7 @@ public class Runner {
     }
 
     public static void main(String[] args) {
-        init();
+        initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
             FacultyService service = factory.createService(FacultyService.class);
