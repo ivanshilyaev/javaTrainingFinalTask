@@ -52,7 +52,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
     }
 
     @Override
-    public Faculty findEntityById(Integer id) throws DAOException {
+    public Faculty findEntityById(Integer id) {
         Faculty faculty = null;
         Statement statement = null;
         ResultSet resultSet;

@@ -3,9 +3,9 @@
     <Appenders>
         <RollingFile name="fileLogger"
                      fileName="src/main/logs/info.log"
-                     filePattern="$src/main/logs/info-%d{yyyy-MM-dd}.log">
+                     filePattern="$src/main/logs/info-%d{dd.MM.yyyy}.log">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                <pattern>[%-5level] %d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>

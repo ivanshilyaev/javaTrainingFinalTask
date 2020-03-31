@@ -18,6 +18,10 @@ public class ServiceFactoryImpl implements ServiceFactory {
 
     static {
         services.put(FacultyService.class, FacultyServiceImpl.class);
+        services.put(GroupService.class, GroupServiceImpl.class);
+        services.put(SubgroupService.class, SubgroupServiceImpl.class);
+        services.put(UserService.class, UserServiceImpl.class);
+        services.put(StudentService.class, StudentServiceImpl.class);
     }
 
     private TransactionFactory factory;

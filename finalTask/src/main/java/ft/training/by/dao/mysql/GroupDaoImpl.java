@@ -106,7 +106,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         return null;
     }
 
-    private void fillGroup(Group group, ResultSet resultSet) throws SQLException, DAOException {
+    private void fillGroup(Group group, ResultSet resultSet) throws SQLException {
         group.setId(resultSet.getInt(1));
         group.setGroupNumber(resultSet.getInt(2));
         group.setCourseNumber(resultSet.getInt(3));
