@@ -7,6 +7,7 @@ import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     public static final String SQL_SELECT_ALL_USERS =
             "SELECT id, login, password, role, surname, name, patronymic FROM user;";
+
+    public static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
+            "SELECT id, role, surname, name, patronymic FROM user WHERE login = ? AND password = ?;";
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -108,6 +112,34 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     @Override
     public User update(User entity) {
         return null;
+    }
+
+    @Override
+    public User findByLoginAndPassword(String login, char[] password) {
+        User user = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD);
+            statement.setString(1, login);
+            statement.setString(2, String.valueOf(password));
+            ResultSet resultSet =
+                    statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt(1));
+                user.setLogin(login);
+                user.setPassword(password);
+                user.setRole(Role.getById(resultSet.getInt(2)));
+                user.setSurname(resultSet.getString(3));
+                user.setName(resultSet.getString(4));
+                user.setPatronymic(resultSet.getString(5));
+            }
+            resultSet.close();
+            close(statement);
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        }
+        return user;
     }
 
     private void fillUser(ResultSet resultSet, User user) throws SQLException {

@@ -13,4 +13,8 @@ public enum Role {
     ADMINISTRATOR,
     @XmlEnumValue("2")
     TUTOR;
+
+    public static Role getById(int id) {
+        return Role.values()[id];
+    }
 }

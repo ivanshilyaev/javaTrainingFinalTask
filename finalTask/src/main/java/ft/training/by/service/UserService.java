@@ -9,4 +9,6 @@ public interface UserService extends Service {
     List<User> findAll() throws ServiceException;
 
     User findEntityById(Integer id) throws ServiceException;
+
+    User findByLoginAndPassword(String login, char[] password) throws ServiceException;
 }

@@ -33,10 +33,8 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
-            StudentService service = factory.createService(StudentService.class);
-            for (Student student : service.findAll()) {
-                System.out.println(student);
-            }
+            UserService service = factory.createService(UserService.class);
+            System.out.println(service.findByLoginAndPassword("1823127", "11111".toCharArray()));
             LOGGER.info("success");
         } catch (ServiceException e) {
             e.printStackTrace();

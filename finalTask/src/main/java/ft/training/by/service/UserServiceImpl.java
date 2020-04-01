@@ -27,4 +27,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User findByLoginAndPassword(String login, char[] password) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.findByLoginAndPassword(login, password);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

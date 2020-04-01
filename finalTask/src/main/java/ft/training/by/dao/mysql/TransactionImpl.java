@@ -13,15 +13,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TransactionImpl implements Transaction {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final Map<Class<? extends Dao<?, ?>>, Class<? extends DaoImpl>> classes =
-            new ConcurrentHashMap<>();
+    private static final Map<Class<? extends Dao<?, ?>>, Class<? extends DaoImpl>>
+            repository = new ConcurrentHashMap<>();
 
     static {
-        classes.put(FacultyDao.class, FacultyDaoImpl.class);
-        classes.put(GroupDao.class, GroupDaoImpl.class);
-        classes.put(SubgroupDao.class, SubgroupDaoImpl.class);
-        classes.put(UserDao.class, UserDaoImpl.class);
-        classes.put(StudentDao.class, StudentDaoImpl.class);
+        repository.put(FacultyDao.class, FacultyDaoImpl.class);
+        repository.put(GroupDao.class, GroupDaoImpl.class);
+        repository.put(SubgroupDao.class, SubgroupDaoImpl.class);
+        repository.put(UserDao.class, UserDaoImpl.class);
+        repository.put(StudentDao.class, StudentDaoImpl.class);
     }
 
     private Connection connection;
@@ -32,7 +32,7 @@ public class TransactionImpl implements Transaction {
 
     @Override
     public <T extends Dao<?, ?>> T createDao(Class<T> key) throws DAOException {
-        Class<? extends DaoImpl> value = classes.get(key);
+        Class<? extends DaoImpl> value = repository.get(key);
         if (value != null) {
             try {
                 DaoImpl dao = value.getDeclaredConstructor().newInstance();
