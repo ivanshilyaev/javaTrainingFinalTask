@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class ServiceFactoryImpl implements ServiceFactory {
+public class ServiceFactoryImpl implements ServiceFactory {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<Class<? extends Service>, Class<? extends ServiceImpl>>

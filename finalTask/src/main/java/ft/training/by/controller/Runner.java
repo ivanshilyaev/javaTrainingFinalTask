@@ -1,6 +1,7 @@
 package ft.training.by.controller;
 
 import ft.training.by.bean.Student;
+import ft.training.by.bean.User;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.dao.pool.ConnectionPool;
@@ -33,8 +34,11 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
-            UserService service = factory.createService(UserService.class);
-            System.out.println(service.findByLoginAndPassword("1823127", "11111".toCharArray()));
+            UserService userService = factory.createService(UserService.class);
+            User user = userService.findByLoginAndPassword("1823127", "11111".toCharArray());
+            StudentService studentService = factory.createService(StudentService.class);
+            Student student = studentService.findEntityById(user.getId());
+            System.out.println(student);
             LOGGER.info("success");
         } catch (ServiceException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Role;
+import ft.training.by.bean.Student;
 import ft.training.by.bean.User;
 import ft.training.by.dao.UserDao;
 import ft.training.by.dao.exception.DAOException;

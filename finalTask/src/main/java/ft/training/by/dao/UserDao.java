@@ -1,5 +1,6 @@
 package ft.training.by.dao;
 
+import ft.training.by.bean.Student;
 import ft.training.by.bean.User;
 
 public interface UserDao extends Dao<Integer, User> {
