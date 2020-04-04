@@ -4,8 +4,11 @@ import ft.training.by.controller.resource.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ActionFactory {
-    public ActionCommand defineCommand(HttpServletRequest request) {
+public final class ActionFactory {
+    private ActionFactory() {
+    }
+
+    public static ActionCommand defineCommand(HttpServletRequest request) {
         ActionCommand command = new EmptyCommand();
         String action = request.getParameter("command");
         if (action == null || action.isEmpty()) {

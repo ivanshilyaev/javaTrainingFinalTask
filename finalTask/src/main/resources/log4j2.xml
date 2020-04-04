@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
+<Configuration status="FATAL">
     <Appenders>
-        <RollingFile name="fileLogger"
-                     fileName="src/main/logs/info.log"
-                     filePattern="$src/main/logs/info-%d{dd.MM.yyyy}.log">
-            <PatternLayout>
-                <pattern>[%-5level] %d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
-            </Policies>
+        <RollingFile name="errorLogFile" fileName="src/main/logs/errorLog.log"
+                     filePattern="logs/errorLog-%d{yyyy-MM-dd}.log"
+                     ignoreExceptions="false">
+            <PatternLayout pattern="%d{dd:MM:yyyy HH:mm:ss} [%t] %-5level %C{2} %M %msg%n"/>
+            <SizeBasedTriggeringPolicy size="2MB"/>
+            <TimeBasedTriggeringPolicy/>
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="debug" additivity="false">
-            <appender-ref ref="fileLogger"/>
+        <Logger name="logger" level="All">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
+        <Root level="All">
+            <AppenderRef ref="errorLogFile"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -36,6 +36,7 @@ public class Controller extends HttpServlet {
             ConnectionPool.getInstance().init(DB_URL,
                     DB_LOGIN, DB_PASSWORD, DB_POOL_START_ACTIVE,
                     DB_POOL_MAX_ACTIVE, DB_POOL_MAX_WAIT);
+            LOGGER.info("Servlet has been started");
         } catch (DAOException | SQLException e) {
             LOGGER.error("Impossible to init connection pool", e);
             destroy();
@@ -57,8 +58,7 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page;
-        ActionFactory client = new ActionFactory();
-        ActionCommand command = client.defineCommand(request);
+        ActionCommand command = ActionFactory.defineCommand(request);
         page = command.execute(request);
         if (page != null) {
             request.getRequestDispatcher(page).forward(request, response);

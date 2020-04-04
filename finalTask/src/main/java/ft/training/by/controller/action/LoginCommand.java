@@ -3,8 +3,6 @@ package ft.training.by.controller.action;
 import ft.training.by.bean.User;
 import ft.training.by.controller.resource.ConfigurationManager;
 import ft.training.by.controller.resource.MessageManager;
-import ft.training.by.dao.exception.DAOException;
-import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.service.ServiceFactory;
 import ft.training.by.service.ServiceFactoryImpl;
 import ft.training.by.service.UserService;
@@ -26,7 +24,7 @@ public class LoginCommand implements ActionCommand {
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         try {
-            ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
+            ServiceFactory factory = new ServiceFactoryImpl();
             UserService userService = factory.createService(UserService.class);
             User user = userService.findByLoginAndPassword(login, password.toCharArray());
             if (user != null) {
@@ -35,9 +33,7 @@ public class LoginCommand implements ActionCommand {
                 return page;
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (DAOException e) {
-            e.printStackTrace();
+            LOGGER.error("Service exception in execute method", e);
         }
         request.setAttribute("errorLoginPasswordMessage", MessageManager.getProperty("message.loginerror"));
         page = ConfigurationManager.getProperty("path.page.login");

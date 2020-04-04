@@ -3,7 +3,6 @@ package ft.training.by.controller;
 import ft.training.by.bean.Student;
 import ft.training.by.bean.User;
 import ft.training.by.dao.exception.DAOException;
-import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.dao.pool.ConnectionPool;
 import ft.training.by.service.*;
 import ft.training.by.service.exception.ServiceException;
@@ -33,7 +32,7 @@ public class Runner {
     public static void main(String[] args) {
         initConnectionPool();
         try {
-            ServiceFactory factory = new ServiceFactoryImpl(new TransactionFactoryImpl());
+            ServiceFactory factory = new ServiceFactoryImpl();
             UserService userService = factory.createService(UserService.class);
             User user = userService.findByLoginAndPassword("1823127", "11111".toCharArray());
             StudentService studentService = factory.createService(StudentService.class);
@@ -41,9 +40,7 @@ public class Runner {
             System.out.println(student);
             LOGGER.info("success");
         } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (DAOException e) {
-            e.printStackTrace();
+            LOGGER.error("Service exception in main method", e);
         }
     }
 }

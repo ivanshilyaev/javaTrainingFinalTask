@@ -21,10 +21,9 @@ public class FacultyServiceTest {
     public void init() {
         try {
             Runner.initConnectionPool();
-            ServiceFactory serviceFactory =
-                    new ServiceFactoryImpl(new TransactionFactoryImpl());
+            ServiceFactory serviceFactory = new ServiceFactoryImpl();
             facultyService = serviceFactory.createService(FacultyService.class);
-        } catch (DAOException | ServiceException e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
     }
