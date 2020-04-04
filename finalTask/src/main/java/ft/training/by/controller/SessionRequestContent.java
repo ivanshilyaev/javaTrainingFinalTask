@@ -18,15 +18,15 @@ public class SessionRequestContent {
         sessionAttributes = new HashMap<>();
     }
 
-    public HashMap<String, Object> getRequestAttributes() {
+    public Map<String, Object> getRequestAttributes() {
         return requestAttributes;
     }
 
-    public HashMap<String, String[]> getRequestParameters() {
+    public Map<String, String[]> getRequestParameters() {
         return requestParameters;
     }
 
-    public HashMap<String, Object> getSessionAttributes() {
+    public Map<String, Object> getSessionAttributes() {
         return sessionAttributes;
     }
 
