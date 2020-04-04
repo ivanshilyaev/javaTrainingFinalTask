@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -52,7 +53,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
     }
 
     @Override
-    public Faculty findEntityById(Integer id) {
+    public Optional<Faculty> findEntityById(Integer id) {
         Faculty faculty = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -73,7 +74,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
                 close(statement);
             }
         }
-        return faculty;
+        return Optional.ofNullable(faculty);
     }
 
     @Override

@@ -6,6 +6,7 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GroupServiceImpl extends ServiceImpl implements GroupService {
     @Override
@@ -19,7 +20,7 @@ public class GroupServiceImpl extends ServiceImpl implements GroupService {
     }
 
     @Override
-    public Group findEntityById(Integer id) throws ServiceException {
+    public Optional<Group> findEntityById(Integer id) throws ServiceException {
         try {
             GroupDao dao = transaction.createDao(GroupDao.class);
             return dao.findEntityById(id);

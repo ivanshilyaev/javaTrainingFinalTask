@@ -6,6 +6,7 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl extends ServiceImpl implements UserService {
     @Override
@@ -19,7 +20,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public User findEntityById(Integer id) throws ServiceException {
+    public Optional<User> findEntityById(Integer id) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.findEntityById(id);
@@ -29,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLoginAndPassword(String login, char[] password) throws ServiceException {
+    public Optional<User> findByLoginAndPassword(String login, char[] password) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.findByLoginAndPassword(login, password);

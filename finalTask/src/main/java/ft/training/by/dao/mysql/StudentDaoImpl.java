@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentDaoImpl extends DaoImpl implements StudentDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -54,7 +55,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public Student findEntityById(Integer id) throws DAOException {
+    public Optional<Student> findEntityById(Integer id) throws DAOException {
         Student student = null;
         try {
             Statement statement = null;
@@ -84,7 +85,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } finally {
             closeConnection();
         }
-        return student;
+        return Optional.ofNullable(student);
     }
 
     @Override
@@ -112,12 +113,12 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         int subgroupID = resultSet.getInt(2);
         SubgroupDaoImpl subgroupDao = new SubgroupDaoImpl();
         subgroupDao.setConnection(connection);
-        Subgroup subgroup = subgroupDao.findEntityById(subgroupID);
+        Subgroup subgroup = subgroupDao.findEntityById(subgroupID).orElse(null);
         student.setSubgroup(subgroup);
         int userID = resultSet.getInt(3);
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
-        User user = userDao.findEntityById(userID);
+        User user = userDao.findEntityById(userID).orElse(null);
         student.setUser(user);
     }
 }

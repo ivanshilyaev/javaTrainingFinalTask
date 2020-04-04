@@ -25,8 +25,8 @@ public class LoginCommand implements ActionCommand {
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         try {
             ServiceFactory factory = new ServiceFactoryImpl();
-            UserService userService = factory.createService(UserService.class);
-            User user = userService.findByLoginAndPassword(login, password.toCharArray());
+            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+            User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElseThrow(ServiceException::new);
             if (user != null) {
                 request.setAttribute("user", user.getName());
                 page = ConfigurationManager.getProperty("path.page.main");

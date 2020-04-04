@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GroupDaoImpl extends DaoImpl implements GroupDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -53,7 +54,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public Group findEntityById(Integer id) throws DAOException {
+    public Optional<Group> findEntityById(Integer id) throws DAOException {
         Group group = null;
         try {
             Statement statement = null;
@@ -83,7 +84,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         } finally {
             closeConnection();
         }
-        return group;
+        return Optional.ofNullable(group);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         int facultyID = resultSet.getInt(4);
         FacultyDaoImpl facultyDao = new FacultyDaoImpl();
         facultyDao.setConnection(connection);
-        Faculty faculty = facultyDao.findEntityById(facultyID);
+        Faculty faculty = facultyDao.findEntityById(facultyID).orElse(null);
         group.setFaculty(faculty);
     }
 }

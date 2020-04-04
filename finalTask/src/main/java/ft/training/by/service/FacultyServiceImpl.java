@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FacultyServiceImpl extends ServiceImpl implements FacultyService {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -23,7 +24,7 @@ public class FacultyServiceImpl extends ServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty findEntityById(Integer id) throws ServiceException {
+    public Optional<Faculty> findEntityById(Integer id) throws ServiceException {
         try {
             FacultyDao dao = transaction.createDao(FacultyDao.class);
             return dao.findEntityById(id);

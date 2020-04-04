@@ -6,6 +6,7 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService {
     @Override
@@ -19,7 +20,7 @@ public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService 
     }
 
     @Override
-    public Subgroup findEntityById(Integer id) throws ServiceException {
+    public Optional<Subgroup> findEntityById(Integer id) throws ServiceException {
         try {
             SubgroupDao dao = transaction.createDao(SubgroupDao.class);
             return dao.findEntityById(id);

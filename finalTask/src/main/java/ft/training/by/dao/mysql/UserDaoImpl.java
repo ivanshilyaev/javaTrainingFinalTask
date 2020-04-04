@@ -1,7 +1,6 @@
 package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Role;
-import ft.training.by.bean.Student;
 import ft.training.by.bean.User;
 import ft.training.by.dao.UserDao;
 import ft.training.by.dao.exception.DAOException;
@@ -14,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl extends DaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -60,7 +60,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public User findEntityById(Integer id) throws DAOException {
+    public Optional<User> findEntityById(Integer id) throws DAOException {
         User user = null;
         try {
             Statement statement = null;
@@ -92,7 +92,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
         } finally {
             closeConnection();
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public User findByLoginAndPassword(String login, char[] password) {
+    public Optional<User> findByLoginAndPassword(String login, char[] password) {
         User user = null;
         PreparedStatement statement = null;
         try {
@@ -140,7 +140,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     private void fillUser(ResultSet resultSet, User user) throws SQLException {

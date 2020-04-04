@@ -6,6 +6,7 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StudentServiceImpl extends ServiceImpl implements StudentService {
     @Override
@@ -19,7 +20,7 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findEntityById(Integer id) throws ServiceException {
+    public Optional<Student> findEntityById(Integer id) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.findEntityById(id);

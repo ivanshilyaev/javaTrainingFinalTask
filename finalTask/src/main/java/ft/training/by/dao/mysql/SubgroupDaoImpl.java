@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -53,7 +54,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     }
 
     @Override
-    public Subgroup findEntityById(Integer id) throws DAOException {
+    public Optional<Subgroup> findEntityById(Integer id) throws DAOException {
         Subgroup subgroup = null;
         try {
             Statement statement = null;
@@ -83,7 +84,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
         } finally {
             closeConnection();
         }
-        return subgroup;
+        return Optional.ofNullable(subgroup);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
         int groupID = resultSet.getInt(3);
         GroupDaoImpl groupDao = new GroupDaoImpl();
         groupDao.setConnection(connection);
-        Group group = groupDao.findEntityById(groupID);
+        Group group = groupDao.findEntityById(groupID).orElse(null);
         subgroup.setGroup(group);
     }
 }

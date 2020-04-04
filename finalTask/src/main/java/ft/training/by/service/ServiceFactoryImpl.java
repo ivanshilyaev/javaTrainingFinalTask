@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ServiceFactoryImpl implements ServiceFactory {
@@ -37,21 +38,21 @@ public final class ServiceFactoryImpl implements ServiceFactory {
     }
 
     @Override
-    public <T extends Service> T createService(Class<T> key) throws ServiceException {
+    public <T extends Service> Optional<T> createService(Class<T> key) throws ServiceException {
         Class<? extends ServiceImpl> value = repository.get(key);
         if (value != null) {
             try {
                 Transaction transaction = factory.createTransaction();
                 ServiceImpl service = value.getDeclaredConstructor().newInstance();
                 service.setTransaction(transaction);
-                return (T) service;
+                return Optional.of((T) service);
             } catch (InstantiationException | InvocationTargetException
                     | NoSuchMethodException | IllegalAccessException e) {
                 LOGGER.error("Impossible to create service");
                 throw new ServiceException(e);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
