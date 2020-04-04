@@ -1,7 +1,7 @@
 package ft.training.by.controller.action;
 
-import javax.servlet.http.HttpServletRequest;
+import ft.training.by.controller.SessionRequestContent;
 
 public interface ActionCommand {
-    String execute(HttpServletRequest request);
+    String execute(SessionRequestContent content);
 }

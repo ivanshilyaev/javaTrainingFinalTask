@@ -8,7 +8,6 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,8 +57,11 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page;
-        ActionCommand command = ActionFactory.defineCommand(request);
-        page = command.execute(request);
+        SessionRequestContent content = new SessionRequestContent();
+        content.extractValues(request);
+        ActionCommand command = ActionFactory.defineCommand(content);
+        page = command.execute(content);
+        content.insertValues(request);
         if (page != null) {
             request.getRequestDispatcher(page).forward(request, response);
         } else {

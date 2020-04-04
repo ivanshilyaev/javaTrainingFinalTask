@@ -1,14 +1,13 @@
 package ft.training.by.controller.action;
 
+import ft.training.by.controller.SessionRequestContent;
 import ft.training.by.controller.resource.ConfigurationManager;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class LogoutCommand implements ActionCommand {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(SessionRequestContent content) {
         String page = ConfigurationManager.getProperty("path.page.index");
-        request.getSession().invalidate();
+        content.setInvalidateSession(true);
         return page;
     }
 }
