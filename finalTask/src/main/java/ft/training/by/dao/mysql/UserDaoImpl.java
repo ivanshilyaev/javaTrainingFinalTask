@@ -24,6 +24,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     public static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT id, role, surname, name, patronymic FROM user WHERE login = ? AND password = ?;";
 
+    public static final String SQL_UPDATE_USER =
+            "UPDATE user SET login = ?, password = ?, role = ?, surname = ?, name = ?, patronymic = ? WHERE id = ?;";
+
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
@@ -112,13 +115,28 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     @Override
     public User update(User entity) {
-        return null;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_UPDATE_USER);
+            statement.setString(1, entity.getLogin());
+            statement.setString(2, String.valueOf(entity.getPassword()));
+            statement.setInt(3, entity.getRole().ordinal());
+            statement.setString(4, entity.getSurname());
+            statement.setString(5, entity.getName());
+            statement.setString(6, entity.getPatronymic());
+            statement.setInt(7, entity.getId());
+            statement.executeUpdate();
+            close(statement);
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        }
+        return entity;
     }
 
     @Override
     public Optional<User> findByLoginAndPassword(String login, char[] password) {
         User user = null;
-        PreparedStatement statement = null;
+        PreparedStatement statement;
         try {
             statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD);
             statement.setString(1, login);

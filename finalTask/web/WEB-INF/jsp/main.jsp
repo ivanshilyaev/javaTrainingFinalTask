@@ -14,7 +14,8 @@ Hello, ${user}!
     <input type="submit" value="Find all users">
 </form>
 <br>
-${errorFindAllUsersMessage}
+
+<a href="password.jsp">Change password</a>
 <hr>
 <a href="controller?command=logout">Logout</a>
 </body>

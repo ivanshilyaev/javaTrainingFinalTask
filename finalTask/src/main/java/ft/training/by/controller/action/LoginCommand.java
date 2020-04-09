@@ -28,6 +28,7 @@ public class LoginCommand implements ActionCommand {
             User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElseThrow(ServiceException::new);
             if (user != null) {
                 content.getRequestAttributes().put("user", user.getName());
+                content.getSessionAttributes().put("current_user", user);
                 page = ConfigurationManager.getProperty("path.page.main");
                 return page;
             }

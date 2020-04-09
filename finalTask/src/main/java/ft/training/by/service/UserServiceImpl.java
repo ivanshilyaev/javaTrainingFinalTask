@@ -38,4 +38,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User update(User user) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }
