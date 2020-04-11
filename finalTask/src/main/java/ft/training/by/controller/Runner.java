@@ -33,11 +33,8 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl();
-            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
-            User user = userService.findByLoginAndPassword("1823127", "11111".toCharArray()).orElseThrow(ServiceException::new);
-            StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
-            Student student = studentService.findEntityById(user.getId()).orElseThrow(ServiceException::new);
-            System.out.println(student);
+            TutorService tutorService = factory.createService(TutorService.class).orElseThrow(ServiceException::new);
+            System.out.println(tutorService.findAll());
             LOGGER.info("success");
         } catch (ServiceException e) {
             LOGGER.error("Service exception in main method", e);
