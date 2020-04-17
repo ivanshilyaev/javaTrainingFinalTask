@@ -41,6 +41,8 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
         }
         return admins;
     }
