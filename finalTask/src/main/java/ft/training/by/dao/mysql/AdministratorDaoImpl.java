@@ -1,0 +1,83 @@
+package ft.training.by.dao.mysql;
+
+import ft.training.by.bean.Administrator;
+import ft.training.by.bean.User;
+import ft.training.by.dao.AdministratorDao;
+import ft.training.by.dao.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final String SQL_SELECT_ALL_ADMINISTRATORS =
+            "SELECT id, position, user_id FROM administrator;";
+
+    @Override
+    public List<Administrator> findAll() throws DAOException {
+        List<Administrator> admins = new ArrayList<>();
+        try {
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_ADMINISTRATORS)) {
+                    while (resultSet.next()) {
+                        Administrator administrator = new Administrator();
+                        fillAdministrator(administrator, resultSet);
+                        admins.add(administrator);
+                    }
+                }
+            } finally {
+                if (statement != null) {
+                    close(statement);
+                }
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return admins;
+    }
+
+    @Override
+    public Optional<Administrator> findEntityById(Integer id) throws DAOException {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Administrator entity) {
+        return false;
+    }
+
+    @Override
+    public boolean create(Administrator entity) {
+        return false;
+    }
+
+    @Override
+    public Administrator update(Administrator entity) {
+        return null;
+    }
+
+    public void fillAdministrator(Administrator administrator, ResultSet resultSet)
+            throws SQLException, DAOException {
+        administrator.setId(resultSet.getInt(1));
+        administrator.setPosition(resultSet.getString(2));
+        int userId = resultSet.getInt(3);
+        UserDaoImpl userDao = new UserDaoImpl();
+        userDao.setConnection(connection);
+        User user = userDao.findEntityById(userId).orElse(null);
+        administrator.setUser(user);
+    }
+}

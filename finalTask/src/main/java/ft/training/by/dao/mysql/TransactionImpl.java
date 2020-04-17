@@ -24,6 +24,7 @@ public class TransactionImpl implements Transaction {
         repository.put(UserDao.class, UserDaoImpl.class);
         repository.put(StudentDao.class, StudentDaoImpl.class);
         repository.put(TutorDao.class, TutorDaoImpl.class);
+        repository.put(AdministratorDao.class, AdministratorDaoImpl.class);
     }
 
     private Connection connection;

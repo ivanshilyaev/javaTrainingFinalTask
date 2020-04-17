@@ -33,6 +33,9 @@ VALUES
 
 (28, "tutor1", "11111", 2, "Деменчук", "Александр", "Константинович");
 
+INSERT into user (login, password, role, surname, name, patronymic) values
+("admin1", "11111", 1, "Севастюк", "Галина", "Александровна");
+
 INSERT INTO faculty (name)
 VALUES
 ("Факультет прикладной математики и информатики"),
@@ -121,3 +124,6 @@ VALUES
 (1, 2),
 (2, 1),
 (2, 2);
+
+INSERT INTO administrator (position, user_id)
+VALUES ("ведущий специалист", 30);
