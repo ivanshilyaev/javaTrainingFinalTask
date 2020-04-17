@@ -53,7 +53,8 @@ public class Administrator extends Entity {
     @Override
     public String toString() {
         return "Administrator{" +
-                "position='" + position + '\'' +
+                "id='" + getId() + '\'' +
+                ", position='" + position + '\'' +
                 ", user=" + user +
                 '}';
     }

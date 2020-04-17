@@ -65,7 +65,8 @@ public class Tutor extends Entity {
     @Override
     public String toString() {
         return "Tutor{" +
-                "user=" + user.toString() +
+                "id='" + getId() + '\'' +
+                ", user=" + user.toString() +
                 ", position='" + position + '\'' +
                 ", degree='" + degree + '\'' +
                 '}';

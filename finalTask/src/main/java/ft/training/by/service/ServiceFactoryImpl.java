@@ -28,6 +28,7 @@ public final class ServiceFactoryImpl implements ServiceFactory {
         repository.put(TutorService.class, TutorServiceImpl.class);
         repository.put(AdministratorService.class, AdministratorServiceImpl.class);
         repository.put(SubjectService.class, SubjectServiceImpl.class);
+        repository.put(ClassroomService.class, ClassroomServiceImpl.class);
     }
 
     private TransactionFactory factory;

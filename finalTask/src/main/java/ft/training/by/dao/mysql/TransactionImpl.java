@@ -1,5 +1,6 @@
 package ft.training.by.dao.mysql;
 
+import ft.training.by.bean.Classroom;
 import ft.training.by.bean.Tutor;
 import ft.training.by.dao.*;
 import ft.training.by.dao.exception.DAOException;
@@ -26,6 +27,7 @@ public class TransactionImpl implements Transaction {
         repository.put(TutorDao.class, TutorDaoImpl.class);
         repository.put(AdministratorDao.class, AdministratorDaoImpl.class);
         repository.put(SubjectDao.class, SubjectDaoImpl.class);
+        repository.put(ClassroomDao.class, ClassroomDaoImpl.class);
     }
 
     private Connection connection;

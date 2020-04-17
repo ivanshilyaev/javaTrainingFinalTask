@@ -33,8 +33,8 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl();
-            SubjectService subjectService = factory.createService(SubjectService.class).orElseThrow(ServiceException::new);
-            System.out.println(subjectService.findAll());
+            ClassroomService classroomService = factory.createService(ClassroomService.class).orElseThrow(ServiceException::new);
+            System.out.println(classroomService.findAll());
             LOGGER.info("success");
         } catch (ServiceException e) {
             LOGGER.error("Service exception in main method", e);

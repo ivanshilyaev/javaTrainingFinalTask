@@ -40,7 +40,7 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
                 }
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LOGGER.error("DB connection error", throwables);
         } finally {
             closeConnection();
         }
