@@ -55,7 +55,38 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
 
     @Override
     public Optional<Tutor> findEntityById(Integer id) throws DAOException {
-        return Optional.empty();
+        Tutor tutor = null;
+        try {
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = null;
+                try {
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_TUTORS);
+                    while (resultSet.next()) {
+                        if (resultSet.getInt(1) == id) {
+                            tutor = new Tutor();
+                            fillTutor(tutor, resultSet);
+                        }
+                    }
+                } finally {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    } else {
+                        LOGGER.error("Error while reading from DB");
+                    }
+                }
+            } finally {
+                if (statement != null) {
+                    close(statement);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(tutor);
     }
 
     @Override

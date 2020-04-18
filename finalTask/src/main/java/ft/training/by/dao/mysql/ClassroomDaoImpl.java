@@ -1,7 +1,7 @@
 package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Classroom;
-import ft.training.by.bean.Type;
+import ft.training.by.bean.enums.ClassroomType;
 import ft.training.by.dao.ClassroomDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
@@ -30,31 +30,7 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
                 try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_CLASSROOMS)) {
                     while (resultSet.next()) {
                         Classroom classroom = new Classroom();
-                        classroom.setId(resultSet.getInt(1));
-                        classroom.setNumber(resultSet.getString(2));
-                        classroom.setCapacity(resultSet.getInt(3));
-                        int type = resultSet.getInt(4);
-                        switch (type) {
-                            case 0:
-                                classroom.setType(Type.SEMINAR);
-                                break;
-                            case 1:
-                                classroom.setType(Type.LECTURE);
-                                break;
-                            default:
-                                break;
-                        }
-                        int hasProjector = resultSet.getInt(5);
-                        switch (hasProjector) {
-                            case 0:
-                                classroom.setHasProjector(false);
-                                break;
-                            case 1:
-                                classroom.setHasProjector(true);
-                                break;
-                            default:
-                                break;
-                        }
+                        fillClassroom(classroom, resultSet);
                         classrooms.add(classroom);
                     }
                 }
@@ -73,7 +49,38 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
 
     @Override
     public Optional<Classroom> findEntityById(Integer id) throws DAOException {
-        return Optional.empty();
+        Classroom classroom = null;
+        try {
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = null;
+                try {
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_CLASSROOMS);
+                    while (resultSet.next()) {
+                        if (resultSet.getInt(1) == id) {
+                            classroom = new Classroom();
+                            fillClassroom(classroom, resultSet);
+                        }
+                    }
+                } finally {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    } else {
+                        LOGGER.error("Error while reading from DB");
+                    }
+                }
+            } finally {
+                if (statement != null) {
+                    close(statement);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(classroom);
     }
 
     @Override
@@ -94,5 +101,24 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
     @Override
     public Classroom update(Classroom entity) {
         return null;
+    }
+
+    public void fillClassroom(Classroom classroom, ResultSet resultSet)
+            throws SQLException {
+        classroom.setId(resultSet.getInt(1));
+        classroom.setNumber(resultSet.getString(2));
+        classroom.setCapacity(resultSet.getInt(3));
+        classroom.setClassroomType(ClassroomType.getById(resultSet.getInt(4)));
+        int hasProjector = resultSet.getInt(5);
+        switch (hasProjector) {
+            case 0:
+                classroom.setHasProjector(false);
+                break;
+            case 1:
+                classroom.setHasProjector(true);
+                break;
+            default:
+                break;
+        }
     }
 }

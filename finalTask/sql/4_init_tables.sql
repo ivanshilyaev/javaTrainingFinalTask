@@ -113,7 +113,7 @@ INSERT INTO tutor (id, position, degree, user_id)
 VALUES
 (1, "доцент кафедры высшей математики", "кандидат физико-математических наук", 28);
 
-INSERT INTO timetable (id, day, pair_number, subject_id, type, classroom_id, tutor_id)
+INSERT INTO timetable (id, day, pair_number, subject_id, classroomType, classroom_id, tutor_id)
 VALUES
 (1, 0, 3, 2, 1, 2, 1),
 (2, 0, 4, 2, 0, 1, 1);

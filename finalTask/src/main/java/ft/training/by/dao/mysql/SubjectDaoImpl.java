@@ -1,6 +1,7 @@
 package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Subject;
+import ft.training.by.bean.Tutor;
 import ft.training.by.dao.SubjectDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
@@ -49,7 +50,39 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
 
     @Override
     public Optional<Subject> findEntityById(Integer id) throws DAOException {
-        return Optional.empty();
+        Subject subject = null;
+        try {
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = null;
+                try {
+                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBJECTS);
+                    while (resultSet.next()) {
+                        if (resultSet.getInt(1) == id) {
+                            subject = new Subject();
+                            subject.setId(resultSet.getInt(1));
+                            subject.setName(resultSet.getString(2));
+                        }
+                    }
+                } finally {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    } else {
+                        LOGGER.error("Error while reading from DB");
+                    }
+                }
+            } finally {
+                if (statement != null) {
+                    close(statement);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(subject);
     }
 
     @Override

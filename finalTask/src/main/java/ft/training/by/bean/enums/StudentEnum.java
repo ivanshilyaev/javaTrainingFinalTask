@@ -1,4 +1,4 @@
-package ft.training.by.bean;
+package ft.training.by.bean.enums;
 
 public enum StudentEnum {
     STUDENTS("students"),

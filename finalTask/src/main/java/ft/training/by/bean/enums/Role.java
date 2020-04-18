@@ -1,4 +1,4 @@
-package ft.training.by.bean;
+package ft.training.by.bean.enums;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

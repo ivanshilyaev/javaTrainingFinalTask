@@ -1,11 +1,13 @@
 package ft.training.by.bean;
 
+import ft.training.by.bean.enums.ClassroomType;
+
 import java.util.Objects;
 
 public class Classroom extends Entity {
     private String number;
     private int capacity;
-    private Type type;
+    private ClassroomType classroomType;
     private boolean hasProjector;
 
     public Classroom() {
@@ -15,11 +17,11 @@ public class Classroom extends Entity {
         super(id);
     }
 
-    public Classroom(int id, String number, int capacity, Type type, boolean hasProjector) {
+    public Classroom(int id, String number, int capacity, ClassroomType classroomType, boolean hasProjector) {
         super(id);
         this.number = number;
         this.capacity = capacity;
-        this.type = type;
+        this.classroomType = classroomType;
         this.hasProjector = hasProjector;
     }
 
@@ -39,12 +41,12 @@ public class Classroom extends Entity {
         this.capacity = capacity;
     }
 
-    public Type getType() {
-        return type;
+    public ClassroomType getClassroomType() {
+        return classroomType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setClassroomType(ClassroomType classroomType) {
+        this.classroomType = classroomType;
     }
 
     public boolean isHasProjector() {
@@ -64,12 +66,12 @@ public class Classroom extends Entity {
         return capacity == classroom.capacity &&
                 hasProjector == classroom.hasProjector &&
                 number.equals(classroom.number) &&
-                type == classroom.type;
+                classroomType == classroom.classroomType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), number, capacity, type, hasProjector);
+        return Objects.hash(super.hashCode(), number, capacity, classroomType, hasProjector);
     }
 
     @Override
@@ -78,7 +80,7 @@ public class Classroom extends Entity {
                 "id='" + getId() + '\'' +
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
-                ", type=" + type +
+                ", type=" + classroomType +
                 ", hasProjector=" + hasProjector +
                 '}';
     }

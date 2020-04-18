@@ -37,7 +37,7 @@ CREATE TABLE classroom (
 	 * 0 - семианрская (Type.SEMINAR)
 	 * 1 - лекционная (Type.LECTURE)
 	 */
-    type TINYINT NOT NULL CHECK (type IN (0, 1)),
+    classroomType TINYINT NOT NULL CHECK (classroomType IN (0, 1)),
     hasProjector BIT NOT NULL,
     CONSTRAINT pk_classroom PRIMARY KEY (id)
 );
@@ -86,7 +86,7 @@ CREATE TABLE timetable (
 	 * 0 - лекция (Type.LECTURE)
 	 * 1 - практическое занятие (Type.PRACTICE)
 	 */
-	type TINYINT NOT NULL CHECK (type IN (0, 1)),
+	type TINYINT NOT NULL CHECK (classroomType IN (0, 1)),
 	classroom_id INTEGER NOT NULL,
 	tutor_id INTEGER NOT NULL,
 	CONSTRAINT pk_timetable PRIMARY KEY (id),
