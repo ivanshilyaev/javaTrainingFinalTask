@@ -19,10 +19,10 @@
 
         <!-- Login Form -->
         <form name="loginForm" method="POST" action="controller">
-            <input classroomType="hidden" name="command" value="login">
-            <input classroomType="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input classroomType="text" id="password" class="fadeIn third" name="password" placeholder="password">
-            <input classroomType="submit" class="fadeIn fourth" value="Log In">
+            <input type="hidden" name="command" value="login">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+            <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
         <br>

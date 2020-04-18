@@ -10,8 +10,8 @@
 Hello, ${user}!
 <hr>
 <form name="findAllUsersForm" method="POST" action="controller">
-    <input classroomType="hidden" name="command" value="find_all_users">
-    <input classroomType="submit" value="Find all users">
+    <input type="hidden" name="command" value="find_all_users">
+    <input type="submit" value="Find all users">
 </form>
 <br>
 
