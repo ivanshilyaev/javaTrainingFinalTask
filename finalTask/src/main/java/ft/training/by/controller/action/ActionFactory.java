@@ -1,15 +1,16 @@
 package ft.training.by.controller.action;
 
-import ft.training.by.controller.SessionRequestContent;
 import ft.training.by.controller.resource.MessageManager;
+
+import javax.servlet.http.HttpServletRequest;
 
 public final class ActionFactory {
     private ActionFactory() {
     }
 
-    public static ActionCommand defineCommand(SessionRequestContent content) {
-        ActionCommand command = new EmptyCommand();
-        String action = content.getRequestParameters().get("command")[0];
+    public static Action defineCommand(HttpServletRequest request) {
+        Action command = new EmptyAction();
+        String action = request.getParameter("command");
         if (action == null || action.isEmpty()) {
             return command;
         }
@@ -17,7 +18,7 @@ public final class ActionFactory {
             CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
             command = commandEnum.getCommand();
         } catch (IllegalArgumentException e) {
-            content.getRequestAttributes().put("wrongAction", action
+            request.setAttribute("wrongAction", action
                     + MessageManager.getProperty("message.wrongaction"));
         }
         return command;

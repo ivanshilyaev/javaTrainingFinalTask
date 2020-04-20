@@ -1,18 +1,18 @@
 package ft.training.by.controller.action;
 
 public enum CommandEnum {
-    LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand()),
-    FIND_ALL_USERS(new FindAllUsersCommand()),
-    CHANGE_PASSWORD(new ChangePasswordCommand());
+    LOGIN(new LoginAction()),
+    LOGOUT(new LogoutAction()),
+    FIND_ALL_USERS(new FindAllUsersAction()),
+    CHANGE_PASSWORD(new ChangePasswordAction());
 
-    private ActionCommand command;
+    private Action command;
 
-    CommandEnum(ActionCommand command) {
+    CommandEnum(Action command) {
         this.command = command;
     }
 
-    public ActionCommand getCommand() {
+    public Action getCommand() {
         return command;
     }
 }

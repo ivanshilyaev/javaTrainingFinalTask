@@ -1,6 +1,6 @@
 package ft.training.by.controller;
 
-import ft.training.by.controller.action.ActionCommand;
+import ft.training.by.controller.action.Action;
 import ft.training.by.controller.action.ActionFactory;
 import ft.training.by.controller.resource.ConfigurationManager;
 import ft.training.by.controller.resource.MessageManager;
@@ -57,11 +57,8 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page;
-        SessionRequestContent content = new SessionRequestContent();
-        content.extractValues(request);
-        ActionCommand command = ActionFactory.defineCommand(content);
-        page = command.execute(content);
-        content.insertValues(request);
+        Action command = ActionFactory.defineCommand(request);
+        page = command.execute(request, response);
         if (page != null) {
             request.getRequestDispatcher(page).forward(request, response);
         } else {
