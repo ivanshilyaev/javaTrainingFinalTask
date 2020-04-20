@@ -4,7 +4,8 @@ public enum CommandEnum {
     LOGIN(new LoginAction()),
     LOGOUT(new LogoutAction()),
     FIND_ALL_USERS(new FindAllUsersAction()),
-    CHANGE_PASSWORD(new ChangePasswordAction());
+    CHANGE_PASSWORD(new ChangePasswordAction()),
+    MAIN(new MainAction());
 
     private Action command;
 

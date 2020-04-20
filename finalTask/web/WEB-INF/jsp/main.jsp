@@ -14,8 +14,10 @@ Hello, ${user}!
     <input type="submit" value="Find all users">
 </form>
 <br>
-
-<a href="password.jsp">Change password</a>
+<form name="findAllUsersForm" method="POST" action="controller">
+    <input type="hidden" name="command" value="main">
+    <input type="submit" value="Change password">
+</form>
 <hr>
 <a href="controller?command=logout">Logout</a>
 </body>
