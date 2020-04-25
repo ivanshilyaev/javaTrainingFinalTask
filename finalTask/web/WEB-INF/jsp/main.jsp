@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -9,12 +10,14 @@
 <hr>
 Hello, ${user}!
 <hr>
-<form name="findAllUsersForm" method="POST" action="controller">
+<c:url value="/list.html" var="listUrl"/>
+<form name="findAllUsersForm" method="POST" action="${listUrl}">
     <input type="hidden" name="command" value="find_all_users">
     <input type="submit" value="Find all users">
 </form>
 <br>
-<form name="findAllUsersForm" method="POST" action="controller">
+<c:url value="/password.html" var="passwordUrl"/>
+<form name="findAllUsersForm" method="POST" action="${passwordUrl}">
     <input type="hidden" name="command" value="main">
     <input type="submit" value="Change password">
 </form>

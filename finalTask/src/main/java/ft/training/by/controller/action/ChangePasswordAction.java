@@ -23,30 +23,26 @@ public class ChangePasswordAction extends Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page = ConfigurationManager.getProperty("path.page.password");
         String oldPassword = request.getParameter(PARAM_NAME_OLD_PASSWORD);
         String newPassword = request.getParameter(PARAM_NAME_NEW_PASSWORD);
         String newPasswordAgain = request.getParameter(PARAM_NAME_NEW_PASSWORD_AGAIN);
         User currentUser = (User) request.getSession().getAttribute("authorizedUser");
-        System.out.println(Arrays.equals(currentUser.getPassword(), oldPassword.toCharArray()));
         if (!Arrays.equals(currentUser.getPassword(), oldPassword.toCharArray())) {
             System.out.println(currentUser.getPassword());
             System.out.println(oldPassword);
-            request.setAttribute("invalidOldPassword",
+            request.setAttribute("message",
                     MessageManager.getProperty("message.oldPasswordError"));
-            page = ConfigurationManager.getProperty("path.page.password");
             return page;
         }
         if (!newPassword.equals(newPasswordAgain)) {
-            request.setAttribute("passwordRepeatedIncorrectly",
+            request.setAttribute("message",
                     MessageManager.getProperty("message.newPasswordError"));
-            page = ConfigurationManager.getProperty("path.page.password");
             return page;
         }
         if (oldPassword.equals(newPassword)) {
-            request.setAttribute("samePassword",
+            request.setAttribute("message",
                     MessageManager.getProperty("message.samePasswordError"));
-            page = ConfigurationManager.getProperty("path.page.password");
             return page;
         }
         currentUser.setPassword(newPassword.toCharArray());
@@ -55,7 +51,8 @@ public class ChangePasswordAction extends Action {
             UserService userService = serviceFactory.createService(UserService.class).orElseThrow(ServiceException::new);
             userService.update(currentUser);
             request.getSession().invalidate();
-            page = ConfigurationManager.getProperty("path.page.index");
+            request.setAttribute("message",
+                    MessageManager.getProperty("message.passwordChanged"));
             return page;
         } catch (ServiceException e) {
             LOGGER.error("Service exception in execute method", e);
