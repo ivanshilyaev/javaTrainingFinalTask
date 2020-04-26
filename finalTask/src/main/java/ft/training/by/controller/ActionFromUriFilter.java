@@ -1,8 +1,6 @@
 package ft.training.by.controller;
 
 import ft.training.by.controller.action.Action;
-import ft.training.by.controller.action.ChangePasswordAction;
-import ft.training.by.controller.action.FindAllUsersAction;
 import ft.training.by.controller.action.LoginAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,13 +24,14 @@ public class ActionFromUriFilter implements Filter {
          */
 
         actions.put("/", LoginAction.class);
-        actions.put("/index", LoginAction.class);
-        actions.put("/list", LoginAction.class);
-        actions.put("/login", LoginAction.class);
-        actions.put("/password", ChangePasswordAction.class);
-        actions.put("/main", FindAllUsersAction.class);
+        actions.put("/main", LoginAction.class);
+        //actions.put("/index", LoginAction.class);
+        //actions.put("/list", LoginAction.class);
+        //actions.put("/login", LoginAction.class);
+        //actions.put("/password", ChangePasswordAction.class);
+        //actions.put("/main", FindAllUsersAction.class);
         // !!!
-        actions.put("/controller", LoginAction.class);
+        //actions.put("/controller", LoginAction.class);
     }
 
     @Override

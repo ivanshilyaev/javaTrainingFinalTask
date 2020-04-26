@@ -2,15 +2,24 @@ package ft.training.by.controller.action;
 
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
+import ft.training.by.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Action {
     private Set<Role> allowedRoles;
     private User authorizedUser;
     private String name;
+
+    protected ServiceFactory factory;
+
+    public void setFactory(ServiceFactory factory) {
+        this.factory = factory;
+    }
 
     public Set<Role> getAllowedRoles() {
         return allowedRoles;
@@ -36,5 +45,40 @@ public abstract class Action {
         this.name = name;
     }
 
-    public abstract String execute(HttpServletRequest request, HttpServletResponse response);
+    public abstract Forward exec(HttpServletRequest request, HttpServletResponse response);
+
+    public static class Forward {
+        private String forward;
+        private boolean redirect;
+        private Map<String, Object> attributes = new HashMap<>();
+
+        public Forward(String forward, boolean redirect) {
+            this.forward = forward;
+            this.redirect = redirect;
+        }
+
+        public Forward(String forward) {
+            this(forward, true);
+        }
+
+        public String getForward() {
+            return forward;
+        }
+
+        public void setForward(String forward) {
+            this.forward = forward;
+        }
+
+        public boolean isRedirect() {
+            return redirect;
+        }
+
+        public void setRedirect(boolean redirect) {
+            this.redirect = redirect;
+        }
+
+        public Map<String, Object> getAttributes() {
+            return attributes;
+        }
+    }
 }
