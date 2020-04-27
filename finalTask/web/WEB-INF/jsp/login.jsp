@@ -19,8 +19,8 @@
         </div>
 
         <!-- Login Form -->
-        <c:url value="/main.html" var="mainUrl"/>
-        <form name="loginForm" method="POST" action="${mainUrl}">
+        <c:url value="/login.html" var="loginUrl"/>
+        <form name="loginForm" method="POST" action="${loginUrl}">
             <input type="hidden" name="command" value="login">
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
             <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">

@@ -7,11 +7,12 @@ import ft.training.by.service.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public abstract class Action {
-    private Set<Role> allowedRoles;
+    private Set<Role> allowedRoles = new HashSet<>();
     private User authorizedUser;
     private String name;
 

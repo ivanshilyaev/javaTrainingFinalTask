@@ -67,6 +67,7 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Inside servlet 1");
         try {
             // redirected data
             HttpSession session = request.getSession(false);
@@ -84,9 +85,8 @@ public class Controller extends HttpServlet {
 
             Action action = (Action) request.getAttribute("action");
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
-            System.out.println("get factory");
             Action.Forward forward = actionManager.execute(action, request, response);
-            System.out.println("action executed");
+            System.out.println("Inside servlet 2");
 
             // redirected data
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
@@ -96,7 +96,7 @@ public class Controller extends HttpServlet {
             String requestedUri = request.getRequestURI();
             if (forward != null && forward.isRedirect()) {
                 String redirectedUri = request.getContextPath() + forward.getForward();
-                LOGGER.debug(String.format("Request for URI \"%s\" id redirected to URI \"%s\"", requestedUri, redirectedUri));
+                LOGGER.debug(String.format("Request for URI \"%s\" is redirected to URI \"%s\"", requestedUri, redirectedUri));
                 response.sendRedirect(redirectedUri);
             } else {
                 String page;
@@ -105,7 +105,8 @@ public class Controller extends HttpServlet {
                 } else {
                     page = action.getName() + ".jsp";
                 }
-                //page = "/WEB-INF/jsp" + page;
+                page = "/WEB-INF/jsp" + page;
+                System.out.println("Inside servlet 3");
                 LOGGER.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, page));
                 getServletContext().getRequestDispatcher(page).forward(request, response);
             }

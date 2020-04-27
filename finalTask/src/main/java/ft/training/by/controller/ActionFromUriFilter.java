@@ -2,6 +2,7 @@ package ft.training.by.controller;
 
 import ft.training.by.controller.action.Action;
 import ft.training.by.controller.action.LoginAction;
+import ft.training.by.controller.action.MainAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ActionFromUriFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
+    private static Map<String, Action> actions = new ConcurrentHashMap<>();
 
     static {
         /*
@@ -23,13 +24,17 @@ public class ActionFromUriFilter implements Filter {
          * вызывается нужный обработчик (Action)
          */
 
-        actions.put("/", LoginAction.class);
-        actions.put("/main", LoginAction.class);
+        actions.put("/", new MainAction());
+        actions.put("/index", new MainAction());
+        actions.put("/login", new LoginAction());
+        actions.put("/main", new LoginAction());
+        //actions.put("/main", MainAction.class);
+//        actions.put("/login", LoginAction.class);
+//        actions.put("/", LoginAction.class);
         //actions.put("/index", LoginAction.class);
         //actions.put("/list", LoginAction.class);
         //actions.put("/login", LoginAction.class);
         //actions.put("/password", ChangePasswordAction.class);
-        //actions.put("/main", FindAllUsersAction.class);
         // !!!
         //actions.put("/controller", LoginAction.class);
     }
@@ -45,6 +50,8 @@ public class ActionFromUriFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
+            System.out.println(contextPath);
+            System.out.println(uri);
             LOGGER.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
             int beginAction = contextPath.length();
             int endAction = uri.lastIndexOf('.');
@@ -54,13 +61,13 @@ public class ActionFromUriFilter implements Filter {
             } else {
                 actionName = uri.substring(beginAction);
             }
-            Class<? extends Action> actionClass = actions.get(actionName);
             try {
-                Action action = actionClass.getDeclaredConstructor().newInstance();
+                Action action = actions.get(actionName);
+                System.out.println(actionName);
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 filterChain.doFilter(servletRequest, servletResponse);
-            } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            } catch (NullPointerException e) {
                 LOGGER.error("Impossible to create action handler object", e);
                 //httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
                 httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
