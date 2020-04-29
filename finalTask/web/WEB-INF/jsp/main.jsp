@@ -8,20 +8,20 @@
 <body>
 <h2>Welcome</h2>
 <hr>
-Hello, ${user}!
+Hello, ${sessionScope.username}!
 <hr>
 <c:url value="/list.html" var="listUrl"/>
 <form name="findAllUsersForm" method="POST" action="${listUrl}">
-    <input type="hidden" name="command" value="find_all_users">
     <input type="submit" value="Find all users">
 </form>
 <br>
 <c:url value="/password.html" var="passwordUrl"/>
-<form name="findAllUsersForm" method="POST" action="${passwordUrl}">
-    <input type="hidden" name="command" value="main">
+<form name="changePasswordForm" method="POST" action="${passwordUrl}">
     <input type="submit" value="Change password">
 </form>
 <hr>
-<a href="controller?command=logout">Logout</a>
-</body>
+<c:url value="/logout.html" var="logoutUrl"/>
+<form name="logoutForm" method="POST" action="${logoutUrl}">
+    <input type="submit" value="Logout">
+</form>
 </html>

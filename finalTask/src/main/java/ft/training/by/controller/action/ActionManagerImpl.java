@@ -1,6 +1,7 @@
 package ft.training.by.controller.action;
 
 import ft.training.by.service.ServiceFactory;
+import ft.training.by.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ public class ActionManagerImpl implements ActionManager {
     }
 
     @Override
-    public Action.Forward execute(Action action, HttpServletRequest request, HttpServletResponse response) {
+    public Action.Forward execute(Action action, HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         action.setFactory(factory);
         return action.exec(request, response);
     }

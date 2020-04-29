@@ -3,8 +3,6 @@ package ft.training.by.controller;
 import ft.training.by.controller.action.Action;
 import ft.training.by.controller.action.ActionManager;
 import ft.training.by.controller.action.ActionManagerFactory;
-import ft.training.by.controller.resource.ConfigurationManager;
-import ft.training.by.controller.resource.MessageManager;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.pool.ConnectionPool;
 import ft.training.by.service.ServiceFactory;
@@ -67,7 +65,6 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Inside servlet 1");
         try {
             // redirected data
             HttpSession session = request.getSession(false);
@@ -76,8 +73,8 @@ public class Controller extends HttpServlet {
                 Map<String, Object> attributes = (Map<String, Object>)
                         session.getAttribute("redirectedData");
                 if (attributes != null) {
-                    for (String key : attributes.keySet()) {
-                        request.setAttribute(key, attributes.get(key));
+                    for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+                        request.setAttribute(entry.getKey(), entry.getValue());
                     }
                     session.removeAttribute("redirectedData");
                 }
@@ -86,8 +83,6 @@ public class Controller extends HttpServlet {
             Action action = (Action) request.getAttribute("action");
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
-            System.out.println("Inside servlet 2");
-
             // redirected data
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
@@ -106,28 +101,13 @@ public class Controller extends HttpServlet {
                     page = action.getName() + ".jsp";
                 }
                 page = "/WEB-INF/jsp" + page;
-                System.out.println("Inside servlet 3");
                 LOGGER.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, page));
                 getServletContext().getRequestDispatcher(page).forward(request, response);
             }
-
-//            String page;
-//            Action command = ActionFactory.defineCommand(request);
-//            page = command.execute(request, response);
-//            if (page != null) {
-//                request.getRequestDispatcher(page).forward(request, response);
-//            } else {
-//                page = ConfigurationManager.getProperty("path.page.index");
-//                request.getSession().setAttribute("nullPage",
-//                        MessageManager.getProperty("message.nullpage"));
-//                response.sendRedirect(request.getContextPath() + page);
-//            }
         } catch (ServiceException e) {
             LOGGER.error("Impossible to process request", e);
-            String page = ConfigurationManager.getProperty("path.page.error");
-            request.getSession().setAttribute("nullPage",
-                    MessageManager.getProperty("message.nullpage"));
-            response.sendRedirect(request.getContextPath() + page);
+            request.setAttribute("error", "Can't process data");
+            request.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
     }
 }

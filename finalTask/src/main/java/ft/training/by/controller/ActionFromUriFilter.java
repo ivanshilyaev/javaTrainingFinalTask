@@ -1,15 +1,13 @@
 package ft.training.by.controller;
 
-import ft.training.by.controller.action.Action;
-import ft.training.by.controller.action.LoginAction;
-import ft.training.by.controller.action.MainAction;
+import ft.training.by.controller.action.*;
+import ft.training.by.controller.action.student.StudentMainAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,25 +21,17 @@ public class ActionFromUriFilter implements Filter {
          * В зависимости от того, на какой путь мы идём,
          * вызывается нужный обработчик (Action)
          */
-
         actions.put("/", new MainAction());
         actions.put("/index", new MainAction());
         actions.put("/login", new LoginAction());
-        actions.put("/main", new LoginAction());
-        //actions.put("/main", MainAction.class);
-//        actions.put("/login", LoginAction.class);
-//        actions.put("/", LoginAction.class);
-        //actions.put("/index", LoginAction.class);
-        //actions.put("/list", LoginAction.class);
-        //actions.put("/login", LoginAction.class);
-        //actions.put("/password", ChangePasswordAction.class);
-        // !!!
-        //actions.put("/controller", LoginAction.class);
+        actions.put("/main", new StudentMainAction());
+        actions.put("/list", new FindAllUsersAction());
+        actions.put("/logout", new LogoutAction());
+        actions.put("/password", new ChangePasswordAction());
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -50,9 +40,7 @@ public class ActionFromUriFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
-            System.out.println(contextPath);
-            System.out.println(uri);
-            LOGGER.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
+            LOGGER.debug(String.format("Starting to process request for URI \"%s\"", uri));
             int beginAction = contextPath.length();
             int endAction = uri.lastIndexOf('.');
             String actionName;
@@ -63,17 +51,16 @@ public class ActionFromUriFilter implements Filter {
             }
             try {
                 Action action = actions.get(actionName);
-                System.out.println(actionName);
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 filterChain.doFilter(servletRequest, servletResponse);
             } catch (NullPointerException e) {
                 LOGGER.error("Impossible to create action handler object", e);
-                //httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
+                httpRequest.setAttribute("error", String.format("Requested address %s can't be processed by the server", uri));
                 httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
             }
         } else {
-            LOGGER.error("It is impossible to use HTTP filter");
+            LOGGER.error("Impossible to use HTTP filter");
             servletRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
         }
     }

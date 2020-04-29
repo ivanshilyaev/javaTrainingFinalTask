@@ -18,7 +18,8 @@
     <input type="submit" class="fadeIn fifth" value="Submit">
 
     <br>
-    ${message}<br>
+    ${sessionScope.passwordMessage}
+    <br>
 
     <!-- Still doesn't work -->
     <input type="button" value="На главную"

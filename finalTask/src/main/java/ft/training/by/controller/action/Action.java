@@ -3,9 +3,11 @@ package ft.training.by.controller.action;
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
 import ft.training.by.service.ServiceFactory;
+import ft.training.by.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -46,9 +48,9 @@ public abstract class Action {
         this.name = name;
     }
 
-    public abstract Forward exec(HttpServletRequest request, HttpServletResponse response);
+    public abstract Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException;
 
-    public static class Forward {
+    public static class Forward implements Serializable {
         private String forward;
         private boolean redirect;
         private Map<String, Object> attributes = new HashMap<>();

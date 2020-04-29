@@ -22,7 +22,8 @@ public class SecurityFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -40,7 +41,7 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
-            boolean canExecute = allowedRoles == null;
+            boolean canExecute = (allowedRoles == null);
             if (user != null) {
                 userName = "\"" + user.getLogin() + "\" user";
                 canExecute = canExecute || allowedRoles.contains(user.getRole());
@@ -48,14 +49,14 @@ public class SecurityFilter implements Filter {
             if (canExecute) {
                 chain.doFilter(request, response);
             } else {
-                LOGGER.info(String.format("Trying of %s access to forbidden resource \"%s\"", userName, action.getName()));
+                LOGGER.info(String.format("Trying of %s access forbidden resource \"%s\"", userName, action.getName()));
                 if (session != null && action.getClass() != MainAction.class) {
-                    session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
+                    session.setAttribute("SecurityFilterMessage", "Access is forbidden");
                 }
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
             }
         } else {
-            LOGGER.error("It is impossible to use HTTP filter");
+            LOGGER.error("Impossible to use HTTP filter");
             request.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
     }

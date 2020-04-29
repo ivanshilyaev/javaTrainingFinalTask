@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="user" items="${list}">
+    <c:forEach var="user" items="${sessionScope.list}">
         <tr>
             <td><c:out value="${ user.id }"/></td>
             <td><c:out value="${ user.login }"/></td>
@@ -39,7 +39,7 @@
     </tbody>
     <table/>
     </c:if>
-    <c:if test="${list.size() == 0}">
+    <c:if test="${sessionScope.list.size() == 0}">
     List is empty!<br>
     </c:if>
     <hr>

@@ -141,8 +141,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, String.valueOf(password));
-            ResultSet resultSet =
-                    statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt(1));

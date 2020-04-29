@@ -2,7 +2,6 @@ package ft.training.by.controller.action;
 
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
-import ft.training.by.controller.resource.MessageManager;
 import ft.training.by.service.UserService;
 import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -41,28 +40,28 @@ public class LoginAction extends Action {
     }
 
     @Override
-    public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Inside login action");
+    public Action.Forward exec(HttpServletRequest request, HttpServletResponse response)
+            throws ServiceException {
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         if (login != null && password != null) {
-            try {
-                UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
-                User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElseThrow(ServiceException::new);
-                if (user != null) {
-                    // для привествия пользователя на главной странице
-                    request.setAttribute("user", user.getName());
-                    // для разделения пользователей
-                    request.getSession().setAttribute("authorizedUser", user);
-                    request.getSession().setAttribute("menu", menu.get(user.getRole()));
-                    LOGGER.info(String.format("user \"%s\" is logged in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                    return new Forward("/index.html");
-                }
-            } catch (ServiceException e) {
-                LOGGER.error("Service exception in execute method", e);
+            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+            User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElse(null);
+            if (user != null) {
+                // для привествия пользователя на главной странице
+                request.getSession().setAttribute("username", user.getName());
+                // для разделения пользователей
+                request.getSession().setAttribute("authorizedUser", user);
+                request.getSession().setAttribute("menu", menu.get(user.getRole()));
+                LOGGER.info(String.format("User \"%s\" is logged in from %s (%s:%s)",
+                        login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
+                return new Forward("/index.html");
+            } else {
+                request.getSession().setAttribute("message", "Unknown login or password");
+                LOGGER.info(String.format("User \"%s\" unsuccessfully tried to log in from %s (%s:%s)",
+                        login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
             }
         }
-        // request.setAttribute("errorLoginPasswordMessage", MessageManager.getProperty("message.loginerror"));
         return null;
     }
 }
