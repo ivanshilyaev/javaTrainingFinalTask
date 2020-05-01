@@ -24,15 +24,14 @@ public class LoginAction extends Action {
 
     static {
         menu.put(Role.STUDENT, new ArrayList<>(Arrays.asList(
-                new MenuItem("главная страница", "/main.html")
+                new MenuItem("главная страница студента", "/studentCabinet.html")
         )));
         menu.put(Role.ADMINISTRATOR, new ArrayList<>(Arrays.asList(
-                // !
-                new MenuItem("главная страница", "/main.html")
+                new MenuItem("главная страница администатора", "/adminCabinet.html")
         )));
         menu.put(Role.TUTOR, new ArrayList<>(Arrays.asList(
                 // !
-                new MenuItem("главная страница", "/main.html")
+                new MenuItem("главная страница преподавателя", "/tutorCabinet.html")
         )));
     }
 

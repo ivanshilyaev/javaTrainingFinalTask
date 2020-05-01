@@ -23,7 +23,7 @@
 
     <!-- Still doesn't work -->
     <input type="button" value="На главную"
-           onclick="window.location='${pageContext.request.contextPath}/main.jsp'">
+           onclick="window.location='${pageContext.request.contextPath}/studentCabinet.jsp'">
 </form>
 </body>
 </html>
