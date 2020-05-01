@@ -41,8 +41,7 @@ public class ChangePasswordAction extends AuthorizedUserAction {
                 return null;
             }
             currentUser.setPassword(newPassword.toCharArray());
-            ServiceFactory serviceFactory = new ServiceFactoryImpl();
-            UserService userService = serviceFactory.createService(UserService.class).orElseThrow(ServiceException::new);
+            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
             userService.update(currentUser);
             return new Forward("/logout.html");
         }

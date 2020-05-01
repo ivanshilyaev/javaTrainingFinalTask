@@ -1,7 +1,9 @@
 package ft.training.by.controller.action;
 
+import ft.training.by.bean.Student;
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
+import ft.training.by.service.StudentService;
 import ft.training.by.service.UserService;
 import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -52,6 +54,25 @@ public class LoginAction extends Action {
                 request.getSession().setAttribute("username", user.getName());
                 // для разделения пользователей
                 request.getSession().setAttribute("authorizedUser", user);
+                switch (user.getRole()) {
+                    case STUDENT:
+                        StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
+                        Student student = studentService.findByUserId(user.getId()).orElse(null);
+                        if (student != null) {
+                            request.getSession().setAttribute("authorizedStudent", student);
+                        }
+                        break;
+
+                    case ADMINISTRATOR:
+
+                        break;
+
+                    case TUTOR:
+
+                        break;
+                    default:
+                        break;
+                }
                 request.getSession().setAttribute("menu", menu.get(user.getRole()));
                 LOGGER.info(String.format("User \"%s\" is logged in from %s (%s:%s)",
                         login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));

@@ -1,6 +1,7 @@
 package ft.training.by.controller;
 
 import ft.training.by.controller.action.*;
+import ft.training.by.controller.action.student.FindGroupStudentsAction;
 import ft.training.by.controller.action.student.StudentMainAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,8 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/list", new FindAllUsersAction());
         actions.put("/logout", new LogoutAction());
         actions.put("/password", new ChangePasswordAction());
+
+        actions.put("/search/group", new FindGroupStudentsAction());
     }
 
     @Override

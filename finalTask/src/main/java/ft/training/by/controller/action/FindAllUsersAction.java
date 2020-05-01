@@ -1,8 +1,6 @@
 package ft.training.by.controller.action;
 
 import ft.training.by.bean.User;
-import ft.training.by.service.ServiceFactory;
-import ft.training.by.service.ServiceFactoryImpl;
 import ft.training.by.service.UserService;
 import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -18,8 +16,7 @@ public class FindAllUsersAction extends AuthorizedUserAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
-        ServiceFactory serviceFactory = new ServiceFactoryImpl();
-        UserService userService = serviceFactory.createService(UserService.class).orElseThrow(ServiceException::new);
+        UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
         List<User> list = userService.findAll();
         request.getSession().setAttribute("list", list);
         return null;

@@ -15,6 +15,11 @@ Hello, ${sessionScope.username}!
     <input type="submit" value="Find all users">
 </form>
 <br>
+<c:url value="/search/group.html" var="groupUrl"/>
+<form name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
+    <input type="submit" value="MyGroup">
+</form>
+<br>
 <c:url value="/password.html" var="passwordUrl"/>
 <form name="changePasswordForm" method="POST" action="${passwordUrl}">
     <input type="submit" value="Change password">

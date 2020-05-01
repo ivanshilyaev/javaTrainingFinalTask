@@ -15,31 +15,31 @@
     </style>
 </head>
 <body>
-<c:if test="${sessionScope.list.size() != 0}">
+<c:if test="${sessionScope.groupList.size() != 0}">
 <table class="table table-bordered">
     <thead>
+    <c:set var="index" value="1"/>
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Login</th>
+        <th scope="col">Number</th>
         <th scope="col">Surname</th>
         <th scope="col">Name</th>
         <th scope="col">Patronymic</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="user" items="${sessionScope.list}">
+    <c:forEach var="student" items="${sessionScope.groupList}">
         <tr>
-            <td><c:out value="${ user.id }"/></td>
-            <td><c:out value="${ user.login }"/></td>
-            <td><c:out value="${ user.surname }"/></td>
-            <td><c:out value="${ user.name }"/></td>
-            <td><c:out value="${ user.patronymic }"/></td>
+            <td><c:out value="${index}"/></td>
+            <td><c:out value="${ student.user.surname }"/></td>
+            <td><c:out value="${ student.user.name }"/></td>
+            <td><c:out value="${ student.user.patronymic }"/></td>
         </tr>
+        <c:set var="index" value="${index + 1}"/>
     </c:forEach>
     </tbody>
     <table/>
     </c:if>
-    <c:if test="${sessionScope.list.size() == 0}">
+    <c:if test="${sessionScope.groupList.size() == 0}">
     List is empty!<br>
     </c:if>
     <hr>

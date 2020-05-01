@@ -28,4 +28,24 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Student> findByGroup(int groupNum) throws ServiceException {
+        try {
+            StudentDao dao = transaction.createDao(StudentDao.class);
+            return dao.findByGroup(groupNum);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<Student> findByUserId(Integer id) throws ServiceException {
+        try {
+            StudentDao dao = transaction.createDao(StudentDao.class);
+            return dao.findByUserId(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

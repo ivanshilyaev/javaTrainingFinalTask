@@ -2,12 +2,14 @@ package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
+import ft.training.by.bean.Subject;
 import ft.training.by.bean.User;
 import ft.training.by.dao.StudentDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +22,9 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
 
     public static final String SQL_SELECT_ALL_STUDENTS =
             "SELECT id, subgroup_id, user_id FROM student;";
+
+    public static final String SQL_SELECT_STUDENT_BY_USER_ID =
+            "SELECT id, subgroup_id, user_id FROM student WHERE user_id = ?;";
 
     @Override
     public List<Student> findAll() throws DAOException {
@@ -106,6 +111,33 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     @Override
     public Student update(Student entity) {
         return null;
+    }
+
+    @Override
+    public List<Student> findByGroup(int groupNum) throws DAOException {
+        List<Student> students = findAll();
+        students.removeIf(student -> student.getSubgroup().getGroup().getGroupNumber() != groupNum);
+        return students;
+    }
+
+    @Override
+    public Optional<Student> findByUserId(Integer id) throws DAOException {
+        Student student = null;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_USER_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                student = new Student();
+                fillStudent(student, resultSet);
+                resultSet.close();
+                close(statement);
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(student);
     }
 
     private void fillStudent(Student student, ResultSet resultSet) throws SQLException, DAOException {
