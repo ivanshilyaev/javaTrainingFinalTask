@@ -8,6 +8,7 @@ import ft.training.by.dao.interfaces.TimetableGroupDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,8 +23,12 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
             "SELECT id, timetable_id, subgroup_id FROM timetable_group;";
 
     private static final String SQL_SELECT_ITEM_BY_ID =
-            "SELECT id, timetable_id, subgroup_id FROM timetable_subgroup" +
+            "SELECT id, timetable_id, subgroup_id FROM timetable_group" +
                     " WHERE id = ?;";
+
+    public static final String SQL_SELECT_ITEM_BY_SUBGROUP_ID =
+            "SELECT id, timetable_id, subgroup_id FROM timetable_group" +
+                    " WHERE subgroup_id = ?;";
 
     @Override
     public List<TimetableGroup> findAll() throws DAOException {
@@ -47,7 +52,22 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
 
     @Override
     public Optional<TimetableGroup> findEntityById(Integer id) throws DAOException {
-        return Optional.empty();
+        TimetableGroup timetableGroup = null;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                timetableGroup = new TimetableGroup();
+                fillTimetableGroup(resultSet, timetableGroup);
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(timetableGroup);
     }
 
     @Override
@@ -68,6 +88,27 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     @Override
     public TimetableGroup update(TimetableGroup entity) {
         return null;
+    }
+
+    @Override
+    public List<TimetableGroup> findBySubgroupId(Integer id) throws DAOException {
+        List<TimetableGroup> list = new ArrayList<>();
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_SUBGROUP_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                TimetableGroup timetableGroup = new TimetableGroup();
+                fillTimetableGroup(resultSet, timetableGroup);
+                list.add(timetableGroup);
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
+        }
+        return list;
     }
 
     private void fillTimetableGroup(ResultSet resultSet, TimetableGroup timetableGroup)

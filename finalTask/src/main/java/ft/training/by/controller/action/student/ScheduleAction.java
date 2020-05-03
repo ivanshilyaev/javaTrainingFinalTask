@@ -2,6 +2,7 @@ package ft.training.by.controller.action.student;
 
 import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
+import ft.training.by.bean.TimetableGroup;
 import ft.training.by.service.interfaces.StudentService;
 import ft.training.by.service.interfaces.SubgroupService;
 import ft.training.by.service.exception.ServiceException;
@@ -9,6 +10,7 @@ import ft.training.by.service.interfaces.TimetableGroupService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class ScheduleAction extends StudentAction {
     @Override
@@ -25,7 +27,10 @@ public class ScheduleAction extends StudentAction {
         SubgroupService subgroupService = factory.createService(SubgroupService.class).orElseThrow(ServiceException::new);
         Subgroup subgroup = subgroupService.findEntityById(student.getSubgroup().getId()).orElse(null);
         TimetableGroupService timetableGroupService = factory.createService(TimetableGroupService.class).orElseThrow(ServiceException::new);
-        System.out.println(timetableGroupService.findAll());
+        List<TimetableGroup> list = timetableGroupService.findBySubgroupId(subgroup.getId());
+        for (TimetableGroup t : list) {
+            System.out.println(t);
+        }
         request.getSession().setAttribute("schedule", null);
         return null;
     }
