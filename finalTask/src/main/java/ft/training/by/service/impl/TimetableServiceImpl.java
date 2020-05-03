@@ -7,6 +7,7 @@ import ft.training.by.service.exception.ServiceException;
 import ft.training.by.service.interfaces.TimetableService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TimetableServiceImpl extends ServiceImpl implements TimetableService {
     @Override
@@ -14,6 +15,16 @@ public class TimetableServiceImpl extends ServiceImpl implements TimetableServic
         try {
             TimetableDao dao = transaction.createDao(TimetableDao.class);
             return dao.findAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<Timetable> findEntityById(Integer id) throws ServiceException {
+        try {
+            TimetableDao dao = transaction.createDao(TimetableDao.class);
+            return dao.findEntityById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

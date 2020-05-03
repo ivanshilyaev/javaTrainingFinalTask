@@ -61,23 +61,24 @@
     <c:if test="${sessionScope.schedule.size() != 0}">
         <table class="table table-bordered">
             <thead>
-            <c:set var="index" value="1"/>
             <tr>
-                <th scope="col">Number</th>
-                <th scope="col">Surname</th>
-                <th scope="col">Name</th>
-                <th scope="col">Patronymic</th>
+                <th scope="col">Номер пары</th>
+                    <%-- Время! (начала и окончания пары) --%>
+                <th scope="col">Диспиплина</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Аудитория</th>
+                <th scope="col">Преподаватель</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="student" items="${sessionScope.schedule}">
+            <c:forEach var="timetable" items="${sessionScope.schedule}">
                 <tr>
-                    <td><c:out value="${index}"/></td>
-                    <td><c:out value="${ student.user.surname }"/></td>
-                    <td><c:out value="${ student.user.name }"/></td>
-                    <td><c:out value="${ student.user.patronymic }"/></td>
+                    <td><c:out value="${ timetable.pairNumber }"/></td>
+                    <td><c:out value="${ timetable.subject.name }"/></td>
+                    <td><c:out value="${ timetable.classType }"/></td>
+                    <td><c:out value="${ timetable.classroom.number }"/></td>
+                    <td><c:out value="${ timetable.tutor.user.surname }"/></td>
                 </tr>
-                <c:set var="index" value="${index + 1}"/>
             </c:forEach>
             </tbody>
         </table>
