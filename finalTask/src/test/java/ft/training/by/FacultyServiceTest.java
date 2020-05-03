@@ -4,11 +4,9 @@ import static org.testng.Assert.assertEquals;
 
 import ft.training.by.bean.Faculty;
 import ft.training.by.controller.Runner;
-import ft.training.by.dao.exception.DAOException;
-import ft.training.by.dao.mysql.TransactionFactoryImpl;
-import ft.training.by.service.FacultyService;
-import ft.training.by.service.ServiceFactory;
-import ft.training.by.service.ServiceFactoryImpl;
+import ft.training.by.service.interfaces.FacultyService;
+import ft.training.by.service.interfaces.ServiceFactory;
+import ft.training.by.service.impl.ServiceFactoryImpl;
 import ft.training.by.service.exception.ServiceException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;

@@ -2,7 +2,7 @@ package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Administrator;
 import ft.training.by.bean.User;
-import ft.training.by.dao.AdministratorDao;
+import ft.training.by.dao.interfaces.AdministratorDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

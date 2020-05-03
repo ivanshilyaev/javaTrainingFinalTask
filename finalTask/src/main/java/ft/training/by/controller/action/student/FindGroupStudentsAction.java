@@ -1,7 +1,7 @@
 package ft.training.by.controller.action.student;
 
 import ft.training.by.bean.Student;
-import ft.training.by.service.StudentService;
+import ft.training.by.service.interfaces.StudentService;
 import ft.training.by.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;

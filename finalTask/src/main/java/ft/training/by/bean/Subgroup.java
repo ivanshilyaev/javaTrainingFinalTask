@@ -7,11 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Objects;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Subgroup", propOrder = {"subgroupNumber", "group"})
 public class Subgroup extends Entity {
-    @XmlJavaTypeAdapter(value = CharAdapter.class, type = char.class)
     private char subgroupNumber;
     private Group group;
 

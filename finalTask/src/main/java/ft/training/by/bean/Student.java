@@ -6,9 +6,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Student", propOrder = {"user", "subgroup"})
 public class Student extends Entity {
     private User user;
     private Subgroup subgroup;
@@ -59,7 +56,8 @@ public class Student extends Entity {
     @Override
     public String toString() {
         return "Student{" +
-                "user=" + user +
+                "id=" + getId() +
+                ", user=" + user +
                 ", subgroup=" + subgroup +
                 '}';
     }

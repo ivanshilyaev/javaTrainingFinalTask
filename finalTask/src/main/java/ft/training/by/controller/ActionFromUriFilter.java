@@ -4,6 +4,7 @@ import ft.training.by.controller.action.*;
 import ft.training.by.controller.action.administrator.AdministratorMainAction;
 import ft.training.by.controller.action.administrator.FindAllUsersAction;
 import ft.training.by.controller.action.student.FindGroupStudentsAction;
+import ft.training.by.controller.action.student.ScheduleAction;
 import ft.training.by.controller.action.student.StudentMainAction;
 import ft.training.by.controller.action.tutor.TutorMainAction;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,8 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/tutorCabinet", new TutorMainAction());
 
         actions.put("/search/group", new FindGroupStudentsAction());
+
+        actions.put("/study/schedule", new ScheduleAction());
     }
 
     @Override
@@ -61,8 +64,6 @@ public class ActionFromUriFilter implements Filter {
             try {
                 // !
                 Action action = actions.get(actionName);
-                System.out.println(action);
-                System.out.println(actionName);
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 filterChain.doFilter(servletRequest, servletResponse);

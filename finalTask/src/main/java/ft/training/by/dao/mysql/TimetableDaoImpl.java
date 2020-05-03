@@ -6,7 +6,7 @@ import ft.training.by.bean.Timetable;
 import ft.training.by.bean.Tutor;
 import ft.training.by.bean.enums.ClassType;
 import ft.training.by.bean.enums.Day;
-import ft.training.by.dao.TimetableDao;
+import ft.training.by.dao.interfaces.TimetableDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

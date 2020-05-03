@@ -1,6 +1,6 @@
 package ft.training.by.controller.action;
 
-import ft.training.by.service.ServiceFactory;
+import ft.training.by.service.interfaces.ServiceFactory;
 import ft.training.by.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;

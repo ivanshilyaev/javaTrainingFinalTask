@@ -1,11 +1,11 @@
 package ft.training.by.controller;
 
-import ft.training.by.bean.Student;
-import ft.training.by.bean.User;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.pool.ConnectionPool;
-import ft.training.by.service.*;
 import ft.training.by.service.exception.ServiceException;
+import ft.training.by.service.impl.ServiceFactoryImpl;
+import ft.training.by.service.interfaces.ServiceFactory;
+import ft.training.by.service.interfaces.TimetableService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

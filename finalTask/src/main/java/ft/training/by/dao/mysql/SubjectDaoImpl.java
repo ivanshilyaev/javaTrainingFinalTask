@@ -1,8 +1,7 @@
 package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Subject;
-import ft.training.by.bean.Tutor;
-import ft.training.by.dao.SubjectDao;
+import ft.training.by.dao.interfaces.SubjectDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

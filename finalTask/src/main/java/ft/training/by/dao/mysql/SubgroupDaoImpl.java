@@ -2,11 +2,12 @@ package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Group;
 import ft.training.by.bean.Subgroup;
-import ft.training.by.dao.SubgroupDao;
+import ft.training.by.dao.interfaces.SubgroupDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,9 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
 
     public static final String SQL_SELECT_ALL_SUBGROUPS =
             "SELECT id, subgroup_number, group_id FROM subgroup;";
+
+    public static final String SQL_SELECT_SUBGROUP_BY_ID =
+            "SELECT id, subgroup_number, group_id FROM subgroup WHERE id = ?;";
 
     @Override
     public List<Subgroup> findAll() throws DAOException {
@@ -56,31 +60,19 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     @Override
     public Optional<Subgroup> findEntityById(Integer id) throws DAOException {
         Subgroup subgroup = null;
+        PreparedStatement statement;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
-                    while (resultSet.next()) {
-                        if (resultSet.getInt(1) == id) {
-                            subgroup = new Subgroup();
-                            fillSubgroup(resultSet, subgroup);
-                        }
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.prepareStatement(SQL_SELECT_SUBGROUP_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                subgroup = new Subgroup();
+                fillSubgroup(resultSet, subgroup);
+                resultSet.close();
+                close(statement);
             }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
         } finally {
             closeConnection();
         }

@@ -2,9 +2,8 @@ package ft.training.by.dao.mysql;
 
 import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
-import ft.training.by.bean.Subject;
 import ft.training.by.bean.User;
-import ft.training.by.dao.StudentDao;
+import ft.training.by.dao.interfaces.StudentDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -136,6 +135,8 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
         }
         return Optional.ofNullable(student);
     }

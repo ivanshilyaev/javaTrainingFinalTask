@@ -1,9 +1,7 @@
 package ft.training.by.controller.action;
 
 import ft.training.by.bean.User;
-import ft.training.by.service.ServiceFactory;
-import ft.training.by.service.ServiceFactoryImpl;
-import ft.training.by.service.UserService;
+import ft.training.by.service.interfaces.UserService;
 import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

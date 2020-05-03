@@ -1,7 +1,7 @@
 package ft.training.by.dao.mysql;
 
-import ft.training.by.dao.Transaction;
-import ft.training.by.dao.TransactionFactory;
+import ft.training.by.dao.interfaces.Transaction;
+import ft.training.by.dao.interfaces.TransactionFactory;
 import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;

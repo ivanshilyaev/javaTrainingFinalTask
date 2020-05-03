@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>List of users</title>
+    <title>Список всех пользователей</title>
     <style>
         table {
             border-collapse: collapse;

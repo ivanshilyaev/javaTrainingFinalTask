@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/start.css"/>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Авторизация</title>
 </head>
 
 <body>
@@ -21,16 +22,16 @@
         <!-- Login Form -->
         <c:url value="/login.html" var="loginUrl"/>
         <form name="loginForm" method="POST" action="${loginUrl}">
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Логин">
+            <input type="text" id="password" class="fadeIn third" name="password" placeholder="Пароль">
+            <input type="submit" class="fadeIn fourth" value="Войти">
         </form>
         ${sessionScope.message}
         <br>
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
+            <a class="underlineHover" href="#">Забыли пароль?</a>
         </div>
 
     </div>
