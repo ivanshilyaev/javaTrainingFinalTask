@@ -2,6 +2,7 @@ package ft.training.by.controller;
 
 import ft.training.by.controller.action.*;
 import ft.training.by.controller.action.administrator.AdministratorMainAction;
+import ft.training.by.controller.action.administrator.FindAllUsersAction;
 import ft.training.by.controller.action.student.FindGroupStudentsAction;
 import ft.training.by.controller.action.student.StudentMainAction;
 import ft.training.by.controller.action.tutor.TutorMainAction;
@@ -24,7 +25,7 @@ public class ActionFromUriFilter implements Filter {
          * В зависимости от того, на какой путь мы идём,
          * вызывается нужный обработчик (Action)
          */
-        actions.put("/", new MainAction());
+        actions.put("/", new UnauthorizedUserAction());
         actions.put("/index", new MainAction());
         actions.put("/login", new LoginAction());
         actions.put("/list", new FindAllUsersAction());
@@ -58,7 +59,10 @@ public class ActionFromUriFilter implements Filter {
                 actionName = uri.substring(beginAction);
             }
             try {
+                // !
                 Action action = actions.get(actionName);
+                System.out.println(action);
+                System.out.println(actionName);
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 filterChain.doFilter(servletRequest, servletResponse);

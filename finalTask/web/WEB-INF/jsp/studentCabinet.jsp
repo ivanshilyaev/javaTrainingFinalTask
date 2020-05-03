@@ -10,11 +10,6 @@
 <hr>
 Hello, ${sessionScope.username}!
 <hr>
-<c:url value="/list.html" var="listUrl"/>
-<form name="findAllUsersForm" method="POST" action="${listUrl}">
-    <input type="submit" value="Find all users">
-</form>
-<br>
 <c:url value="/search/group.html" var="groupUrl"/>
 <form name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
     <input type="submit" value="MyGroup">

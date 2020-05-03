@@ -10,6 +10,16 @@
 <hr>
 Hello, ${sessionScope.username}!
 <hr>
+<c:url value="/list.html" var="listUrl"/>
+<form name="findAllUsersForm" method="POST" action="${listUrl}">
+    <input type="submit" value="Find all users">
+</form>
+<br>
+<c:url value="/password.html" var="passwordUrl"/>
+<form name="changePasswordForm" method="POST" action="${passwordUrl}">
+    <input type="submit" value="Change password">
+</form>
+<hr>
 <c:url value="/logout.html" var="logoutUrl"/>
 <form name="logoutForm" method="POST" action="${logoutUrl}">
     <input type="submit" value="Logout">

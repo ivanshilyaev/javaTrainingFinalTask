@@ -1,4 +1,4 @@
-package ft.training.by.controller.action;
+package ft.training.by.controller.action.administrator;
 
 import ft.training.by.bean.User;
 import ft.training.by.service.UserService;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class FindAllUsersAction extends AuthorizedUserAction {
+public class FindAllUsersAction extends AdministratorAction {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override

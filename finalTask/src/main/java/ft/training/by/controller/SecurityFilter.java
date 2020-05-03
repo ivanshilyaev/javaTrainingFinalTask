@@ -41,19 +41,29 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
+            /*
+             * Исправить это место, когда появятся общие действия,
+             * которые возможны для неавторизированных пользователей.
+             */
             boolean canExecute = (allowedRoles == null);
             if (user != null) {
                 userName = "\"" + user.getLogin() + "\" user";
-                canExecute = canExecute || allowedRoles.contains(user.getRole());
+                canExecute = canExecute ||
+                        (allowedRoles.contains(user.getRole()));
             }
             if (canExecute) {
                 chain.doFilter(request, response);
             } else {
-                LOGGER.info(String.format("Trying of %s access forbidden resource \"%s\"", userName, action.getName()));
-                if (session != null && action.getClass() != MainAction.class) {
-                    session.setAttribute("SecurityFilterMessage", "Access is forbidden");
+                if (allowedRoles.isEmpty()) {
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
+                } else {
+                    LOGGER.info(String.format("Trying of %s access forbidden resource \"%s\"", userName, action.getName()));
+                    if (session != null && action.getClass() != MainAction.class) {
+                        session.setAttribute("SecurityFilterMessage", "Access is forbidden");
+                    }
+                    request.setAttribute("error", "Access denied");
+                    request.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
                 }
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
             }
         } else {
             LOGGER.error("Impossible to use HTTP filter");
