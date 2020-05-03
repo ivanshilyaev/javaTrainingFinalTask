@@ -11,6 +11,7 @@ import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,9 +22,14 @@ import java.util.Optional;
 public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_CLASSES =
+    private static final String SQL_SELECT_ALL_CLASSES =
             "SELECT id, day, pair_number, subject_id, type" +
                     ", classroom_id, tutor_id FROM timetable;";
+
+    private static final String SQL_SELECT_CLASS_BY_ID =
+            "SELECT id, day, pair_number, subject_id, type" +
+                    ", classroom_id, tutor_id FROM timetable" +
+                    " WHERE id = ?;";
 
     public List<Timetable> findAll() throws DAOException {
         List<Timetable> timetables = new ArrayList<>();
@@ -53,7 +59,24 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
 
     @Override
     public Optional<Timetable> findEntityById(Integer id) throws DAOException {
-        return Optional.empty();
+        Timetable timetable = null;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_CLASS_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                timetable = new Timetable();
+                fillTimetable(timetable, resultSet);
+                resultSet.close();
+                close(statement);
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(timetable);
     }
 
     @Override

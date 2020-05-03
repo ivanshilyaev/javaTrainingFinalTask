@@ -5,6 +5,7 @@ import ft.training.by.bean.Subgroup;
 import ft.training.by.service.interfaces.StudentService;
 import ft.training.by.service.interfaces.SubgroupService;
 import ft.training.by.service.exception.ServiceException;
+import ft.training.by.service.interfaces.TimetableGroupService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,8 @@ public class ScheduleAction extends StudentAction {
         System.out.println(day);
         SubgroupService subgroupService = factory.createService(SubgroupService.class).orElseThrow(ServiceException::new);
         Subgroup subgroup = subgroupService.findEntityById(student.getSubgroup().getId()).orElse(null);
-        System.out.println(subgroup);
+        TimetableGroupService timetableGroupService = factory.createService(TimetableGroupService.class).orElseThrow(ServiceException::new);
+        System.out.println(timetableGroupService.findAll());
         request.getSession().setAttribute("schedule", null);
         return null;
     }
