@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>Моя группа</title>
+    <title>Группа</title>
     <style>
         table {
             border-collapse: collapse;
@@ -43,6 +43,11 @@
     Список пуст!<br>
 </c:if>
 <hr>
+
+<c:url value="/students/edit.html" var="editUrl"/>
+<form name="addNewUser" method="POST" action="${editUrl}">
+    <input type="submit" value="Добавить нового студента">
+</form>
 
 <script>
     function goBack() {

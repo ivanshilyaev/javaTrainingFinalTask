@@ -1,10 +1,7 @@
 package ft.training.by.controller;
 
 import ft.training.by.controller.action.*;
-import ft.training.by.controller.action.administrator.AdministratorMainAction;
-import ft.training.by.controller.action.administrator.FindAllGroupsAction;
-import ft.training.by.controller.action.administrator.FindAllUsersAction;
-import ft.training.by.controller.action.administrator.FindConcreteGroupAction;
+import ft.training.by.controller.action.administrator.*;
 import ft.training.by.controller.action.student.FindGroupStudentsAction;
 import ft.training.by.controller.action.student.ScheduleAction;
 import ft.training.by.controller.action.student.StudentMainAction;
@@ -40,8 +37,10 @@ public class ActionFromUriFilter implements Filter {
 
         actions.put("/search/group", new FindGroupStudentsAction());
         actions.put("/search/list", new FindAllUsersAction());
-        actions.put("/search/listGroups", new FindAllGroupsAction());
-        actions.put("/search/concreteGroup", new FindConcreteGroupAction());
+        actions.put("/students/listGroups", new FindAllGroupsAction());
+        actions.put("/students/concreteGroup", new FindConcreteGroupAction());
+
+        actions.put("/students/edit", new AddNewStudentAction());
 
         actions.put("/study/schedule", new ScheduleAction());
     }

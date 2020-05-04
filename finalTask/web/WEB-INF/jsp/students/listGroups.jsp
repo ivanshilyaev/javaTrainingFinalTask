@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>Список всех пользователей</title>
+    <title>Список всех групп</title>
     <style>
         table {
             border-collapse: collapse;
@@ -17,7 +17,7 @@
 <body>
 <c:if test="${sessionScope.listGroups.size() != 0}">
     <c:forEach var="group" items="${sessionScope.listGroups}">
-        <c:url value="/search/concreteGroup.html" var="concreteGroupUrl"/>
+        <c:url value="/students/concreteGroup.html" var="concreteGroupUrl"/>
         <form name="findGroup" method="POST" action="${concreteGroupUrl}">
             <input type="hidden" name="groupNum" value="${group.groupNumber}">
             <input type="submit" value="Группа ${group.groupNumber}">
