@@ -7,6 +7,7 @@ import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,31 +21,24 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     public static final String SQL_SELECT_ALL_GROUPS =
             "SELECT id, group_number, course_number, faculty_id FROM ugroup;";
 
+    public static final String SQL_SELECT_GROUP_BY_ID =
+            "SELECT id, group_number, course_number, faculty_id FROM ugroup" +
+                    " WHERE id = ?;";
+
     @Override
     public List<Group> findAll() throws DAOException {
         List<Group> groups = new ArrayList<>();
+        Statement statement;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
-                    while (resultSet.next()) {
-                        Group group = new Group();
-                        fillGroup(group, resultSet);
-                        groups.add(group);
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
+            while (resultSet.next()) {
+                Group group = new Group();
+                fillGroup(group, resultSet);
+                groups.add(group);
             }
+            resultSet.close();
+            close(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
@@ -56,31 +50,19 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     @Override
     public Optional<Group> findEntityById(Integer id) throws DAOException {
         Group group = null;
+        PreparedStatement statement;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_GROUPS);
-                    while (resultSet.next()) {
-                        if (resultSet.getInt(1) == id) {
-                            group = new Group();
-                            fillGroup(group, resultSet);
-                        }
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.prepareStatement(SQL_SELECT_GROUP_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                group = new Group();
+                fillGroup(group, resultSet);
+                resultSet.close();
+                close(statement);
             }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
         } finally {
             closeConnection();
         }

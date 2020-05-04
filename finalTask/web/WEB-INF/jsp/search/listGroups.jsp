@@ -15,41 +15,26 @@
     </style>
 </head>
 <body>
-<c:if test="${sessionScope.list.size() != 0}">
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Login</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Name</th>
-        <th scope="col">Patronymic</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="user" items="${sessionScope.list}">
-        <tr>
-            <td><c:out value="${ user.id }"/></td>
-            <td><c:out value="${ user.login }"/></td>
-            <td><c:out value="${ user.surname }"/></td>
-            <td><c:out value="${ user.name }"/></td>
-            <td><c:out value="${ user.patronymic }"/></td>
-        </tr>
+<c:if test="${sessionScope.listGroups.size() != 0}">
+    <c:forEach var="group" items="${sessionScope.listGroups}">
+        <c:url value="/search/listGroups.html" var="listGroupsUrl"/>
+        <form name="findGroup" method="POST" action="${listGroupsUrl}">
+            <input type="submit" value="Группа ${group.groupNumber}">
+        </form>
+        <br>
     </c:forEach>
-    </tbody>
-    <table/>
-    </c:if>
-    <c:if test="${sessionScope.list.size() == 0}">
-    List is empty!<br>
-    </c:if>
-    <hr>
+</c:if>
+<c:if test="${sessionScope.listGroups.size() == 0}">
+    Список пуст!<br>
+</c:if>
+<hr>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 
-    <button onclick="goBack()">Go Back</button>
+<button onclick="goBack()">Go Back</button>
 </body>
 </html>

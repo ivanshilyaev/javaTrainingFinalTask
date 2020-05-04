@@ -37,19 +37,19 @@
         <c:set var="index" value="${index + 1}"/>
     </c:forEach>
     </tbody>
-    <table/>
-    </c:if>
-    <c:if test="${sessionScope.groupList.size() == 0}">
-    List is empty!<br>
-    </c:if>
-    <hr>
+</table>
+</c:if>
+<c:if test="${sessionScope.groupList.size() == 0}">
+    Список пуст!<br>
+</c:if>
+<hr>
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 
-    <button onclick="goBack()">Go Back</button>
+<button onclick="goBack()">Go Back</button>
 </body>
 </html>

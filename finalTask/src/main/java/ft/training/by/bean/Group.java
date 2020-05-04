@@ -1,14 +1,7 @@
 package ft.training.by.bean;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "group", propOrder = {"groupNumber", "courseNumber", "faculty"})
 public class Group extends Entity {
     private int groupNumber;
     private int courseNumber;

@@ -56,7 +56,7 @@
 </c:if>
 <c:if test="${sessionScope.schedule != null}">
     <c:if test="${sessionScope.schedule.size() == 0}">
-        List is empty!<br>
+        Список пуст!<br>
     </c:if>
     <c:if test="${sessionScope.schedule.size() != 0}">
         <table class="table table-bordered">
