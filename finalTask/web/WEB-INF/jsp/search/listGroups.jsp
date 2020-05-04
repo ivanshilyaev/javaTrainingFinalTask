@@ -17,8 +17,9 @@
 <body>
 <c:if test="${sessionScope.listGroups.size() != 0}">
     <c:forEach var="group" items="${sessionScope.listGroups}">
-        <c:url value="/search/listGroups.html" var="listGroupsUrl"/>
-        <form name="findGroup" method="POST" action="${listGroupsUrl}">
+        <c:url value="/search/concreteGroup.html" var="concreteGroupUrl"/>
+        <form name="findGroup" method="POST" action="${concreteGroupUrl}">
+            <input type="hidden" name="groupNum" value="${group.groupNumber}">
             <input type="submit" value="Группа ${group.groupNumber}">
         </form>
         <br>
