@@ -50,7 +50,7 @@ public class LoginAction extends Action {
             User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElse(null);
             if (user != null) {
                 // для привествия пользователя на главной странице
-                request.getSession().setAttribute("username", user.getName());
+                request.getSession().setAttribute("username", user.getName() + " " + user.getPatronymic());
                 // для разделения пользователей
                 request.getSession().setAttribute("authorizedUser", user);
                 switch (user.getRole()) {

@@ -29,7 +29,6 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/", new UnauthorizedUserAction());
         actions.put("/index", new MainAction());
         actions.put("/login", new LoginAction());
-        actions.put("/list", new FindAllUsersAction());
         actions.put("/logout", new LogoutAction());
         actions.put("/password", new ChangePasswordAction());
 
@@ -38,6 +37,8 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/tutorCabinet", new TutorMainAction());
 
         actions.put("/search/group", new FindGroupStudentsAction());
+        actions.put("/search/list", new FindAllUsersAction());
+        actions.put("/search/listGroups", new FindAllUsersAction());
 
         actions.put("/study/schedule", new ScheduleAction());
     }

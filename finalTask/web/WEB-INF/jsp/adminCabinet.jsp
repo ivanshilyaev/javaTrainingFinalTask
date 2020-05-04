@@ -10,9 +10,14 @@
 <hr>
 Добро пожаловать, ${sessionScope.username}!
 <hr>
-<c:url value="/list.html" var="listUrl"/>
+<c:url value="/search/list.html" var="listUrl"/>
 <form name="findAllUsersForm" method="POST" action="${listUrl}">
     <input type="submit" value="Список всех пользователей">
+</form>
+<br>
+<c:url value="/search/listGroups.html" var="listGroupsUrl"/>
+<form name="findAllGroups" method="POST" action="${listGroupsUrl}">
+    <input type="submit" value="Список всех групп">
 </form>
 <br>
 <c:url value="/password.html" var="passwordUrl"/>
