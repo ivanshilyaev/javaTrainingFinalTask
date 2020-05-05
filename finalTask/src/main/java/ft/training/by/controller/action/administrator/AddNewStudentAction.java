@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class AddNewStudentAction extends AdministratorAction {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -59,6 +60,9 @@ public class AddNewStudentAction extends AdministratorAction {
                 Student student = new Student(user, subgroup);
                 StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
                 studentCreated = studentService.create(student);
+                List<Student> groupList = (List<Student>) request.getSession().getAttribute("groupList");
+                groupList.add(student);
+                request.getSession().setAttribute("groupList", groupList);
                 if (studentCreated) {
                     request.getSession().setAttribute("studentAddedMessage",
                             "Новый студент был успешно добавлен");

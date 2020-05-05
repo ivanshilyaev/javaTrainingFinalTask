@@ -36,6 +36,10 @@
     <input type="submit" value="Добавить">
 </form>
 <br>
+<c:url value="/index.html" var="indexUrl"/>
+<form name="findGroup" method="POST" action="${indexUrl}">
+    <input type="submit" value="На главную">
+</form>
 ${sessionScope.studentAddedMessage}
 <ctg:footer address="${sessionScope.address}"/>
 </body>

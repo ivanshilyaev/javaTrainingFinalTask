@@ -44,14 +44,10 @@
     Список пуст!<br>
 </c:if>
 <hr>
-
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
-
-<button onclick="goBack()">Go Back</button>
+<c:url value="/index.html" var="indexUrl"/>
+<form name="findGroup" method="POST" action="${indexUrl}">
+    <input type="submit" value="На главную">
+</form>
 <ctg:footer address="${sessionScope.address}"/>
 </body>
 </html>

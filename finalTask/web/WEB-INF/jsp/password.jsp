@@ -21,10 +21,10 @@
     <br>
     ${sessionScope.passwordMessage}
     <br>
-
-    <!-- Still doesn't work -->
-    <input type="button" value="На главную"
-           onclick="window.location='${pageContext.request.contextPath}/studentCabinet.jsp'">
+</form>
+<c:url value="/index.html" var="indexUrl"/>
+<form name="findGroup" method="POST" action="${indexUrl}">
+    <input type="submit" value="На главную">
 </form>
 <ctg:footer address="${sessionScope.address}"/>
 </body>
