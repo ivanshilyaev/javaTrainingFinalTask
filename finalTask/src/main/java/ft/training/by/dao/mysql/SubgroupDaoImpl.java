@@ -18,37 +18,30 @@ import java.util.Optional;
 public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_SUBGROUPS =
+    private static final String SQL_SELECT_ALL_SUBGROUPS =
             "SELECT id, subgroup_number, group_id FROM subgroup;";
 
-    public static final String SQL_SELECT_SUBGROUP_BY_ID =
+    private static final String SQL_SELECT_SUBGROUP_BY_ID =
             "SELECT id, subgroup_number, group_id FROM subgroup WHERE id = ?;";
+
+    private static final String SQL_SELECT_SUBGROUP_BY_NUMBER_AND_GROUP_ID =
+            "SELECT id, subgroup_number, group_id FROM subgroup " +
+                    "WHERE subgroup_number = ? AND group_id = ?;";
 
     @Override
     public List<Subgroup> findAll() throws DAOException {
         List<Subgroup> subgroups = new ArrayList<>();
+        Statement statement = null;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
-                    while (resultSet.next()) {
-                        Subgroup subgroup = new Subgroup();
-                        fillSubgroup(resultSet, subgroup);
-                        subgroups.add(subgroup);
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_SUBGROUPS);
+            while (resultSet.next()) {
+                Subgroup subgroup = new Subgroup();
+                fillSubgroup(resultSet, subgroup);
+                subgroups.add(subgroup);
             }
+            resultSet.close();
+            close(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
@@ -68,9 +61,9 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
             if (resultSet.next()) {
                 subgroup = new Subgroup();
                 fillSubgroup(resultSet, subgroup);
-                resultSet.close();
-                close(statement);
             }
+            resultSet.close();
+            close(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
@@ -97,6 +90,29 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     @Override
     public Subgroup update(Subgroup entity) {
         return null;
+    }
+
+    @Override
+    public Optional<Subgroup> findBySubgroupNumberAndGroupId(char subgroupNum, Integer id) throws DAOException {
+        Subgroup subgroup = null;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_SELECT_SUBGROUP_BY_NUMBER_AND_GROUP_ID);
+            statement.setString(1, String.valueOf(subgroupNum));
+            statement.setInt(2, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                subgroup = new Subgroup();
+                fillSubgroup(resultSet, subgroup);
+            }
+            resultSet.close();
+            close(statement);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
+        }
+        return Optional.ofNullable(subgroup);
     }
 
     private void fillSubgroup(ResultSet resultSet, Subgroup subgroup) throws SQLException, DAOException {

@@ -15,4 +15,6 @@ public interface UserService extends Service {
     Optional<User> findByLoginAndPassword(String login, char[] password) throws ServiceException;
 
     User update(User user) throws ServiceException;
+
+    boolean create(User entity) throws ServiceException;
 }

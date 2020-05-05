@@ -12,20 +12,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends DaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_USERS =
+    private static final String SQL_SELECT_ALL_USERS =
             "SELECT id, login, password, role, surname, name, patronymic FROM user;";
 
-    public static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
+    private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT id, role, surname, name, patronymic FROM user WHERE login = ? AND password = ?;";
 
-    public static final String SQL_UPDATE_USER =
+    private static final String SQL_UPDATE_USER =
             "UPDATE user SET login = ?, password = ?, role = ?, surname = ?, name = ?, patronymic = ? WHERE id = ?;";
+
+    private static final String SQL_INSERT =
+            "INSERT INTO user (login, password, role, surname, name, patronymic) VALUES (?, ?, ?, ?, ?, ?);";
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -109,8 +113,26 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public boolean create(User entity) {
-        return false;
+    public boolean create(User entity) throws DAOException {
+        boolean created = false;
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(SQL_INSERT);
+            statement.setString(1, entity.getLogin());
+            statement.setString(2, new String(entity.getPassword()));
+            statement.setInt(3, entity.getRole().ordinal());
+            statement.setString(4, entity.getSurname());
+            statement.setString(5, entity.getName());
+            statement.setString(6, entity.getPatronymic());
+            statement.executeUpdate();
+            created = true;
+            close(statement);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            closeConnection();
+        }
+        return created;
     }
 
     @Override

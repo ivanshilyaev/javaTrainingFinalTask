@@ -2,18 +2,39 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/start.css"/>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <title>Новый студент</title>
 </head>
 
 <body>
-<c:url value="/login.html" var="loginUrl"/>
-<form name="loginForm" method="POST" action="${loginUrl}">
-    <input type="text" name="login" placeholder="Фамилия">
-    <input type="text" name="password" placeholder="Имя">
-    <input type="submit" class="fadeIn fourth" value="Добавить">
+<c:url value="/students/edit.html" var="editUrl"/>
+<form name="loginForm" method="POST" action="${editUrl}">
+    <label>
+        Фамилия <br>
+        <input type="text" name="surname">
+    </label> <br>
+    <label>
+        Имя <br>
+        <input type="text" name="name">
+    </label> <br>
+    <label>
+        Отчество <br>
+        <input type="text" name="patronymic">
+    </label> <br>
+    <label>
+        Подгруппа <br>
+        <input type="text" name="subgroup">
+    </label> <br>
+    <label>
+        Логин <br>
+        <input type="text" name="login">
+    </label> <br>
+    <input type="submit" value="Добавить">
 </form>
+<br>
+${sessionScope.studentAddedMessage}
 </body>
 </html>

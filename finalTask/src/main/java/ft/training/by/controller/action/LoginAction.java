@@ -53,6 +53,7 @@ public class LoginAction extends Action {
                 request.getSession().setAttribute("username", user.getName() + " " + user.getPatronymic());
                 // для разделения пользователей
                 request.getSession().setAttribute("authorizedUser", user);
+                setAuthorizedUser(user);
                 switch (user.getRole()) {
                     case STUDENT:
                         StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);

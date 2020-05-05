@@ -15,7 +15,7 @@ public interface Dao<K, T extends Entity> {
 
     boolean delete(T entity);
 
-    boolean create(T entity);
+    boolean create(T entity) throws DAOException;
 
     T update(T entity);
 }

@@ -19,11 +19,14 @@ import java.util.Optional;
 public class StudentDaoImpl extends DaoImpl implements StudentDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_STUDENTS =
+    private static final String SQL_SELECT_ALL_STUDENTS =
             "SELECT id, subgroup_id, user_id FROM student;";
 
-    public static final String SQL_SELECT_STUDENT_BY_USER_ID =
+    private static final String SQL_SELECT_STUDENT_BY_USER_ID =
             "SELECT id, subgroup_id, user_id FROM student WHERE user_id = ?;";
+
+    private static final String SQL_INSERT =
+            "INSERT INTO student (subgroup_id, user_id) VALUES (?, ?);";
 
     @Override
     public List<Student> findAll() throws DAOException {
@@ -103,8 +106,22 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public boolean create(Student entity) {
-        return false;
+    public boolean create(Student entity) throws DAOException {
+        boolean created = false;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_INSERT);
+            statement.setInt(1, entity.getSubgroup().getId());
+            statement.setInt(2, entity.getUser().getId());
+            statement.executeUpdate();
+            created = true;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            close(statement);
+            closeConnection();
+        }
+        return created;
     }
 
     @Override

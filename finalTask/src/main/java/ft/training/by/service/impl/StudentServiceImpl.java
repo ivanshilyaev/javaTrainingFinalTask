@@ -49,4 +49,14 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean create(Student entity) throws ServiceException {
+        try {
+            StudentDao dao = transaction.createDao(StudentDao.class);
+            return dao.create(entity);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

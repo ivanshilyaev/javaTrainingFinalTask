@@ -19,7 +19,7 @@ public abstract class DaoImpl {
 
     public void close(Statement statement) {
         try {
-            statement.close();
+            if (statement != null) statement.close();
         } catch (SQLException e) {
             LOGGER.error("Couldn't close statement", e);
         }

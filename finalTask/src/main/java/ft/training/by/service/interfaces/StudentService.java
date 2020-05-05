@@ -15,4 +15,6 @@ public interface StudentService extends Service {
     List<Student> findByGroup(int groupNum) throws ServiceException;
 
     Optional<Student> findByUserId(Integer id) throws ServiceException;
+
+    boolean create(Student entity) throws ServiceException;
 }

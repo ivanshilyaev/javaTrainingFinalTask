@@ -15,6 +15,10 @@
     </style>
 </head>
 <body>
+<c:url value="/students/edit.html" var="editUrl"/>
+<form name="addNewUser" method="POST" action="${editUrl}">
+    <input type="submit" value="Добавить нового студента">
+</form>
 <c:if test="${sessionScope.groupList.size() != 0}">
     <table class="table table-bordered">
         <thead>
@@ -43,11 +47,6 @@
     Список пуст!<br>
 </c:if>
 <hr>
-
-<c:url value="/students/edit.html" var="editUrl"/>
-<form name="addNewUser" method="POST" action="${editUrl}">
-    <input type="submit" value="Добавить нового студента">
-</form>
 
 <script>
     function goBack() {

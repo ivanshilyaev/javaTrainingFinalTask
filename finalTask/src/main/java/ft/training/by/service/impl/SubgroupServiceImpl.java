@@ -29,4 +29,14 @@ public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService 
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Optional<Subgroup> findBySubgroupNumberAndGroupId(char subgroupNum, Integer id) throws ServiceException {
+        try {
+            SubgroupDao dao = transaction.createDao(SubgroupDao.class);
+            return dao.findBySubgroupNumberAndGroupId(subgroupNum, id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

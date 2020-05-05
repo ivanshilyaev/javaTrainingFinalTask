@@ -11,4 +11,7 @@ public interface SubgroupService extends Service {
     List<Subgroup> findAll() throws ServiceException;
 
     Optional<Subgroup> findEntityById(Integer id) throws ServiceException;
+
+    Optional<Subgroup> findBySubgroupNumberAndGroupId(char subgroupNum, Integer id)
+            throws ServiceException;
 }

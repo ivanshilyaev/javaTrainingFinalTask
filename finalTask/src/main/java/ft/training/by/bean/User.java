@@ -7,14 +7,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Arrays;
 import java.util.Objects;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "User", propOrder = {"login", "password", "role", "surname", "name", "patronymic"})
 public class User extends Entity {
     private String login;
-    @XmlJavaTypeAdapter(value = CharArrayAdapter.class, type = char[].class)
     private char[] password;
-    @XmlAttribute(required = true)
     private Role role;
     private String surname;
     private String name;
@@ -25,6 +20,16 @@ public class User extends Entity {
 
     public User(int id) {
         super(id);
+    }
+
+    public User(String login, char[] password, Role role,
+                String surname, String name, String patronymic) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.surname = surname;
+        this.name = name;
+        this.patronymic = patronymic;
     }
 
     public User(int id, String login, char[] password, Role role,

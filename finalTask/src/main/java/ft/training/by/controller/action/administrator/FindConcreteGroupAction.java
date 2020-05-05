@@ -16,6 +16,9 @@ public class FindConcreteGroupAction extends AdministratorAction {
             StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
             List<Student> groupList = studentService.findByGroup(groupNum);
             request.getSession().setAttribute("groupList", groupList);
+            if (!groupList.isEmpty()) {
+                request.getSession().setAttribute("currentGroupStudent", groupList.get(0));
+            }
         } catch (NumberFormatException e) {
 
         }

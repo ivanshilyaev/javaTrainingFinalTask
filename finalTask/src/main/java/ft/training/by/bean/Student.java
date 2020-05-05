@@ -17,6 +17,11 @@ public class Student extends Entity {
         super(id);
     }
 
+    public Student(User user, Subgroup subgroup) {
+        this.user = user;
+        this.subgroup = subgroup;
+    }
+
     public Student(int id, User user, Subgroup subgroup) {
         super(id);
         this.user = user;
