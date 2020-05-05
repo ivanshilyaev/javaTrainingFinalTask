@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LoginAction extends Action {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private static String address = "Адрес: ул. Октябрьская, 10, 220030, г. Минск, Республика Беларусь";
+
     private static final String PARAM_NAME_LOGIN = "login";
     private static final String PARAM_NAME_PASSWORD = "password";
 
@@ -45,6 +47,7 @@ public class LoginAction extends Action {
             throws ServiceException {
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
+        request.getSession().setAttribute("address", address);
         if (login != null && password != null) {
             UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
             User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElse(null);

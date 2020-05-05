@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -25,5 +26,6 @@
     <input type="button" value="На главную"
            onclick="window.location='${pageContext.request.contextPath}/studentCabinet.jsp'">
 </form>
+<ctg:footer address="${sessionScope.address}"/>
 </body>
 </html>
