@@ -25,7 +25,7 @@
         <c:url value="/login.html" var="loginUrl"/>
         <form name="loginForm" method="POST" action="${loginUrl}">
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="Логин">
-            <input type="text" id="password" class="fadeIn third" name="password" placeholder="Пароль">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Пароль">
             <input type="submit" class="fadeIn fourth" value="Войти">
         </form>
         ${sessionScope.message}

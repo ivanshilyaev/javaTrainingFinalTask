@@ -41,6 +41,7 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/students/concreteGroup", new FindConcreteGroupAction());
 
         actions.put("/students/edit", new AddNewStudentAction());
+        actions.put("/students/delete", new DeleteStudentAction());
 
         actions.put("/study/schedule", new ScheduleAction());
     }

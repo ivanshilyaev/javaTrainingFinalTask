@@ -22,6 +22,9 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     private static final String SQL_SELECT_ALL_STUDENTS =
             "SELECT id, subgroup_id, user_id FROM student;";
 
+    private static final String SQL_SELECT_STUDENT_BY_ID =
+            "SELECT id, subgroup_id, user_id FROM student WHERE id = ?;";
+
     private static final String SQL_SELECT_STUDENT_BY_USER_ID =
             "SELECT id, subgroup_id, user_id FROM student WHERE user_id = ?;";
 
@@ -64,32 +67,20 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     @Override
     public Optional<Student> findEntityById(Integer id) throws DAOException {
         Student student = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_STUDENTS);
-                    while (resultSet.next()) {
-                        if (resultSet.getInt(1) == id) {
-                            student = new Student();
-                            fillStudent(student, resultSet);
-                        }
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                student = new Student();
+                fillStudent(student, resultSet);
             }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
         } finally {
+            if (statement != null) close(statement);
             closeConnection();
         }
         return Optional.ofNullable(student);

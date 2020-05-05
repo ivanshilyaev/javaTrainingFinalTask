@@ -16,15 +16,8 @@
     </style>
 </head>
 <body>
-<c:url value="/students/edit.html" var="editUrl"/>
-<form name="addNewUser" method="POST" action="${editUrl}">
-    <input type="submit" value="Добавить нового студента">
-</form>
+${sessionScope.studentDeletedMessage}
 <br>
-<c:url value="/students/delete.html" var="deleteUrl"/>
-<form name="addNewUser" method="POST" action="${deleteUrl}">
-    <input type="submit" value="Удалить студента">
-</form>
 <c:if test="${sessionScope.groupList.size() != 0}">
     <table class="table table-bordered">
         <thead>
@@ -34,6 +27,7 @@
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +37,13 @@
                 <td><c:out value="${ student.user.surname }"/></td>
                 <td><c:out value="${ student.user.name }"/></td>
                 <td><c:out value="${ student.user.patronymic }"/></td>
+                <td>
+                    <c:url value="/delete.html" var="deleteUrl"/>
+                    <form name="findGroup" method="POST" action="${deleteUrl}">
+                        <input type="hidden" name="studentId" value="${student.id}">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </td>
             </tr>
             <c:set var="index" value="${index + 1}"/>
         </c:forEach>

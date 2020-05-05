@@ -1,5 +1,6 @@
 package ft.training.by.dao.mysql;
 
+import ft.training.by.bean.Student;
 import ft.training.by.bean.enums.Role;
 import ft.training.by.bean.User;
 import ft.training.by.dao.interfaces.UserDao;
@@ -21,6 +22,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     private static final String SQL_SELECT_ALL_USERS =
             "SELECT id, login, password, role, surname, name, patronymic FROM user;";
+
+    private static final String SQL_SELECT_USER_BY_ID =
+            "SELECT id, login, password, role, surname, name, patronymic FROM user WHERE id = ?;";
 
     private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT id, role, surname, name, patronymic FROM user WHERE login = ? AND password = ?;";
@@ -69,34 +73,20 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     @Override
     public Optional<User> findEntityById(Integer id) throws DAOException {
         User user = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet;
         try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
-                    while (resultSet.next()) {
-                        if (resultSet.getInt(1) == id) {
-                            user = new User();
-                            fillUser(resultSet, user);
-                        }
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    } else {
-                        LOGGER.error("Error while reading from DB");
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    close(statement);
-                }
+            statement = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                fillUser(resultSet, user);
             }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
         } finally {
+            if (statement != null) close(statement);
             closeConnection();
         }
         return Optional.ofNullable(user);
