@@ -63,7 +63,8 @@ public class Group extends Entity {
     @Override
     public String toString() {
         return "Group{" +
-                "groupNumber=" + groupNumber +
+                "id='" + getId() + '\'' +
+                ", groupNumber=" + groupNumber +
                 ", courseNumber=" + courseNumber +
                 ", faculty=" + faculty.toString() +
                 '}';

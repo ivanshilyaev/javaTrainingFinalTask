@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class FacultyServiceImpl extends ServiceImpl implements FacultyService {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @Override
-    public List<Faculty> findAll() throws ServiceException {
+    public List<Faculty> read() throws ServiceException {
         try {
             FacultyDao dao = transaction.createDao(FacultyDao.class);
             return dao.read();
@@ -25,7 +23,7 @@ public class FacultyServiceImpl extends ServiceImpl implements FacultyService {
     }
 
     @Override
-    public Optional<Faculty> findEntityById(Integer id) throws ServiceException {
+    public Optional<Faculty> read(Integer id) throws ServiceException {
         try {
             FacultyDao dao = transaction.createDao(FacultyDao.class);
             return dao.read(id);

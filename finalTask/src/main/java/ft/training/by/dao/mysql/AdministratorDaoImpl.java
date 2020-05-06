@@ -7,9 +7,9 @@ import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,36 +17,51 @@ import java.util.Optional;
 public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_ADMINISTRATORS =
+    private static final String SQL_SELECT_ALL_ADMINISTRATORS =
             "SELECT id, position, user_id FROM administrator;";
+
+    private static final String SQL_SELECT_ADMINISTRATOR_BY_ID =
+            "SELECT id, position, user_id FROM administrator" +
+                    "  WHERE id = ?;";
+
+
+    @Override
+    public Integer create(Administrator entity) {
+        return BAD_CREATION_CODE;
+    }
 
     @Override
     public List<Administrator> read() throws DAOException {
         List<Administrator> admins = new ArrayList<>();
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_ADMINISTRATORS)) {
-                    while (resultSet.next()) {
-                        Administrator administrator = new Administrator();
-                        fillAdministrator(administrator, resultSet);
-                        admins.add(administrator);
-                    }
-                }
-            } finally {
-
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ADMINISTRATORS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Administrator administrator = new Administrator();
+                fillAdministrator(resultSet, administrator);
+                admins.add(administrator);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return admins;
     }
 
     @Override
     public Optional<Administrator> read(Integer id) throws DAOException {
-        return Optional.empty();
+        Administrator administrator = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ADMINISTRATOR_BY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                administrator = new Administrator();
+                fillAdministrator(resultSet, administrator);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(administrator);
     }
 
     @Override
@@ -64,13 +79,7 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
         return false;
     }
 
-    @Override
-    public Integer create(Administrator entity) {
-        return BAD_CREATION_CODE;
-    }
-
-
-    public void fillAdministrator(Administrator administrator, ResultSet resultSet)
+    public void fillAdministrator(ResultSet resultSet, Administrator administrator)
             throws SQLException, DAOException {
         administrator.setId(resultSet.getInt(1));
         administrator.setPosition(resultSet.getString(2));

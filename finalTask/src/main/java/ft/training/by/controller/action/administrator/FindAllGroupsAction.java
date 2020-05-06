@@ -12,7 +12,7 @@ public class FindAllGroupsAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         GroupService groupService = factory.createService(GroupService.class).orElseThrow(ServiceException::new);
-        List<Group> groups = groupService.findAll();
+        List<Group> groups = groupService.read();
         request.getSession().setAttribute("listGroups", groups);
         return null;
     }

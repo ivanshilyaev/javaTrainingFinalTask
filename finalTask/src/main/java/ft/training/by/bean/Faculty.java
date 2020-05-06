@@ -49,7 +49,7 @@ public class Faculty extends Entity {
     public String toString() {
         return "Faculty{" +
                 "id='" + getId() + '\'' +
-                "name='" + name + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

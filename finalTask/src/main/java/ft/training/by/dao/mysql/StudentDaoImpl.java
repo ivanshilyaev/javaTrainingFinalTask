@@ -35,78 +35,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             "DELETE FROM student WHERE id = ?;";
 
     @Override
-    public List<Student> read() throws DAOException {
-        List<Student> students = new ArrayList<>();
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_STUDENTS);
-                    while (resultSet.next()) {
-                        Student student = new Student();
-                        fillStudent(student, resultSet);
-                        students.add(student);
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-
-            }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
-        } finally {
-        }
-        return students;
-    }
-
-    @Override
-    public Optional<Student> read(Integer id) throws DAOException {
-        Student student = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_ID);
-            statement.setInt(1, id);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                student = new Student();
-                fillStudent(student, resultSet);
-            }
-        } catch (SQLException throwables) {
-            LOGGER.error("DB connection error", throwables);
-        } finally {
-        }
-        return Optional.ofNullable(student);
-    }
-
-    @Override
-    public boolean delete(Integer id) throws DAOException {
-        boolean deleted = false;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(SQL_DELETE_STUDENT_BY_ID);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            deleted = true;
-
-        } catch (SQLException throwables) {
-            LOGGER.error("DB connection error", throwables);
-        } finally {
-        }
-        return deleted;
-    }
-
-    @Override
-    public boolean delete(Student entity) throws DAOException {
-        return delete(entity.getId());
-    }
-
-    @Override
     public Integer create(Student entity) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, entity.getSubgroup().getId());
@@ -126,7 +54,59 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
+    public List<Student> read() throws DAOException {
+        List<Student> students = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_STUDENTS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Student student = new Student();
+                fillStudent(resultSet, student);
+                students.add(student);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            LOGGER.error("DB connection error", e);
+        }
+        return students;
+    }
+
+    @Override
+    public Optional<Student> read(Integer id) throws DAOException {
+        Student student = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                student = new Student();
+                fillStudent(resultSet, student);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(student);
+    }
+
+    @Override
     public void update(Student entity) {
+    }
+
+    @Override
+    public boolean delete(Integer id) throws DAOException {
+        boolean deleted = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_STUDENT_BY_ID)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            deleted = true;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return deleted;
+    }
+
+    @Override
+    public boolean delete(Student entity) throws DAOException {
+        return delete(entity.getId());
     }
 
     @Override
@@ -146,7 +126,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 student = new Student();
-                fillStudent(student, resultSet);
+                fillStudent(resultSet, student);
                 resultSet.close();
             }
         } catch (SQLException throwables) {
@@ -156,7 +136,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         return Optional.ofNullable(student);
     }
 
-    private void fillStudent(Student student, ResultSet resultSet) throws SQLException, DAOException {
+    private void fillStudent(ResultSet resultSet, Student student) throws SQLException, DAOException {
         student.setId(resultSet.getInt(1));
         int subgroupID = resultSet.getInt(2);
         SubgroupDaoImpl subgroupDao = new SubgroupDaoImpl();

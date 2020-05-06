@@ -57,7 +57,8 @@ public class Subgroup extends Entity {
     @Override
     public String toString() {
         return "Subgroup{" +
-                "subgroupNumber=" + subgroupNumber +
+                "id='" + getId() + '\'' +
+                ", subgroupNumber=" + subgroupNumber +
                 ", group=" + group +
                 '}';
     }

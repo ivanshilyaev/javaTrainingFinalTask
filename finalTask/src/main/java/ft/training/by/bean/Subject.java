@@ -42,7 +42,8 @@ public class Subject extends Entity {
     @Override
     public String toString() {
         return "Subject{" +
-                "name='" + name + '\'' +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

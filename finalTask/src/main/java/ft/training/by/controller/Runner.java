@@ -4,8 +4,7 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.pool.ConnectionPool;
 import ft.training.by.service.exception.ServiceException;
 import ft.training.by.service.impl.ServiceFactoryImpl;
-import ft.training.by.service.interfaces.ServiceFactory;
-import ft.training.by.service.interfaces.TimetableService;
+import ft.training.by.service.interfaces.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,8 +32,8 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl();
-            TimetableService timetableService = factory.createService(TimetableService.class).orElseThrow(ServiceException::new);
-            System.out.println(timetableService.findAll());
+            GroupService service = factory.createService(GroupService.class).orElseThrow(ServiceException::new);
+            System.out.println(service.read(1));
             LOGGER.info("success");
         } catch (ServiceException e) {
             LOGGER.error("Service exception in main method", e);

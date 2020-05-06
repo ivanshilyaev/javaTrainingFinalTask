@@ -31,11 +31,11 @@ public class FacultyServiceTest {
         return new Object[][]{
                 {
                         new Faculty(1, "Факультет прикладной математики и информатики"),
-                        facultyService.findEntityById(1)
+                        facultyService.read(1)
                 },
                 {
                         new Faculty(2, "Механико-математический факультет"),
-                        facultyService.findEntityById(2)
+                        facultyService.read(2)
                 }
         };
     }

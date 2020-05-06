@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FacultyService extends Service {
-    List<Faculty> findAll() throws ServiceException;
+    List<Faculty> read() throws ServiceException;
 
-    Optional<Faculty> findEntityById(Integer id) throws ServiceException;
+    Optional<Faculty> read(Integer id) throws ServiceException;
 }

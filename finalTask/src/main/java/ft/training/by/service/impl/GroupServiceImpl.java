@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class GroupServiceImpl extends ServiceImpl implements GroupService {
     @Override
-    public List<Group> findAll() throws ServiceException {
+    public List<Group> read() throws ServiceException {
         try {
             GroupDao dao = transaction.createDao(GroupDao.class);
             return dao.read();
@@ -21,7 +21,7 @@ public class GroupServiceImpl extends ServiceImpl implements GroupService {
     }
 
     @Override
-    public Optional<Group> findEntityById(Integer id) throws ServiceException {
+    public Optional<Group> read(Integer id) throws ServiceException {
         try {
             GroupDao dao = transaction.createDao(GroupDao.class);
             return dao.read(id);
