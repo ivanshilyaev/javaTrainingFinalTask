@@ -11,7 +11,17 @@ import java.util.Optional;
 
 public class UserServiceImpl extends ServiceImpl implements UserService {
     @Override
-    public List<User> findAll() throws ServiceException {
+    public Integer create(User entity) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.create(entity);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> read() throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.read();
@@ -21,7 +31,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findEntityById(Integer id) throws ServiceException {
+    public Optional<User> read(Integer id) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.read(id);
@@ -31,10 +41,20 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByLoginAndPassword(String login, char[] password) throws ServiceException {
+    public Optional<User> read(String login, char[] password) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.read(login, password);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void update(User user) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            dao.update(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -55,26 +75,6 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.delete(entity);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean create(User entity) throws ServiceException {
-        try {
-            UserDao dao = transaction.createDao(UserDao.class);
-            return dao.create(entity);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public User update(User user) throws ServiceException {
-        try {
-            UserDao dao = transaction.createDao(UserDao.class);
-            return dao.update(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

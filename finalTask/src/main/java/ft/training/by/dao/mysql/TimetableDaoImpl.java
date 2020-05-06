@@ -86,13 +86,12 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     }
 
     @Override
-    public boolean create(Timetable entity) {
-        return false;
+    public Integer create(Timetable entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Timetable update(Timetable entity) {
-        return null;
+    public void update(Timetable entity) {
     }
 
     public void fillTimetable(Timetable timetable, ResultSet resultSet)

@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Dao<K, T extends Entity> {
-    boolean create(T entity) throws DAOException;
+    Integer create(T entity) throws DAOException;
 
     List<T> read() throws DAOException;
 
     Optional<T> read(K id) throws DAOException;
 
-    T update(T entity);
+    void update(T entity);
 
     boolean delete(K id) throws DAOException;
 

@@ -50,6 +50,11 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
     }
 
     @Override
+    public void update(Administrator entity) {
+
+    }
+
+    @Override
     public boolean delete(Integer id) {
         return false;
     }
@@ -60,14 +65,10 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
     }
 
     @Override
-    public boolean create(Administrator entity) {
-        return false;
+    public Integer create(Administrator entity) {
+        return BAD_CREATION_CODE;
     }
 
-    @Override
-    public Administrator update(Administrator entity) {
-        return null;
-    }
 
     public void fillAdministrator(Administrator administrator, ResultSet resultSet)
             throws SQLException, DAOException {

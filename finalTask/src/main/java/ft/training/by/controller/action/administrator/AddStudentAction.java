@@ -48,29 +48,30 @@ public class AddStudentAction extends AdministratorAction {
 
             // добавление нового пользователя
             UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
-            boolean userCreated = userService.create(user);
-            boolean studentCreated = false;
-            if (userCreated) {
+            int userId = userService.create(user);
+            int studentId = -1;
+            if (userId != -1) {
                 // добавление нового студента
                 /*
                  * Для создания новго студента нужен id пользователя
                  * и id подгруппы
                  */
-                user = userService.findByLoginAndPassword(user.getLogin(), user.getPassword()).orElse(null);
+                user = userService.read(userId).orElse(null);
                 Student student = new Student(user, subgroup);
                 StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
-                studentCreated = studentService.create(student);
+                studentId = studentService.create(student);
+                student = studentService.read(studentId).orElse(null);
                 List<Student> groupList = (List<Student>) request.getSession().getAttribute("groupList");
                 groupList.add(student);
                 request.getSession().setAttribute("groupList", groupList);
-                if (studentCreated) {
+                if (studentId != -1) {
                     request.getSession().setAttribute("studentAddedMessage",
                             "Новый студент был успешно добавлен");
                     LOGGER.info(String.format("New student \"%s\" with identity %d has been added successfully",
                             student.getUser().getLogin(), student.getId()));
                 }
             }
-            if (!userCreated || !studentCreated) {
+            if (userId == -1 || studentId == -1) {
                 request.getSession().setAttribute("studentAddedMessage",
                         "Произошла ошибка ввода данных");
                 LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add new student",

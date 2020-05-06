@@ -11,7 +11,17 @@ import java.util.Optional;
 
 public class StudentServiceImpl extends ServiceImpl implements StudentService {
     @Override
-    public List<Student> findAll() throws ServiceException {
+    public Integer create(Student entity) throws ServiceException {
+        try {
+            StudentDao dao = transaction.createDao(StudentDao.class);
+            return dao.create(entity);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Student> read() throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.read();
@@ -21,7 +31,7 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     }
 
     @Override
-    public Optional<Student> findEntityById(Integer id) throws ServiceException {
+    public Optional<Student> read(Integer id) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.read(id);
@@ -41,10 +51,10 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     }
 
     @Override
-    public Optional<Student> findByUserId(Integer id) throws ServiceException {
+    public Optional<Student> readByUserId(Integer userId) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
-            return dao.findByUserId(id);
+            return dao.findByUserId(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -65,16 +75,6 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.delete(entity);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean create(Student entity) throws ServiceException {
-        try {
-            StudentDao dao = transaction.createDao(StudentDao.class);
-            return dao.create(entity);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

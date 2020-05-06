@@ -91,12 +91,11 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
     }
 
     @Override
-    public boolean create(Subject entity) {
-        return false;
+    public Integer create(Subject entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Subject update(Subject entity) {
-        return null;
+    public void update(Subject entity) {
     }
 }

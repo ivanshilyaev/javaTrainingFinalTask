@@ -88,13 +88,12 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
     }
 
     @Override
-    public boolean create(Classroom entity) {
-        return false;
+    public Integer create(Classroom entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Classroom update(Classroom entity) {
-        return null;
+    public void update(Classroom entity) {
     }
 
     public void fillClassroom(Classroom classroom, ResultSet resultSet)

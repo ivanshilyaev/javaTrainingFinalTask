@@ -50,7 +50,7 @@ public class LoginAction extends Action {
         request.getSession().setAttribute("address", address);
         if (login != null && password != null) {
             UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
-            User user = userService.findByLoginAndPassword(login, password.toCharArray()).orElse(null);
+            User user = userService.read(login, password.toCharArray()).orElse(null);
             if (user != null) {
                 // для привествия пользователя на главной странице
                 request.getSession().setAttribute("username", user.getName() + " " + user.getPatronymic());
@@ -60,7 +60,7 @@ public class LoginAction extends Action {
                 switch (user.getRole()) {
                     case STUDENT:
                         StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
-                        Student student = studentService.findByUserId(user.getId()).orElse(null);
+                        Student student = studentService.readByUserId(user.getId()).orElse(null);
                         if (student != null) {
                             request.getSession().setAttribute("authorizedStudent", student);
                         }

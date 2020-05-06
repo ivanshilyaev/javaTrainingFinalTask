@@ -79,13 +79,12 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     }
 
     @Override
-    public boolean create(Subgroup entity) {
-        return false;
+    public Integer create(Subgroup entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Subgroup update(Subgroup entity) {
-        return null;
+    public void update(Subgroup entity) {
     }
 
     @Override

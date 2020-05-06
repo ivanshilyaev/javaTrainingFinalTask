@@ -79,13 +79,12 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     }
 
     @Override
-    public boolean create(TimetableGroup entity) {
-        return false;
+    public Integer create(TimetableGroup entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public TimetableGroup update(TimetableGroup entity) {
-        return null;
+    public void update(TimetableGroup entity) {
     }
 
     @Override

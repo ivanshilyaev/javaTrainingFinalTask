@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,9 +37,8 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             "DELETE FROM user WHERE id = ?;";
 
     @Override
-    public boolean create(User entity) throws DAOException {
-        boolean created = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT)) {
+    public Integer create(User entity) throws DAOException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, new String(entity.getPassword()));
             statement.setInt(3, entity.getRole().ordinal());
@@ -46,11 +46,17 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             statement.setString(5, entity.getName());
             statement.setString(6, entity.getPatronymic());
             statement.executeUpdate();
-            created = true;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                LOGGER.error("No autoincremented index after trying to add record into table user");
+                return BAD_CREATION_CODE;
+            }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
+            return BAD_CREATION_CODE;
         }
-        return created;
     }
 
     @Override
@@ -88,7 +94,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public User update(User entity) {
+    public void update(User entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, String.valueOf(entity.getPassword()));
@@ -101,7 +107,6 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
-        return entity;
     }
 
     @Override

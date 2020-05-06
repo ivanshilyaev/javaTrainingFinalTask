@@ -23,8 +23,8 @@ public class DeleteStudentAction extends AdministratorAction {
                 int groupNum = Integer.parseInt(request.getParameter("groupNum"));
                 int id = Integer.parseInt(studentId);
                 StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
-                Student student = studentService.findEntityById(id).orElse(null);
-                int userId = student.getId();
+                Student student = studentService.read(id).orElse(null);
+                int userId = student.getUser().getId();
 
                 boolean studentDeleted = studentService.delete(id);
                 if (studentDeleted) {

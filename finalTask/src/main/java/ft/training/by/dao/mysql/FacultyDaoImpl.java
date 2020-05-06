@@ -82,13 +82,12 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
     }
 
     @Override
-    public boolean create(Faculty entity) {
-        return false;
+    public Integer create(Faculty entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Faculty update(Faculty entity) {
-        return null;
+    public void update(Faculty entity) {
     }
 
     private void fillFaculty(ResultSet resultSet, Faculty faculty) throws SQLException {

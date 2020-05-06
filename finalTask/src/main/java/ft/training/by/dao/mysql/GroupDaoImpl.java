@@ -6,12 +6,14 @@ import ft.training.by.dao.interfaces.GroupDao;
 import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.appender.rolling.action.IfNot;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,13 +78,12 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public boolean create(Group entity) {
-        return false;
+    public Integer create(Group entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Group update(Group entity) {
-        return null;
+    public void update(Group entity) {
     }
 
     private void fillGroup(Group group, ResultSet resultSet) throws SQLException {

@@ -107,25 +107,26 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public boolean create(Student entity) throws DAOException {
-        boolean created = false;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(SQL_INSERT);
+    public Integer create(Student entity) throws DAOException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, entity.getSubgroup().getId());
             statement.setInt(2, entity.getUser().getId());
             statement.executeUpdate();
-            created = true;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                LOGGER.error("No autoincremented index after trying to add record into table student");
+                return BAD_CREATION_CODE;
+            }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
+            return BAD_CREATION_CODE;
         }
-        return created;
     }
 
     @Override
-    public Student update(Student entity) {
-        return null;
+    public void update(Student entity) {
     }
 
     @Override

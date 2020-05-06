@@ -94,13 +94,12 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     }
 
     @Override
-    public boolean create(Tutor entity) {
-        return false;
+    public Integer create(Tutor entity) {
+        return BAD_CREATION_CODE;
     }
 
     @Override
-    public Tutor update(Tutor entity) {
-        return null;
+    public void update(Tutor entity) {
     }
 
     private void fillTutor(Tutor tutor, ResultSet resultSet) throws SQLException, DAOException {
