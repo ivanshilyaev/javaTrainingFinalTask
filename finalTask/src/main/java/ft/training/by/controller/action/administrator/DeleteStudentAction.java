@@ -22,13 +22,13 @@ public class DeleteStudentAction extends AdministratorAction {
             try {
                 int groupNum = Integer.parseInt(request.getParameter("groupNum"));
                 int id = Integer.parseInt(studentId);
-                StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
+                StudentService studentService = factory.createService(StudentService.class);
                 Student student = studentService.read(id).orElse(null);
                 int userId = student.getUser().getId();
 
                 boolean studentDeleted = studentService.delete(id);
                 if (studentDeleted) {
-                    UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+                    UserService userService = factory.createService(UserService.class);
                     boolean userDeleted = userService.delete(userId);
                     if (userDeleted) {
                         LOGGER.info(String.format("User \"%s\" deleted user with identity %d", getAuthorizedUser().getLogin(), id));

@@ -11,7 +11,7 @@ import java.util.List;
 public class FindAllGroupsAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        GroupService groupService = factory.createService(GroupService.class).orElseThrow(ServiceException::new);
+        GroupService groupService = factory.createService(GroupService.class);
         List<Group> groups = groupService.read();
         request.getSession().setAttribute("listGroups", groups);
         return null;

@@ -9,29 +9,27 @@ import ft.training.by.service.interfaces.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ServiceFactoryImpl implements ServiceFactory {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final Map<Class<? extends Service>, Class<? extends ServiceImpl>>
+    private static final Map<Class<? extends Service>, ServiceImpl>
             repository = new ConcurrentHashMap<>();
 
     static {
-        repository.put(FacultyService.class, FacultyServiceImpl.class);
-        repository.put(GroupService.class, GroupServiceImpl.class);
-        repository.put(SubgroupService.class, SubgroupServiceImpl.class);
-        repository.put(UserService.class, UserServiceImpl.class);
-        repository.put(StudentService.class, StudentServiceImpl.class);
-        repository.put(TutorService.class, TutorServiceImpl.class);
-        repository.put(AdministratorService.class, AdministratorServiceImpl.class);
-        repository.put(SubjectService.class, SubjectServiceImpl.class);
-        repository.put(ClassroomService.class, ClassroomServiceImpl.class);
-        repository.put(TimetableService.class, TimetableServiceImpl.class);
-        repository.put(TimetableGroupService.class, TimetableGroupServiceImpl.class);
+        repository.put(FacultyService.class, new FacultyServiceImpl());
+        repository.put(GroupService.class, new GroupServiceImpl());
+        repository.put(SubgroupService.class, new SubgroupServiceImpl());
+        repository.put(UserService.class, new UserServiceImpl());
+        repository.put(StudentService.class, new StudentServiceImpl());
+        repository.put(TutorService.class, new TutorServiceImpl());
+        repository.put(AdministratorService.class, new AdministratorServiceImpl());
+        repository.put(SubjectService.class, new SubjectServiceImpl());
+        repository.put(ClassroomService.class, new ClassroomServiceImpl());
+        repository.put(TimetableService.class, new TimetableServiceImpl());
+        repository.put(TimetableGroupService.class, new TimetableGroupServiceImpl());
     }
 
     private TransactionFactory factory;
@@ -45,21 +43,14 @@ public final class ServiceFactoryImpl implements ServiceFactory {
     }
 
     @Override
-    public <T extends Service> Optional<T> createService(Class<T> key) throws ServiceException {
-        Class<? extends ServiceImpl> value = repository.get(key);
-        if (value != null) {
-            try {
-                Transaction transaction = factory.createTransaction();
-                ServiceImpl service = value.getDeclaredConstructor().newInstance();
-                service.setTransaction(transaction);
-                return Optional.of((T) service);
-            } catch (InstantiationException | InvocationTargetException
-                    | NoSuchMethodException | IllegalAccessException e) {
-                LOGGER.error("Impossible to create service");
-                throw new ServiceException(e);
-            }
+    public <T extends Service> T createService(Class<T> key) throws ServiceException {
+        ServiceImpl service = repository.get(key);
+        if (service != null) {
+            Transaction transaction = factory.createTransaction();
+            service.setTransaction(transaction);
+            return (T) service;
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override

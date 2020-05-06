@@ -20,7 +20,7 @@ public class FacultyServiceTest {
         try {
             Runner.initConnectionPool();
             ServiceFactory serviceFactory = new ServiceFactoryImpl();
-            facultyService = serviceFactory.createService(FacultyService.class).orElseThrow(ServiceException::new);
+            facultyService = serviceFactory.createService(FacultyService.class);
         } catch (ServiceException e) {
             e.printStackTrace();
         }

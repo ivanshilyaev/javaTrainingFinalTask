@@ -16,7 +16,7 @@ public class FindAllUsersAction extends AdministratorAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
-        UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+        UserService userService = factory.createService(UserService.class);
         List<User> list = userService.read();
         request.getSession().setAttribute("list", list);
         return null;

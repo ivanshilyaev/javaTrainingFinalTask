@@ -11,7 +11,7 @@ import java.util.List;
 public class FindGroupStudentsAction extends StudentAction {
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
+        StudentService studentService = factory.createService(StudentService.class);
         Student student = (Student) request.getSession().getAttribute("authorizedStudent");
         List<Student> groupList = studentService.findByGroup(student.getSubgroup().getGroup().getGroupNumber());
         request.getSession().setAttribute("groupList", groupList);

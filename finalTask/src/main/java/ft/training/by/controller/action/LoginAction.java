@@ -49,7 +49,7 @@ public class LoginAction extends Action {
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         request.getSession().setAttribute("address", address);
         if (login != null && password != null) {
-            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+            UserService userService = factory.createService(UserService.class);
             User user = userService.read(login, password.toCharArray()).orElse(null);
             if (user != null) {
                 // для привествия пользователя на главной странице
@@ -59,8 +59,8 @@ public class LoginAction extends Action {
                 setAuthorizedUser(user);
                 switch (user.getRole()) {
                     case STUDENT:
-                        StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
-                        Student student = studentService.readByUserId(user.getId()).orElse(null);
+                        StudentService studentService = factory.createService(StudentService.class);
+                        Student student = studentService.findByUserId(user.getId()).orElse(null);
                         if (student != null) {
                             request.getSession().setAttribute("authorizedStudent", student);
                         }

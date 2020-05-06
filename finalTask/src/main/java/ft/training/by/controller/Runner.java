@@ -32,8 +32,8 @@ public class Runner {
         initConnectionPool();
         try {
             ServiceFactory factory = new ServiceFactoryImpl();
-            GroupService service = factory.createService(GroupService.class).orElseThrow(ServiceException::new);
-            System.out.println(service.read(1));
+            TutorService service = factory.createService(TutorService.class);
+            System.out.println(service.read(15));
             LOGGER.info("success");
         } catch (ServiceException e) {
             LOGGER.error("Service exception in main method", e);

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,20 +30,23 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
                     " WHERE subgroup_id = ?;";
 
     @Override
+    public Integer create(TimetableGroup entity) {
+        return BAD_CREATION_CODE;
+    }
+
+    @Override
     public List<TimetableGroup> read() throws DAOException {
         List<TimetableGroup> list = new ArrayList<>();
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_ITEMS);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_ITEMS)) {
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 TimetableGroup timetableGroup = new TimetableGroup();
                 fillTimetableGroup(resultSet, timetableGroup);
                 list.add(timetableGroup);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return list;
     }
@@ -52,20 +54,22 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     @Override
     public Optional<TimetableGroup> read(Integer id) throws DAOException {
         TimetableGroup timetableGroup = null;
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_ID);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 timetableGroup = new TimetableGroup();
                 fillTimetableGroup(resultSet, timetableGroup);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return Optional.ofNullable(timetableGroup);
+    }
+
+    @Override
+    public void update(TimetableGroup entity) {
     }
 
     @Override
@@ -79,20 +83,9 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     }
 
     @Override
-    public Integer create(TimetableGroup entity) {
-        return BAD_CREATION_CODE;
-    }
-
-    @Override
-    public void update(TimetableGroup entity) {
-    }
-
-    @Override
     public List<TimetableGroup> findBySubgroupId(Integer id) throws DAOException {
         List<TimetableGroup> list = new ArrayList<>();
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_SUBGROUP_ID);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_SUBGROUP_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -100,9 +93,9 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
                 fillTimetableGroup(resultSet, timetableGroup);
                 list.add(timetableGroup);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return list;
     }

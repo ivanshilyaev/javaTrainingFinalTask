@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,26 +30,23 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                     ", classroom_id, tutor_id FROM timetable" +
                     " WHERE id = ?;";
 
+    @Override
+    public Integer create(Timetable entity) {
+        return BAD_CREATION_CODE;
+    }
+
     public List<Timetable> read() throws DAOException {
         List<Timetable> timetables = new ArrayList<>();
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_CLASSES)) {
-                    while (resultSet.next()) {
-                        Timetable timetable = new Timetable();
-                        fillTimetable(timetable, resultSet);
-                        timetables.add(timetable);
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_CLASSES)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Timetable timetable = new Timetable();
+                fillTimetable(resultSet, timetable);
+                timetables.add(timetable);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return timetables;
     }
@@ -58,21 +54,22 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     @Override
     public Optional<Timetable> read(Integer id) throws DAOException {
         Timetable timetable = null;
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_CLASS_BY_ID);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLASS_BY_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 timetable = new Timetable();
-                fillTimetable(timetable, resultSet);
-                resultSet.close();
+                fillTimetable(resultSet, timetable);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return Optional.ofNullable(timetable);
+    }
+
+    @Override
+    public void update(Timetable entity) {
     }
 
     @Override
@@ -85,16 +82,7 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
         return false;
     }
 
-    @Override
-    public Integer create(Timetable entity) {
-        return BAD_CREATION_CODE;
-    }
-
-    @Override
-    public void update(Timetable entity) {
-    }
-
-    public void fillTimetable(Timetable timetable, ResultSet resultSet)
+    public void fillTimetable(ResultSet resultSet, Timetable timetable)
             throws SQLException, DAOException {
         timetable.setId(resultSet.getInt(1));
         timetable.setDay(Day.getById(resultSet.getInt(2)));

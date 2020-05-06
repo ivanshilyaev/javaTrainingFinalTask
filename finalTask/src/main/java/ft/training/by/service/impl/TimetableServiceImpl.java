@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class TimetableServiceImpl extends ServiceImpl implements TimetableService {
     @Override
-    public List<Timetable> findAll() throws ServiceException {
+    public List<Timetable> read() throws ServiceException {
         try {
             TimetableDao dao = transaction.createDao(TimetableDao.class);
             return dao.read();
@@ -21,7 +21,7 @@ public class TimetableServiceImpl extends ServiceImpl implements TimetableServic
     }
 
     @Override
-    public Optional<Timetable> findEntityById(Integer id) throws ServiceException {
+    public Optional<Timetable> read(Integer id) throws ServiceException {
         try {
             TimetableDao dao = transaction.createDao(TimetableDao.class);
             return dao.read(id);

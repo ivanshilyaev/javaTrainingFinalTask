@@ -46,11 +46,11 @@ public class AddStudentAction extends AdministratorAction {
             User user = new User(login, new char[]{'1', '1', '1', '1', '1'}, Role.STUDENT,
                     surname, name, patronymic);
             // подгруппа
-            SubgroupService subgroupService = factory.createService(SubgroupService.class).orElseThrow(ServiceException::new);
+            SubgroupService subgroupService = factory.createService(SubgroupService.class);
             subgroup = subgroupService.findBySubgroupNumberAndGroupId(subgroupNum.charAt(0), currentStudent.getSubgroup().getGroup().getId()).orElse(null);
 
             // добавление нового пользователя
-            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+            UserService userService = factory.createService(UserService.class);
             int userId = userService.create(user);
             int studentId = -1;
             if (userId != -1) {
@@ -61,7 +61,7 @@ public class AddStudentAction extends AdministratorAction {
                  */
                 user = userService.read(userId).orElse(null);
                 Student student = new Student(user, subgroup);
-                StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
+                StudentService studentService = factory.createService(StudentService.class);
                 studentId = studentService.create(student);
                 student = studentService.read(studentId).orElse(null);
                 List<Student> groupList = (List<Student>) request.getSession().getAttribute("groupList");

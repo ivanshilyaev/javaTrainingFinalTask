@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService {
     @Override
-    public List<Subgroup> findAll() throws ServiceException {
+    public List<Subgroup> read() throws ServiceException {
         try {
             SubgroupDao dao = transaction.createDao(SubgroupDao.class);
             return dao.read();
@@ -21,7 +21,7 @@ public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService 
     }
 
     @Override
-    public Optional<Subgroup> findEntityById(Integer id) throws ServiceException {
+    public Optional<Subgroup> read(Integer id) throws ServiceException {
         try {
             SubgroupDao dao = transaction.createDao(SubgroupDao.class);
             return dao.read(id);

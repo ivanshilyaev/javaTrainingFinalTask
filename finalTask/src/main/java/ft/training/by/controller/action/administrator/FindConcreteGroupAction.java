@@ -21,7 +21,7 @@ public class FindConcreteGroupAction extends AdministratorAction {
             } else {
                 groupNum = (int) request.getAttribute(PARAM_GROUP_NUMBER);
             }
-            StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
+            StudentService studentService = factory.createService(StudentService.class);
             List<Student> groupList = studentService.findByGroup(groupNum);
             request.getSession().setAttribute("groupList", groupList);
             if (!groupList.isEmpty()) {

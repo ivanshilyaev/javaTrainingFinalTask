@@ -7,9 +7,9 @@ import ft.training.by.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,35 +17,30 @@ import java.util.Optional;
 public class TutorDaoImpl extends DaoImpl implements TutorDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String SQL_SELECT_ALL_TUTORS =
+    private static final String SQL_SELECT_ALL_TUTORS =
             "SELECT id, position, degree, user_id FROM tutor;";
+
+    private static final String SQL_SELECT_TUTOR_BY_ID =
+            "SELECT id, position, degree, user_id FROM tutor WHERE id = ?;";
+
+    @Override
+    public Integer create(Tutor entity) {
+        return BAD_CREATION_CODE;
+    }
 
     @Override
     public List<Tutor> read() throws DAOException {
         List<Tutor> tutors = new ArrayList<>();
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_TUTORS);
-                    while (resultSet.next()) {
-                        Tutor tutor = new Tutor();
-                        fillTutor(tutor, resultSet);
-                        tutors.add(tutor);
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            } finally {
-
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_TUTORS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Tutor tutor = new Tutor();
+                fillTutor(resultSet, tutor);
+                tutors.add(tutor);
             }
+            resultSet.close();
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
-        } finally {
         }
         return tutors;
     }
@@ -53,34 +48,22 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     @Override
     public Optional<Tutor> read(Integer id) throws DAOException {
         Tutor tutor = null;
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_TUTORS);
-                    while (resultSet.next()) {
-                        if (resultSet.getInt(1) == id) {
-                            tutor = new Tutor();
-                            fillTutor(tutor, resultSet);
-                        }
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    } else {
-                        LOGGER.error("Error while reading from DB");
-                    }
-                }
-            } finally {
-
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_TUTOR_BY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                tutor = new Tutor();
+                fillTutor(resultSet, tutor);
             }
+            resultSet.close();
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
-        } finally {
         }
         return Optional.ofNullable(tutor);
+    }
+
+    @Override
+    public void update(Tutor entity) {
     }
 
     @Override
@@ -93,16 +76,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
         return false;
     }
 
-    @Override
-    public Integer create(Tutor entity) {
-        return BAD_CREATION_CODE;
-    }
-
-    @Override
-    public void update(Tutor entity) {
-    }
-
-    private void fillTutor(Tutor tutor, ResultSet resultSet) throws SQLException, DAOException {
+    private void fillTutor(ResultSet resultSet, Tutor tutor) throws SQLException, DAOException {
         tutor.setId(resultSet.getInt(1));
         tutor.setPosition(resultSet.getString(2));
         tutor.setDegree(resultSet.getString(3));

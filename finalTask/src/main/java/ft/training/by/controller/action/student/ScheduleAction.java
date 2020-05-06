@@ -24,16 +24,16 @@ public class ScheduleAction extends StudentAction {
             // 2. забираем день недели, для которого нужно отображать расписание
             int day = Integer.parseInt(request.getParameter("day"));
             // 3. находим группу (подгруппу) студента
-            SubgroupService subgroupService = factory.createService(SubgroupService.class).orElseThrow(ServiceException::new);
-            Subgroup subgroup = subgroupService.findEntityById(student.getSubgroup().getId()).orElse(null);
+            SubgroupService subgroupService = factory.createService(SubgroupService.class);
+            Subgroup subgroup = subgroupService.read(student.getSubgroup().getId()).orElse(null);
             // 4. находим все занятия для этой подгурппы
-            TimetableGroupService timetableGroupService = factory.createService(TimetableGroupService.class).orElseThrow(ServiceException::new);
+            TimetableGroupService timetableGroupService = factory.createService(TimetableGroupService.class);
             List<TimetableGroup> list = timetableGroupService.findBySubgroupId(subgroup.getId());
             // 5. находим все пары
             List<Timetable> classes = new ArrayList<>();
-            TimetableService timetableService = factory.createService(TimetableService.class).orElseThrow(ServiceException::new);
+            TimetableService timetableService = factory.createService(TimetableService.class);
             for (TimetableGroup timetableGroup : list) {
-                classes.add(timetableService.findEntityById(timetableGroup.getTimetable().getId()).orElse(null));
+                classes.add(timetableService.read(timetableGroup.getTimetable().getId()).orElse(null));
             }
             // 6. находим все пары для данного дня
             List<Timetable> schedule = new ArrayList<>();

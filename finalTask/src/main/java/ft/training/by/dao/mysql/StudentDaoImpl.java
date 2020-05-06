@@ -119,9 +119,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     @Override
     public Optional<Student> findByUserId(Integer id) throws DAOException {
         Student student = null;
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_USER_ID);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_STUDENT_BY_USER_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -131,7 +129,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
         }
         return Optional.ofNullable(student);
     }

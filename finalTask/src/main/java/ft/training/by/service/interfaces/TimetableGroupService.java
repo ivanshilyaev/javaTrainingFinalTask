@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TimetableGroupService extends Service {
-    List<TimetableGroup> findAll() throws ServiceException;
+    List<TimetableGroup> read() throws ServiceException;
 
-    Optional<TimetableGroup> findEntityById(Integer id) throws ServiceException;
+    Optional<TimetableGroup> read(Integer id) throws ServiceException;
 
     List<TimetableGroup> findBySubgroupId(Integer id) throws ServiceException;
 }

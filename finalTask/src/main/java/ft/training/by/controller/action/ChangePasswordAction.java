@@ -39,7 +39,7 @@ public class ChangePasswordAction extends AuthorizedUserAction {
                 return null;
             }
             currentUser.setPassword(newPassword.toCharArray());
-            UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
+            UserService userService = factory.createService(UserService.class);
             userService.update(currentUser);
             return new Forward("/logout.html");
         }
