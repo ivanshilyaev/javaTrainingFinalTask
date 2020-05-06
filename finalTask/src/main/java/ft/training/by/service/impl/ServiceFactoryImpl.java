@@ -6,15 +6,13 @@ import ft.training.by.dao.exception.DAOException;
 import ft.training.by.dao.mysql.TransactionFactoryImpl;
 import ft.training.by.service.exception.ServiceException;
 import ft.training.by.service.interfaces.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ServiceFactoryImpl implements ServiceFactory {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private static final Map<Class<? extends Service>, ServiceImpl>
             repository = new ConcurrentHashMap<>();
 
@@ -48,7 +46,9 @@ public final class ServiceFactoryImpl implements ServiceFactory {
         if (service != null) {
             Transaction transaction = factory.createTransaction();
             service.setTransaction(transaction);
-            return (T) service;
+            InvocationHandler handler = new ServiceInvocationHandler(service);
+            return (T) Proxy.newProxyInstance(service.getClass().getClassLoader(),
+                    new Class[]{key}, handler);
         }
         return null;
     }

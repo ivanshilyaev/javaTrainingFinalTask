@@ -17,6 +17,12 @@ public class TransactionFactoryImpl implements TransactionFactory {
 
     public TransactionFactoryImpl() throws DAOException {
         connection = ConnectionPool.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException throwables) {
+            LOGGER.error("Impossible to turn off autocommiting for database connection", throwables);
+            throw new DAOException(throwables);
+        }
     }
 
     @Override

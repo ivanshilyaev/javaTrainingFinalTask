@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,12 +47,22 @@ public class TransactionImpl implements Transaction {
     }
 
     @Override
-    public void commit() {
-
+    public void commit() throws DAOException {
+        try {
+            connection.commit();
+        } catch (SQLException throwables) {
+            LOGGER.error("Impossible to commit transaction", throwables);
+            throw new DAOException(throwables);
+        }
     }
 
     @Override
-    public void rollback() {
-
+    public void rollback() throws DAOException {
+        try {
+            connection.rollback();
+        } catch (SQLException throwables) {
+            LOGGER.error("Impossible to rollback transaction", throwables);
+            throw new DAOException(throwables);
+        }
     }
 }
