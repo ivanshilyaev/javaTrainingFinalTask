@@ -46,13 +46,12 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return timetables;
     }
@@ -69,12 +68,11 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                 timetable = new Timetable();
                 fillTimetable(timetable, resultSet);
                 resultSet.close();
-                close(statement);
+                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(timetable);
     }

@@ -5,7 +5,6 @@ import ft.training.by.dao.interfaces.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,21 +12,21 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TransactionImpl implements Transaction {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final Map<Class<? extends Dao<?, ?>>, Class<? extends DaoImpl>>
+    private static final Map<Class<? extends Dao<?, ?>>, DaoImpl>
             repository = new ConcurrentHashMap<>();
 
     static {
-        repository.put(FacultyDao.class, FacultyDaoImpl.class);
-        repository.put(GroupDao.class, GroupDaoImpl.class);
-        repository.put(SubgroupDao.class, SubgroupDaoImpl.class);
-        repository.put(UserDao.class, UserDaoImpl.class);
-        repository.put(StudentDao.class, StudentDaoImpl.class);
-        repository.put(TutorDao.class, TutorDaoImpl.class);
-        repository.put(AdministratorDao.class, AdministratorDaoImpl.class);
-        repository.put(SubjectDao.class, SubjectDaoImpl.class);
-        repository.put(ClassroomDao.class, ClassroomDaoImpl.class);
-        repository.put(TimetableDao.class, TimetableDaoImpl.class);
-        repository.put(TimetableGroupDao.class, TimetableGroupDaoImpl.class);
+        repository.put(FacultyDao.class, new FacultyDaoImpl());
+        repository.put(GroupDao.class, new GroupDaoImpl());
+        repository.put(SubgroupDao.class, new SubgroupDaoImpl());
+        repository.put(UserDao.class, new UserDaoImpl());
+        repository.put(StudentDao.class, new StudentDaoImpl());
+        repository.put(TutorDao.class, new TutorDaoImpl());
+        repository.put(AdministratorDao.class, new AdministratorDaoImpl());
+        repository.put(SubjectDao.class, new SubjectDaoImpl());
+        repository.put(ClassroomDao.class, new ClassroomDaoImpl());
+        repository.put(TimetableDao.class, new TimetableDaoImpl());
+        repository.put(TimetableGroupDao.class, new TimetableGroupDaoImpl());
     }
 
     private Connection connection;
@@ -38,17 +37,10 @@ public class TransactionImpl implements Transaction {
 
     @Override
     public <T extends Dao<?, ?>> T createDao(Class<T> key) throws DAOException {
-        Class<? extends DaoImpl> value = repository.get(key);
-        if (value != null) {
-            try {
-                DaoImpl dao = value.getDeclaredConstructor().newInstance();
-                dao.setConnection(connection);
-                return (T) dao;
-            } catch (InstantiationException | InvocationTargetException |
-                    NoSuchMethodException | IllegalAccessException e) {
-                LOGGER.error("Impossible to create dao object", e);
-                throw new DAOException(e);
-            }
+        DaoImpl dao = repository.get(key);
+        if (dao != null) {
+            dao.setConnection(connection);
+            return (T) dao;
         }
         return null;
     }

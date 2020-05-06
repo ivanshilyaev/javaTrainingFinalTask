@@ -41,11 +41,10 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 subgroups.add(subgroup);
             }
             resultSet.close();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return subgroups;
     }
@@ -63,11 +62,10 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 fillSubgroup(resultSet, subgroup);
             }
             resultSet.close();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(subgroup);
     }
@@ -106,11 +104,10 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 fillSubgroup(resultSet, subgroup);
             }
             resultSet.close();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(subgroup);
     }

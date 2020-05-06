@@ -56,13 +56,12 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return students;
     }
@@ -83,8 +82,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            close(statement);
-            closeConnection();
+            closeStatement(statement);
         }
         return Optional.ofNullable(student);
     }
@@ -102,8 +100,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            close(statement);
-            closeConnection();
+            closeStatement(statement);
         }
         return deleted;
     }
@@ -126,8 +123,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            close(statement);
-            closeConnection();
+            closeStatement(statement);
         }
         return created;
     }
@@ -156,12 +152,11 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
                 student = new Student();
                 fillStudent(student, resultSet);
                 resultSet.close();
-                close(statement);
+                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(student);
     }

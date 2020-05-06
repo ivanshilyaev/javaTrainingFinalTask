@@ -45,7 +45,6 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return list;
     }
@@ -65,7 +64,6 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(timetableGroup);
     }
@@ -106,7 +104,6 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return list;
     }

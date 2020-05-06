@@ -60,13 +60,12 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return users;
     }
@@ -87,8 +86,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            if (statement != null) close(statement);
-            closeConnection();
+            if (statement != null) closeStatement(statement);
         }
         return Optional.ofNullable(user);
     }
@@ -106,8 +104,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            close(statement);
-            closeConnection();
+            closeStatement(statement);
         }
         return deleted;
     }
@@ -120,7 +117,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     @Override
     public boolean create(User entity) throws DAOException {
         boolean created = false;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, entity.getLogin());
@@ -131,11 +128,10 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             statement.setString(6, entity.getPatronymic());
             statement.executeUpdate();
             created = true;
-            close(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
+            closeStatement(statement);
         }
         return created;
     }
@@ -153,7 +149,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             statement.setString(6, entity.getPatronymic());
             statement.setInt(7, entity.getId());
             statement.executeUpdate();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
@@ -180,7 +176,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
                 user.setPatronymic(resultSet.getString(5));
             }
             resultSet.close();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }

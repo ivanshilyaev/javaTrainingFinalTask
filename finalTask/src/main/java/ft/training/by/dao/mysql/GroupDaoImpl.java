@@ -38,11 +38,10 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
                 groups.add(group);
             }
             resultSet.close();
-            close(statement);
+            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return groups;
     }
@@ -59,12 +58,11 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
                 group = new Group();
                 fillGroup(group, resultSet);
                 resultSet.close();
-                close(statement);
+                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(group);
     }

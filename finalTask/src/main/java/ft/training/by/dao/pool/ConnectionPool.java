@@ -44,7 +44,11 @@ public final class ConnectionPool {
                 if (!freeConnections.isEmpty()) {
                     connection = freeConnections.take();
                     if (!connection.isValid(maxWait)) {
-                        connection.getConnection().close();
+                        try {
+                            connection.getConnection().close();
+                        } catch (SQLException throwables) {
+                        }
+                        connection = null;
                     }
                 } else if (usedConnections.size() < maxActive) {
                     connection = createConnection();
@@ -55,8 +59,11 @@ public final class ConnectionPool {
                 }
             } catch (InterruptedException | SQLException e) {
                 LOGGER.error("Impossible to connect to a database", e);
+                locker.unlock();
+                throw new DAOException(e);
             }
         }
+        usedConnections.add(connection);
         locker.unlock();
         return connection;
     }

@@ -41,13 +41,12 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return faculties;
     }
@@ -71,7 +70,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
             LOGGER.error("Couldn't create statement", e);
         } finally {
             if (statement != null) {
-                close(statement);
+                closeStatement(statement);
             }
         }
         return Optional.ofNullable(faculty);

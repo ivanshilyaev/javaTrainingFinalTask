@@ -42,13 +42,12 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return tutors;
     }
@@ -78,13 +77,12 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
                 }
             } finally {
                 if (statement != null) {
-                    close(statement);
+                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
-            closeConnection();
         }
         return Optional.ofNullable(tutor);
     }
