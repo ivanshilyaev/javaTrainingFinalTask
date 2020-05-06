@@ -40,7 +40,7 @@
 <form name="findGroup" method="POST" action="${indexUrl}">
     <input type="submit" value="На главную">
 </form>
-${sessionScope.studentAddedMessage}
+${requestScope.studentAddedMessage}
 <ctg:footer address="${sessionScope.address}"/>
 </body>
 </html>

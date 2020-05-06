@@ -31,15 +31,15 @@ public class DeleteStudentAction extends AdministratorAction {
                     UserService userService = factory.createService(UserService.class).orElseThrow(ServiceException::new);
                     boolean userDeleted = userService.delete(userId);
                     if (userDeleted) {
-                        request.getSession().setAttribute("studentDeletedMessage",
-                                "Студент был успешно удалён");
                         LOGGER.info(String.format("User \"%s\" deleted user with identity %d", getAuthorizedUser().getLogin(), id));
                         Forward forward = new Forward("/students/concreteGroup.html");
                         forward.getAttributes().put("groupNum", groupNum);
+                        forward.getAttributes().put("studentDeletedMessage",
+                                "Студент был успешно удалён");
                         return forward;
                     }
                 }
-                request.getSession().setAttribute("studentDeletedMessage",
+                request.setAttribute("studentDeletedMessage",
                         "Ошибка при попытке удалить студента");
                 LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to delete user", getAuthorizedUser().getLogin()));
             } catch (NumberFormatException e) {

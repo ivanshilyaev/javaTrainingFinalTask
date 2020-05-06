@@ -83,6 +83,7 @@ public class Controller extends HttpServlet {
             Action action = (Action) request.getAttribute("action");
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
+            actionManager.close();
             // redirected data
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());

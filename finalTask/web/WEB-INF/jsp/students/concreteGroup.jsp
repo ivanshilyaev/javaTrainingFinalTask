@@ -26,7 +26,7 @@
     <input type="submit" value="Удалить студента">
 </form>
 <br>
-${sessionScope.studentDeletedMessage}
+${requestScope.studentDeletedMessage}
 <br>
 <c:if test="${sessionScope.groupList.size() != 0}">
     <table class="table table-bordered">

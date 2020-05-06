@@ -33,6 +33,9 @@ public class AddStudentAction extends AdministratorAction {
         String patronymic = request.getParameter(PARAM_NAME_PATRONYMIC);
         String subgroupNum = request.getParameter(PARAM_NAME_SUBGROUP);
         String login = request.getParameter(PARAM_NAME_LOGIN);
+
+        // валидация
+
         if (surname != null && name != null && patronymic != null &&
                 subgroupNum != null && login != null) {
             // подгруппа
@@ -65,14 +68,14 @@ public class AddStudentAction extends AdministratorAction {
                 groupList.add(student);
                 request.getSession().setAttribute("groupList", groupList);
                 if (studentId != -1) {
-                    request.getSession().setAttribute("studentAddedMessage",
+                    request.setAttribute("studentAddedMessage",
                             "Новый студент был успешно добавлен");
                     LOGGER.info(String.format("New student \"%s\" with identity %d has been added successfully",
                             student.getUser().getLogin(), student.getId()));
                 }
             }
             if (userId == -1 || studentId == -1) {
-                request.getSession().setAttribute("studentAddedMessage",
+                request.setAttribute("studentAddedMessage",
                         "Произошла ошибка ввода данных");
                 LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add new student",
                         authorizedUser.getLogin()));
