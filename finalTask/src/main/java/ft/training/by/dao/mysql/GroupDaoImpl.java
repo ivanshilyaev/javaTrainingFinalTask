@@ -26,7 +26,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
                     " WHERE id = ?;";
 
     @Override
-    public List<Group> findAll() throws DAOException {
+    public List<Group> read() throws DAOException {
         List<Group> groups = new ArrayList<>();
         Statement statement;
         try {
@@ -38,7 +38,6 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
                 groups.add(group);
             }
             resultSet.close();
-            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
@@ -47,7 +46,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public Optional<Group> findEntityById(Integer id) throws DAOException {
+    public Optional<Group> read(Integer id) throws DAOException {
         Group group = null;
         PreparedStatement statement;
         try {
@@ -58,7 +57,6 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
                 group = new Group();
                 fillGroup(group, resultSet);
                 resultSet.close();
-                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
@@ -94,7 +92,7 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         int facultyID = resultSet.getInt(4);
         FacultyDaoImpl facultyDao = new FacultyDaoImpl();
         facultyDao.setConnection(connection);
-        Faculty faculty = facultyDao.findEntityById(facultyID).orElse(null);
+        Faculty faculty = facultyDao.read(facultyID).orElse(null);
         group.setFaculty(faculty);
     }
 }

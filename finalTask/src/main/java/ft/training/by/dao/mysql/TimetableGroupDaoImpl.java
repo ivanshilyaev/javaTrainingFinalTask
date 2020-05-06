@@ -31,7 +31,7 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
                     " WHERE subgroup_id = ?;";
 
     @Override
-    public List<TimetableGroup> findAll() throws DAOException {
+    public List<TimetableGroup> read() throws DAOException {
         List<TimetableGroup> list = new ArrayList<>();
         Statement statement = null;
         try {
@@ -50,7 +50,7 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     }
 
     @Override
-    public Optional<TimetableGroup> findEntityById(Integer id) throws DAOException {
+    public Optional<TimetableGroup> read(Integer id) throws DAOException {
         TimetableGroup timetableGroup = null;
         PreparedStatement statement;
         try {
@@ -114,12 +114,12 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
         int timetableId = resultSet.getInt(2);
         TimetableDaoImpl timetableDao = new TimetableDaoImpl();
         timetableDao.setConnection(connection);
-        Timetable timetable = timetableDao.findEntityById(timetableId).orElse(null);
+        Timetable timetable = timetableDao.read(timetableId).orElse(null);
         timetableGroup.setTimetable(timetable);
         int subgroupId = resultSet.getInt(3);
         SubgroupDaoImpl subgroupDao = new SubgroupDaoImpl();
         subgroupDao.setConnection(connection);
-        Subgroup subgroup = subgroupDao.findEntityById(subgroupId).orElse(null);
+        Subgroup subgroup = subgroupDao.read(subgroupId).orElse(null);
         timetableGroup.setSubgroup(subgroup);
     }
 }

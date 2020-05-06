@@ -21,7 +21,7 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
             "SELECT id, number, capacity, type, hasProjector FROM classroom;";
 
     @Override
-    public List<Classroom> findAll() throws DAOException {
+    public List<Classroom> read() throws DAOException {
         List<Classroom> classrooms = new ArrayList<>();
         try {
             Statement statement = null;
@@ -35,9 +35,7 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
@@ -47,7 +45,7 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
     }
 
     @Override
-    public Optional<Classroom> findEntityById(Integer id) throws DAOException {
+    public Optional<Classroom> read(Integer id) throws DAOException {
         Classroom classroom = null;
         try {
             Statement statement = null;
@@ -70,9 +68,7 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);

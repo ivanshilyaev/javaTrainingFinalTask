@@ -13,7 +13,7 @@ public class AdministratorServiceImpl extends ServiceImpl implements Administrat
     public List<Administrator> findAll() throws ServiceException {
         try {
             AdministratorDao dao = transaction.createDao(AdministratorDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

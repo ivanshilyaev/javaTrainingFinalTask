@@ -14,7 +14,7 @@ public class GroupServiceImpl extends ServiceImpl implements GroupService {
     public List<Group> findAll() throws ServiceException {
         try {
             GroupDao dao = transaction.createDao(GroupDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -24,7 +24,7 @@ public class GroupServiceImpl extends ServiceImpl implements GroupService {
     public Optional<Group> findEntityById(Integer id) throws ServiceException {
         try {
             GroupDao dao = transaction.createDao(GroupDao.class);
-            return dao.findEntityById(id);
+            return dao.read(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

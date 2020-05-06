@@ -20,7 +20,7 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
             "SELECT id, name FROM subject;";
 
     @Override
-    public List<Subject> findAll() throws DAOException {
+    public List<Subject> read() throws DAOException {
         List<Subject> subjects = new ArrayList<>();
         try {
             Statement statement = null;
@@ -36,7 +36,6 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
                 }
             } finally {
                 if (statement != null) {
-                    closeStatement(statement);
                 }
             }
         } catch (SQLException throwables) {
@@ -47,7 +46,7 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
     }
 
     @Override
-    public Optional<Subject> findEntityById(Integer id) throws DAOException {
+    public Optional<Subject> read(Integer id) throws DAOException {
         Subject subject = null;
         try {
             Statement statement = null;
@@ -72,7 +71,6 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
                 }
             } finally {
                 if (statement != null) {
-                    closeStatement(statement);
                 }
             }
         } catch (SQLException e) {

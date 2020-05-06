@@ -14,7 +14,7 @@ public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService 
     public List<Subgroup> findAll() throws ServiceException {
         try {
             SubgroupDao dao = transaction.createDao(SubgroupDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -24,7 +24,7 @@ public class SubgroupServiceImpl extends ServiceImpl implements SubgroupService 
     public Optional<Subgroup> findEntityById(Integer id) throws ServiceException {
         try {
             SubgroupDao dao = transaction.createDao(SubgroupDao.class);
-            return dao.findEntityById(id);
+            return dao.read(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

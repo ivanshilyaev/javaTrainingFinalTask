@@ -14,7 +14,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     public List<User> findAll() throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -24,7 +24,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     public Optional<User> findEntityById(Integer id) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
-            return dao.findEntityById(id);
+            return dao.read(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -34,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     public Optional<User> findByLoginAndPassword(String login, char[] password) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
-            return dao.findByLoginAndPassword(login, password);
+            return dao.read(login, password);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

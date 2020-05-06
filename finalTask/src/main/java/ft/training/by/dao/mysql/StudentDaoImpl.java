@@ -35,7 +35,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             "DELETE FROM student WHERE id = ?;";
 
     @Override
-    public List<Student> findAll() throws DAOException {
+    public List<Student> read() throws DAOException {
         List<Student> students = new ArrayList<>();
         try {
             Statement statement = null;
@@ -55,9 +55,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
@@ -67,7 +65,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public Optional<Student> findEntityById(Integer id) throws DAOException {
+    public Optional<Student> read(Integer id) throws DAOException {
         Student student = null;
         PreparedStatement statement = null;
         ResultSet resultSet;
@@ -82,7 +80,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeStatement(statement);
         }
         return Optional.ofNullable(student);
     }
@@ -100,7 +97,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeStatement(statement);
         }
         return deleted;
     }
@@ -123,7 +119,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            closeStatement(statement);
         }
         return created;
     }
@@ -135,7 +130,7 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
 
     @Override
     public List<Student> findByGroup(int groupNum) throws DAOException {
-        List<Student> students = findAll();
+        List<Student> students = read();
         students.removeIf(student -> student.getSubgroup().getGroup().getGroupNumber() != groupNum);
         return students;
     }
@@ -152,7 +147,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
                 student = new Student();
                 fillStudent(student, resultSet);
                 resultSet.close();
-                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
@@ -166,12 +160,12 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         int subgroupID = resultSet.getInt(2);
         SubgroupDaoImpl subgroupDao = new SubgroupDaoImpl();
         subgroupDao.setConnection(connection);
-        Subgroup subgroup = subgroupDao.findEntityById(subgroupID).orElse(null);
+        Subgroup subgroup = subgroupDao.read(subgroupID).orElse(null);
         student.setSubgroup(subgroup);
         int userID = resultSet.getInt(3);
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
-        User user = userDao.findEntityById(userID).orElse(null);
+        User user = userDao.read(userID).orElse(null);
         student.setUser(user);
     }
 }

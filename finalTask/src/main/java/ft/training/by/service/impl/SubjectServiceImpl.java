@@ -13,7 +13,7 @@ public class SubjectServiceImpl extends ServiceImpl implements SubjectService {
     public List<Subject> findAll() throws ServiceException {
         try {
             SubjectDao dao = transaction.createDao(SubjectDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

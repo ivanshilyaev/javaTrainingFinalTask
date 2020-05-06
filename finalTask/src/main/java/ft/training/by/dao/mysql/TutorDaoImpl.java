@@ -21,7 +21,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
             "SELECT id, position, degree, user_id FROM tutor;";
 
     @Override
-    public List<Tutor> findAll() throws DAOException {
+    public List<Tutor> read() throws DAOException {
         List<Tutor> tutors = new ArrayList<>();
         try {
             Statement statement = null;
@@ -41,9 +41,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
@@ -53,7 +51,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     }
 
     @Override
-    public Optional<Tutor> findEntityById(Integer id) throws DAOException {
+    public Optional<Tutor> read(Integer id) throws DAOException {
         Tutor tutor = null;
         try {
             Statement statement = null;
@@ -76,9 +74,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
@@ -114,7 +110,7 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
         int userID = resultSet.getInt(4);
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
-        User user = userDao.findEntityById(userID).orElse(null);
+        User user = userDao.read(userID).orElse(null);
         tutor.setUser(user);
     }
 }

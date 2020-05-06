@@ -14,7 +14,7 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     public List<Student> findAll() throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -24,7 +24,7 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     public Optional<Student> findEntityById(Integer id) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
-            return dao.findEntityById(id);
+            return dao.read(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -13,7 +13,7 @@ public class TutorServiceImpl extends ServiceImpl implements TutorService {
     public List<Tutor> findAll() throws ServiceException {
         try {
             TutorDao dao = transaction.createDao(TutorDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

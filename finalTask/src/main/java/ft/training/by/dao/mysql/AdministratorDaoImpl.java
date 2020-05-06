@@ -21,7 +21,7 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
             "SELECT id, position, user_id FROM administrator;";
 
     @Override
-    public List<Administrator> findAll() throws DAOException {
+    public List<Administrator> read() throws DAOException {
         List<Administrator> admins = new ArrayList<>();
         try {
             Statement statement = null;
@@ -35,9 +35,7 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
+
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
@@ -47,7 +45,7 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
     }
 
     @Override
-    public Optional<Administrator> findEntityById(Integer id) throws DAOException {
+    public Optional<Administrator> read(Integer id) throws DAOException {
         return Optional.empty();
     }
 
@@ -78,7 +76,7 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
         int userId = resultSet.getInt(3);
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.setConnection(connection);
-        User user = userDao.findEntityById(userId).orElse(null);
+        User user = userDao.read(userId).orElse(null);
         administrator.setUser(user);
     }
 }

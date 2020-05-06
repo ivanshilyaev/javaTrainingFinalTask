@@ -31,7 +31,7 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                     ", classroom_id, tutor_id FROM timetable" +
                     " WHERE id = ?;";
 
-    public List<Timetable> findAll() throws DAOException {
+    public List<Timetable> read() throws DAOException {
         List<Timetable> timetables = new ArrayList<>();
         try {
             Statement statement = null;
@@ -46,7 +46,6 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                 }
             } finally {
                 if (statement != null) {
-                    closeStatement(statement);
                 }
             }
         } catch (SQLException throwables) {
@@ -57,7 +56,7 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     }
 
     @Override
-    public Optional<Timetable> findEntityById(Integer id) throws DAOException {
+    public Optional<Timetable> read(Integer id) throws DAOException {
         Timetable timetable = null;
         PreparedStatement statement;
         try {
@@ -68,7 +67,6 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                 timetable = new Timetable();
                 fillTimetable(timetable, resultSet);
                 resultSet.close();
-                closeStatement(statement);
             }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
@@ -105,18 +103,18 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
         int subjectId = resultSet.getInt(4);
         SubjectDaoImpl subjectDao = new SubjectDaoImpl();
         subjectDao.setConnection(connection);
-        Subject subject = subjectDao.findEntityById(subjectId).orElse(null);
+        Subject subject = subjectDao.read(subjectId).orElse(null);
         timetable.setSubject(subject);
         timetable.setClassType(ClassType.getById(resultSet.getInt(5)));
         int classroomId = resultSet.getInt(6);
         ClassroomDaoImpl classroomDao = new ClassroomDaoImpl();
         classroomDao.setConnection(connection);
-        Classroom classroom = classroomDao.findEntityById(classroomId).orElse(null);
+        Classroom classroom = classroomDao.read(classroomId).orElse(null);
         timetable.setClassroom(classroom);
         int tutorId = resultSet.getInt(7);
         TutorDaoImpl tutorDao = new TutorDaoImpl();
         tutorDao.setConnection(connection);
-        Tutor tutor = tutorDao.findEntityById(tutorId).orElse(null);
+        Tutor tutor = tutorDao.read(tutorId).orElse(null);
         timetable.setTutor(tutor);
     }
 }

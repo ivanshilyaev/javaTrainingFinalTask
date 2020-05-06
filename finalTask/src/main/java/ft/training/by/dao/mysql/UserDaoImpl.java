@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SQL_SELECT_ALL_USERS =
-            "SELECT id, login, password, role, surname, name, patronymic FROM user;";
+            "SELECT id, login, password, role, surname, name, patronymic FROM user ORDER BY surname;";
 
     private static final String SQL_SELECT_USER_BY_ID =
             "SELECT id, login, password, role, surname, name, patronymic FROM user WHERE id = ?;";
@@ -37,89 +36,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             "DELETE FROM user WHERE id = ?;";
 
     @Override
-    public List<User> findAll() throws DAOException {
-        List<User> users = new ArrayList<>();
-        try {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = null;
-                try {
-                    resultSet = statement.executeQuery(SQL_SELECT_ALL_USERS);
-                    while (resultSet.next()) {
-                        User user = new User();
-                        fillUser(resultSet, user);
-                        users.add(user);
-                    }
-                } finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    } else {
-                        LOGGER.error("Error while reading from DB");
-                    }
-                }
-            } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.error("DB connection error", e);
-        } finally {
-        }
-        return users;
-    }
-
-    @Override
-    public Optional<User> findEntityById(Integer id) throws DAOException {
-        User user = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_USER_BY_ID);
-            statement.setInt(1, id);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user = new User();
-                fillUser(resultSet, user);
-            }
-        } catch (SQLException throwables) {
-            LOGGER.error("DB connection error", throwables);
-        } finally {
-            if (statement != null) closeStatement(statement);
-        }
-        return Optional.ofNullable(user);
-    }
-
-    @Override
-    public boolean delete(Integer id) throws DAOException {
-        boolean deleted = false;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            deleted = true;
-
-        } catch (SQLException throwables) {
-            LOGGER.error("DB connection error", throwables);
-        } finally {
-            closeStatement(statement);
-        }
-        return deleted;
-    }
-
-    @Override
-    public boolean delete(User entity) throws DAOException {
-        return delete(entity.getId());
-    }
-
-    @Override
     public boolean create(User entity) throws DAOException {
         boolean created = false;
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(SQL_INSERT);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, new String(entity.getPassword()));
             statement.setInt(3, entity.getRole().ordinal());
@@ -130,17 +49,47 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             created = true;
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
-        } finally {
-            closeStatement(statement);
         }
         return created;
     }
 
     @Override
+    public List<User> read() throws DAOException {
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_USERS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                fillUser(resultSet, user);
+                users.add(user);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return users;
+    }
+
+    @Override
+    public Optional<User> read(Integer id) throws DAOException {
+        User user = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                fillUser(resultSet, user);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(user);
+    }
+
+    @Override
     public User update(User entity) {
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_USER);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, String.valueOf(entity.getPassword()));
             statement.setInt(3, entity.getRole().ordinal());
@@ -149,7 +98,6 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             statement.setString(6, entity.getPatronymic());
             statement.setInt(7, entity.getId());
             statement.executeUpdate();
-            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
@@ -157,11 +105,27 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByLoginAndPassword(String login, char[] password) {
+    public boolean delete(Integer id) throws DAOException {
+        boolean deleted = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER_BY_ID)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            deleted = true;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return deleted;
+    }
+
+    @Override
+    public boolean delete(User entity) throws DAOException {
+        return delete(entity.getId());
+    }
+
+    @Override
+    public Optional<User> read(String login, char[] password) {
         User user = null;
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, String.valueOf(password));
             ResultSet resultSet = statement.executeQuery();
@@ -176,7 +140,6 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
                 user.setPatronymic(resultSet.getString(5));
             }
             resultSet.close();
-            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }

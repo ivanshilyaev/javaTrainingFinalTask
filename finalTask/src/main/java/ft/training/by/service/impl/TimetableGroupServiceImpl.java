@@ -14,7 +14,7 @@ public class TimetableGroupServiceImpl extends ServiceImpl implements TimetableG
     public List<TimetableGroup> findAll() throws ServiceException {
         try {
             TimetableGroupDao dao = transaction.createDao(TimetableGroupDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -24,7 +24,7 @@ public class TimetableGroupServiceImpl extends ServiceImpl implements TimetableG
     public Optional<TimetableGroup> findEntityById(Integer id) throws ServiceException {
         try {
             TimetableGroupDao dao = transaction.createDao(TimetableGroupDao.class);
-            return dao.findEntityById(id);
+            return dao.read(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

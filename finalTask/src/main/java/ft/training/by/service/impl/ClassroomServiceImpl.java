@@ -13,7 +13,7 @@ public class ClassroomServiceImpl extends ServiceImpl implements ClassroomServic
     public List<Classroom> findAll() throws ServiceException {
         try {
             ClassroomDao dao = transaction.createDao(ClassroomDao.class);
-            return dao.findAll();
+            return dao.read();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -20,7 +20,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
             "SELECT id, name FROM faculty;";
 
     @Override
-    public List<Faculty> findAll() throws DAOException {
+    public List<Faculty> read() throws DAOException {
         List<Faculty> faculties = new ArrayList<>();
         try {
             Statement statement = null;
@@ -40,9 +40,6 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
                     }
                 }
             } finally {
-                if (statement != null) {
-                    closeStatement(statement);
-                }
             }
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
@@ -52,7 +49,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
     }
 
     @Override
-    public Optional<Faculty> findEntityById(Integer id) {
+    public Optional<Faculty> read(Integer id) {
         Faculty faculty = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -69,9 +66,7 @@ public class FacultyDaoImpl extends DaoImpl implements FacultyDao {
         } catch (SQLException e) {
             LOGGER.error("Couldn't create statement", e);
         } finally {
-            if (statement != null) {
-                closeStatement(statement);
-            }
+
         }
         return Optional.ofNullable(faculty);
     }

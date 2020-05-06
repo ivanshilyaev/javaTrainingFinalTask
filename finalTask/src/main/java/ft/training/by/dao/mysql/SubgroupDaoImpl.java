@@ -29,7 +29,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                     "WHERE subgroup_number = ? AND group_id = ?;";
 
     @Override
-    public List<Subgroup> findAll() throws DAOException {
+    public List<Subgroup> read() throws DAOException {
         List<Subgroup> subgroups = new ArrayList<>();
         Statement statement = null;
         try {
@@ -41,7 +41,6 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 subgroups.add(subgroup);
             }
             resultSet.close();
-            closeStatement(statement);
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         } finally {
@@ -50,7 +49,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     }
 
     @Override
-    public Optional<Subgroup> findEntityById(Integer id) throws DAOException {
+    public Optional<Subgroup> read(Integer id) throws DAOException {
         Subgroup subgroup = null;
         PreparedStatement statement;
         try {
@@ -62,7 +61,6 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 fillSubgroup(resultSet, subgroup);
             }
             resultSet.close();
-            closeStatement(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
@@ -104,7 +102,6 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
                 fillSubgroup(resultSet, subgroup);
             }
             resultSet.close();
-            closeStatement(statement);
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
@@ -118,7 +115,7 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
         int groupID = resultSet.getInt(3);
         GroupDaoImpl groupDao = new GroupDaoImpl();
         groupDao.setConnection(connection);
-        Group group = groupDao.findEntityById(groupID).orElse(null);
+        Group group = groupDao.read(groupID).orElse(null);
         subgroup.setGroup(group);
     }
 }
