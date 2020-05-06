@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class AddNewStudentAction extends AdministratorAction {
+public class AddStudentAction extends AdministratorAction {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String PARAM_NAME_SURNAME = "surname";

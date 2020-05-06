@@ -1,6 +1,5 @@
 package ft.training.by.dao.mysql;
 
-import ft.training.by.bean.Student;
 import ft.training.by.bean.enums.Role;
 import ft.training.by.bean.User;
 import ft.training.by.dao.interfaces.UserDao;
@@ -13,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +32,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     private static final String SQL_INSERT =
             "INSERT INTO user (login, password, role, surname, name, patronymic) VALUES (?, ?, ?, ?, ?, ?);";
+
+    private static final String SQL_DELETE_USER_BY_ID =
+            "DELETE FROM user WHERE id = ?;";
 
     @Override
     public List<User> findAll() throws DAOException {
@@ -93,13 +94,27 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
+    public boolean delete(Integer id) throws DAOException {
+        boolean deleted = false;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            deleted = true;
+
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            close(statement);
+            closeConnection();
+        }
+        return deleted;
     }
 
     @Override
-    public boolean delete(User entity) {
-        return false;
+    public boolean delete(User entity) throws DAOException {
+        return delete(entity.getId());
     }
 
     @Override

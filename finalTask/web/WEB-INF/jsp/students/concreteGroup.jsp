@@ -17,14 +17,17 @@
 </head>
 <body>
 <c:url value="/students/edit.html" var="editUrl"/>
-<form name="addNewUser" method="POST" action="${editUrl}">
+<form name="addNewStudent" method="POST" action="${editUrl}">
     <input type="submit" value="Добавить нового студента">
 </form>
 <br>
 <c:url value="/students/delete.html" var="deleteUrl"/>
-<form name="addNewUser" method="POST" action="${deleteUrl}">
+<form name="deleteStudent" method="POST" action="${deleteUrl}">
     <input type="submit" value="Удалить студента">
 </form>
+<br>
+${sessionScope.studentDeletedMessage}
+<br>
 <c:if test="${sessionScope.groupList.size() != 0}">
     <table class="table table-bordered">
         <thead>

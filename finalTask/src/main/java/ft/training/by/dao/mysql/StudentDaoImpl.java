@@ -31,6 +31,9 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     private static final String SQL_INSERT =
             "INSERT INTO student (subgroup_id, user_id) VALUES (?, ?);";
 
+    private static final String SQL_DELETE_STUDENT_BY_ID =
+            "DELETE FROM student WHERE id = ?;";
+
     @Override
     public List<Student> findAll() throws DAOException {
         List<Student> students = new ArrayList<>();
@@ -80,20 +83,34 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         } finally {
-            if (statement != null) close(statement);
+            close(statement);
             closeConnection();
         }
         return Optional.ofNullable(student);
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
+    public boolean delete(Integer id) throws DAOException {
+        boolean deleted = false;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_DELETE_STUDENT_BY_ID);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            deleted = true;
+
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        } finally {
+            close(statement);
+            closeConnection();
+        }
+        return deleted;
     }
 
     @Override
-    public boolean delete(Student entity) {
-        return false;
+    public boolean delete(Student entity) throws DAOException {
+        return delete(entity.getId());
     }
 
     @Override

@@ -9,10 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class FindConcreteGroupAction extends AdministratorAction {
+    private static final String PARAM_GROUP_NUMBER = "groupNum";
+
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         try {
-            int groupNum = Integer.parseInt(request.getParameter("groupNum"));
+            String line = request.getParameter(PARAM_GROUP_NUMBER);
+            int groupNum;
+            if (line != null) {
+                groupNum = Integer.parseInt(request.getParameter(PARAM_GROUP_NUMBER));
+            } else {
+                groupNum = (int) request.getAttribute(PARAM_GROUP_NUMBER);
+            }
             StudentService studentService = factory.createService(StudentService.class).orElseThrow(ServiceException::new);
             List<Student> groupList = studentService.findByGroup(groupNum);
             request.getSession().setAttribute("groupList", groupList);

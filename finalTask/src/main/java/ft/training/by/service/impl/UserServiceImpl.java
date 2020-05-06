@@ -41,10 +41,20 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) throws ServiceException {
+    public boolean delete(Integer id) throws ServiceException {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
-            return dao.update(user);
+            return dao.delete(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean delete(User entity) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.delete(entity);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -55,6 +65,16 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
         try {
             UserDao dao = transaction.createDao(UserDao.class);
             return dao.create(entity);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User update(User user) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.update(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

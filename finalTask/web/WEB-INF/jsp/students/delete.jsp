@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+<br>
 ${sessionScope.studentDeletedMessage}
 <br>
 <c:if test="${sessionScope.groupList.size() != 0}">
@@ -38,9 +39,10 @@ ${sessionScope.studentDeletedMessage}
                 <td><c:out value="${ student.user.name }"/></td>
                 <td><c:out value="${ student.user.patronymic }"/></td>
                 <td>
-                    <c:url value="/delete.html" var="deleteUrl"/>
-                    <form name="findGroup" method="POST" action="${deleteUrl}">
+                    <c:url value="/students/delete.html" var="deleteUrl"/>
+                    <form name="deleteStudent" method="POST" action="${deleteUrl}">
                         <input type="hidden" name="studentId" value="${student.id}">
+                        <input type="hidden" name="groupNum" value="${student.subgroup.group.groupNumber}">
                         <input type="submit" value="Удалить">
                     </form>
                 </td>

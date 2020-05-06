@@ -16,5 +16,9 @@ public interface StudentService extends Service {
 
     Optional<Student> findByUserId(Integer id) throws ServiceException;
 
+    boolean delete(Integer id) throws ServiceException;
+
+    boolean delete(Student entity) throws ServiceException;
+
     boolean create(Student entity) throws ServiceException;
 }

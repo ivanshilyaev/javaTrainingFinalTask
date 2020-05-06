@@ -16,6 +16,9 @@
     </style>
 </head>
 <body>
+<br>
+${sessionScope.studentDeletedMessage}
+<br>
 <c:if test="${sessionScope.listGroups.size() != 0}">
     <c:forEach var="group" items="${sessionScope.listGroups}">
         <c:url value="/students/concreteGroup.html" var="concreteGroupUrl"/>
