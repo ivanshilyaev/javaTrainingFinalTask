@@ -39,7 +39,7 @@ public class DeleteStudentAction extends AdministratorAction {
                         return forward;
                     }
                 }
-                request.setAttribute("studentDeletedMessage",
+                request.setAttribute("message",
                         "Ошибка при попытке удалить студента");
                 LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to delete user", getAuthorizedUser().getLogin()));
             } catch (NumberFormatException e) {

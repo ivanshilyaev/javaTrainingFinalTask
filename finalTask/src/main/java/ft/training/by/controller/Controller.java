@@ -66,7 +66,6 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // redirected data
             HttpSession session = request.getSession(false);
             if (session != null) {
                 @SuppressWarnings("unchecked")
@@ -84,11 +83,9 @@ public class Controller extends HttpServlet {
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
             actionManager.close();
-            // redirected data
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
             }
-
             String requestedUri = request.getRequestURI();
             if (forward != null && forward.isRedirect()) {
                 String redirectedUri = request.getContextPath() + forward.getForward();

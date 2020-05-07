@@ -29,4 +29,14 @@ public class AdministratorServiceImpl extends ServiceImpl implements Administrat
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Optional<Administrator> findByUserId(Integer userId) throws ServiceException {
+        try {
+            AdministratorDao dao = transaction.createDao(AdministratorDao.class);
+            return dao.findByUserId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -31,19 +31,22 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/logout", new LogoutAction());
         actions.put("/password", new ChangePasswordAction());
 
+        // student
         actions.put("/studentCabinet", new StudentMainAction());
-        actions.put("/adminCabinet", new AdministratorMainAction());
-        actions.put("/tutorCabinet", new TutorMainAction());
-
         actions.put("/search/group", new FindGroupStudentsAction());
+        actions.put("/study/schedule", new ScheduleAction());
+
+        // administrator
+        actions.put("/adminCabinet", new AdministratorMainAction());
         actions.put("/search/list", new FindAllUsersAction());
+        actions.put("/students/listFaculties", new FindAllFacultiesAction());
         actions.put("/students/listGroups", new FindAllGroupsAction());
         actions.put("/students/concreteGroup", new FindConcreteGroupAction());
-
         actions.put("/students/edit", new AddStudentAction());
         actions.put("/students/delete", new DeleteStudentAction());
 
-        actions.put("/study/schedule", new ScheduleAction());
+        // tutor
+        actions.put("/tutorCabinet", new TutorMainAction());
     }
 
     @Override
@@ -66,7 +69,6 @@ public class ActionFromUriFilter implements Filter {
                 actionName = uri.substring(beginAction);
             }
             try {
-                // !
                 Action action = actions.get(actionName);
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);

@@ -17,7 +17,7 @@
 </head>
 <body>
 <br>
-${requestScope.studentDeletedMessage}
+${requestScope.message}
 <br>
 <c:if test="${sessionScope.groupList.size() != 0}">
     <table class="table table-bordered">

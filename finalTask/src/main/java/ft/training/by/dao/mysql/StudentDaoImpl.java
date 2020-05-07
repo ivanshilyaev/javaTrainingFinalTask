@@ -110,9 +110,10 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> findByGroup(int groupNum) throws DAOException {
+    public List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException {
         List<Student> students = read();
-        students.removeIf(student -> student.getSubgroup().getGroup().getGroupNumber() != groupNum);
+        students.removeIf(student -> student.getSubgroup().getGroup().getGroupNumber() != groupNum
+                || student.getSubgroup().getGroup().getCourseNumber() != courseNum);
         return students;
     }
 
@@ -125,8 +126,8 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             if (resultSet.next()) {
                 student = new Student();
                 fillStudent(resultSet, student);
-                resultSet.close();
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         }

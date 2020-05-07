@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudentDao extends Dao<Integer, Student> {
-    List<Student> findByGroup(int groupNum) throws DAOException;
+    List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException;
 
     Optional<Student> findByUserId(Integer id) throws DAOException;
 }

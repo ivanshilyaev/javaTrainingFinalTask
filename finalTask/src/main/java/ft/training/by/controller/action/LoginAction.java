@@ -1,9 +1,13 @@
 package ft.training.by.controller.action;
 
+import ft.training.by.bean.Administrator;
 import ft.training.by.bean.Student;
+import ft.training.by.bean.Tutor;
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
+import ft.training.by.service.interfaces.AdministratorService;
 import ft.training.by.service.interfaces.StudentService;
+import ft.training.by.service.interfaces.TutorService;
 import ft.training.by.service.interfaces.UserService;
 import ft.training.by.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -67,11 +71,19 @@ public class LoginAction extends Action {
                         break;
 
                     case ADMINISTRATOR:
-
+                        AdministratorService administratorService = factory.createService(AdministratorService.class);
+                        Administrator administrator = administratorService.findByUserId(user.getId()).orElse(null);
+                        if (administrator != null) {
+                            request.getSession().setAttribute("authorizedAdministrator", administrator);
+                        }
                         break;
 
                     case TUTOR:
-
+                        TutorService tutorService = factory.createService(TutorService.class);
+                        Tutor tutor = tutorService.findByUserId(user.getId()).orElse(null);
+                        if (tutor != null) {
+                            request.getSession().setAttribute("authorizedTutor", tutor);
+                        }
                         break;
                     default:
                         break;
@@ -81,7 +93,7 @@ public class LoginAction extends Action {
                         login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return new Forward("/index.html");
             } else {
-                request.getSession().setAttribute("message", "Unknown login or password");
+                request.setAttribute("message", "Unknown login or password");
                 LOGGER.info(String.format("User \"%s\" unsuccessfully tried to log in from %s (%s:%s)",
                         login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
             }

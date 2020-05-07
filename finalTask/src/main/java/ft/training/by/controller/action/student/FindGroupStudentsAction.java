@@ -13,8 +13,9 @@ public class FindGroupStudentsAction extends StudentAction {
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         StudentService studentService = factory.createService(StudentService.class);
         Student student = (Student) request.getSession().getAttribute("authorizedStudent");
-        List<Student> groupList = studentService.findByGroup(student.getSubgroup().getGroup().getGroupNumber());
-        request.getSession().setAttribute("groupList", groupList);
+        List<Student> groupList = studentService.findByGroupAndCourse(student.getSubgroup().getGroup().getGroupNumber(),
+                student.getSubgroup().getGroup().getCourseNumber());
+        request.setAttribute("groupList", groupList);
         return null;
     }
 }

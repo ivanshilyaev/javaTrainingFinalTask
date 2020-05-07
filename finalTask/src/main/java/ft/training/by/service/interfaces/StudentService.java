@@ -17,7 +17,7 @@ public interface StudentService extends Service {
 
     boolean delete(Student entity) throws ServiceException;
 
-    List<Student> findByGroup(int groupNum) throws ServiceException;
+    List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws ServiceException;
 
     Optional<Student> findByUserId(Integer userId) throws ServiceException;
 }

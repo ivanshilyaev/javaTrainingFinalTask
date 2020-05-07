@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<c:if test="${sessionScope.groupList.size() != 0}">
+<c:if test="${requestScope.groupList.size() != 0}">
     <table class="table table-bordered">
         <thead>
         <c:set var="index" value="1"/>
@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="student" items="${sessionScope.groupList}">
+        <c:forEach var="student" items="${requestScope.groupList}">
             <tr>
                 <td><c:out value="${index}"/></td>
                 <td><c:out value="${ student.user.surname }"/></td>
@@ -40,12 +40,12 @@
         </tbody>
     </table>
 </c:if>
-<c:if test="${sessionScope.groupList.size() == 0}">
+<c:if test="${requestScope.groupList.size() == 0}">
     Список пуст!<br>
 </c:if>
 <hr>
 <c:url value="/index.html" var="indexUrl"/>
-<form name="findGroup" method="POST" action="${indexUrl}">
+<form name="mainPage" method="POST" action="${indexUrl}">
     <input type="submit" value="На главную">
 </form>
 <ctg:footer address="${sessionScope.address}"/>

@@ -23,6 +23,9 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     private static final String SQL_SELECT_TUTOR_BY_ID =
             "SELECT id, position, degree, user_id FROM tutor WHERE id = ?;";
 
+    private static final String SQL_SELECT_TUTOR_BY_USER_ID =
+            "SELECT id, position, degree, user_id FROM tutor WHERE user_id = ?;";
+
     @Override
     public Integer create(Tutor entity) {
         return BAD_CREATION_CODE;
@@ -74,6 +77,23 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     @Override
     public boolean delete(Tutor entity) {
         return false;
+    }
+
+    @Override
+    public Optional<Tutor> findByUserId(Integer id) throws DAOException {
+        Tutor tutor = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_TUTOR_BY_USER_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                tutor = new Tutor();
+                fillTutor(resultSet, tutor);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(tutor);
     }
 
     private void fillTutor(ResultSet resultSet, Tutor tutor) throws SQLException, DAOException {

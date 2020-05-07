@@ -1,10 +1,12 @@
 package ft.training.by.controller.action.administrator;
 
+import ft.training.by.bean.Group;
 import ft.training.by.bean.Student;
 import ft.training.by.bean.Subgroup;
 import ft.training.by.bean.User;
 import ft.training.by.bean.enums.Role;
 import ft.training.by.service.exception.ServiceException;
+import ft.training.by.service.interfaces.GroupService;
 import ft.training.by.service.interfaces.StudentService;
 import ft.training.by.service.interfaces.SubgroupService;
 import ft.training.by.service.interfaces.UserService;
@@ -26,6 +28,9 @@ public class AddStudentAction extends AdministratorAction {
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
+        int groupNum = (int) request.getAttribute("groupNum");
+        int courseNum = (int) request.getAttribute("courseNum");
+
         User authorizedUser = (User) request.getSession().getAttribute("authorizedUser");
         Student currentStudent = (Student) request.getSession().getAttribute("currentGroupStudent");
         String surname = request.getParameter(PARAM_NAME_SURNAME);
@@ -35,6 +40,13 @@ public class AddStudentAction extends AdministratorAction {
         String login = request.getParameter(PARAM_NAME_LOGIN);
 
         // валидация
+
+        if (surname != null && name != null && patronymic != null &&
+                subgroupNum != null && login != null) {
+            GroupService groupService = factory.createService(GroupService.class);
+            //Group group = groupService.read();
+        }
+
 
         if (surname != null && name != null && patronymic != null &&
                 subgroupNum != null && login != null) {

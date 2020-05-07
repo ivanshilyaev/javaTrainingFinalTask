@@ -16,21 +16,17 @@
     </style>
 </head>
 <body>
-<br>
-${requestScope.message}
-<br>
-<c:if test="${requestScope.listGroups.size() != 0}">
-    <c:forEach var="group" items="${requestScope.listGroups}">
-        <c:url value="/students/concreteGroup.html" var="concreteGroupUrl"/>
-        <form name="findGroup" method="POST" action="${concreteGroupUrl}">
-            <input type="hidden" name="groupNum" value="${group.groupNumber}">
-            <input type="hidden" name="courseNum" value="${group.courseNumber}">
-            <input type="submit" value="${group.courseNumber} курс ${group.groupNumber} группа">
+<c:if test="${requestScope.listFaculties.size() != 0}">
+    <c:forEach var="faculty" items="${requestScope.listFaculties}">
+        <c:url value="/students/listGroups.html" var="listGroupsUrl"/>
+        <form name="findGroup" method="POST" action="${listGroupsUrl}">
+            <input type="hidden" name="facultyId" value="${faculty.id}">
+            <input type="submit" value="${faculty.name}">
         </form>
         <br>
     </c:forEach>
 </c:if>
-<c:if test="${requestScope.listGroups.size() == 0}">
+<c:if test="${requestScope.listFaculties.size() == 0}">
     Список пуст!<br>
 </c:if>
 <hr>

@@ -30,22 +30,17 @@ public class ScheduleAction extends StudentAction {
             TimetableGroupService timetableGroupService = factory.createService(TimetableGroupService.class);
             List<TimetableGroup> list = timetableGroupService.findBySubgroupId(subgroup.getId());
             // 5. находим все пары
-            List<Timetable> classes = new ArrayList<>();
+            List<Timetable> schedule = new ArrayList<>();
             TimetableService timetableService = factory.createService(TimetableService.class);
             for (TimetableGroup timetableGroup : list) {
-                classes.add(timetableService.read(timetableGroup.getTimetable().getId()).orElse(null));
+                schedule.add(timetableService.read(timetableGroup.getTimetable().getId()).orElse(null));
             }
             // 6. находим все пары для данного дня
-            List<Timetable> schedule = new ArrayList<>();
-            for (Timetable timetable : classes) {
-                if (timetable.getDay() == Day.getById(day)) {
-                    schedule.add(timetable);
-                }
-            }
-            request.getSession().setAttribute("schedule", schedule);
+            schedule.removeIf(timetable -> timetable.getDay() != Day.getById(day));
+            request.setAttribute("schedule", schedule);
         } catch (NumberFormatException e) {
             // если день ещё не установлен, то ничего не выводим
-            request.getSession().setAttribute("schedule", null);
+            request.setAttribute("schedule", null);
         }
         return null;
     }

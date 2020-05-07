@@ -10,4 +10,6 @@ public interface AdministratorService extends Service {
     List<Administrator> read() throws ServiceException;
 
     Optional<Administrator> read(Integer id) throws ServiceException;
+
+    Optional<Administrator> findByUserId(Integer userId) throws ServiceException;
 }

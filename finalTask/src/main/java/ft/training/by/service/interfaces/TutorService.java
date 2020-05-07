@@ -10,4 +10,6 @@ public interface TutorService extends Service {
     List<Tutor> read() throws ServiceException;
 
     Optional<Tutor> read(Integer id) throws ServiceException;
+
+    Optional<Tutor> findByUserId(Integer userId) throws ServiceException;
 }

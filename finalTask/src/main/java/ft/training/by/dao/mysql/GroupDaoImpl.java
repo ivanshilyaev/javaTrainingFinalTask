@@ -78,6 +78,15 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         return false;
     }
 
+    @Override
+    public Optional<Group> findByGroupNumberAndCourseNumber(int groupNum, int courseNum) throws DAOException {
+        Group group = null;
+//        try (PreparedStatement statement = connection.prepareStatement()) {
+//
+//        }
+        return Optional.ofNullable(group);
+    }
+
     private void fillGroup(ResultSet resultSet, Group group) throws SQLException {
         group.setId(resultSet.getInt(1));
         group.setGroupNumber(resultSet.getInt(2));

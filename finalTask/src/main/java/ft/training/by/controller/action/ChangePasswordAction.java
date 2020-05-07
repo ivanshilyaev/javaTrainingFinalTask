@@ -25,8 +25,6 @@ public class ChangePasswordAction extends AuthorizedUserAction {
         if (oldPassword != null && newPassword != null && newPasswordAgain != null) {
             User currentUser = (User) request.getSession().getAttribute("authorizedUser");
             if (!Arrays.equals(currentUser.getPassword(), oldPassword.toCharArray())) {
-                System.out.println(currentUser.getPassword());
-                System.out.println(oldPassword);
                 request.getSession().setAttribute("passwordMessage", "Old password was entered incorrectly");
                 return null;
             }

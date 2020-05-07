@@ -24,6 +24,10 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
             "SELECT id, position, user_id FROM administrator" +
                     "  WHERE id = ?;";
 
+    private static final String SQL_SELECT_ADMINISTRATOR_BY_USER_ID =
+            "SELECT id, position, user_id FROM administrator" +
+                    "  WHERE user_id = ?;";
+
 
     @Override
     public Integer create(Administrator entity) {
@@ -77,6 +81,23 @@ public class AdministratorDaoImpl extends DaoImpl implements AdministratorDao {
     @Override
     public boolean delete(Administrator entity) {
         return false;
+    }
+
+    @Override
+    public Optional<Administrator> findByUserId(Integer id) throws DAOException {
+        Administrator administrator = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ADMINISTRATOR_BY_USER_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                administrator = new Administrator();
+                fillAdministrator(resultSet, administrator);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return Optional.ofNullable(administrator);
     }
 
     public void fillAdministrator(ResultSet resultSet, Administrator administrator)

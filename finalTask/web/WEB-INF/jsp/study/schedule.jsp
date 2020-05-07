@@ -52,14 +52,14 @@
     <input type="submit" value="Суббота">
 </form>
 <br>
-<c:if test="${sessionScope.schedule == null}">
+<c:if test="${requestScope.schedule == null}">
     <br>
 </c:if>
-<c:if test="${sessionScope.schedule != null}">
-    <c:if test="${sessionScope.schedule.size() == 0}">
+<c:if test="${requestScope.schedule != null}">
+    <c:if test="${requestScope.schedule.size() == 0}">
         Список пуст!<br>
     </c:if>
-    <c:if test="${sessionScope.schedule.size() != 0}">
+    <c:if test="${requestScope.schedule.size() != 0}">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -72,7 +72,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="timetable" items="${sessionScope.schedule}">
+            <c:forEach var="timetable" items="${requestScope.schedule}">
                 <tr>
                     <td><c:out value="${ timetable.pairNumber }"/></td>
                     <td><c:out value="${ timetable.subject.name }"/></td>
@@ -87,7 +87,7 @@
 </c:if>
 <hr>
 <c:url value="/index.html" var="indexUrl"/>
-<form name="findGroup" method="POST" action="${indexUrl}">
+<form name="mainPage" method="POST" action="${indexUrl}">
     <input type="submit" value="На главную">
 </form>
 <ctg:footer address="${sessionScope.address}"/>

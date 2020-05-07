@@ -16,9 +16,9 @@
     <input type="submit" value="Список всех пользователей">
 </form>
 <br>
-<c:url value="/students/listGroups.html" var="listGroupsUrl"/>
+<c:url value="/students/listFaculties.html" var="listGroupsUrl"/>
 <form name="findAllGroups" method="POST" action="${listGroupsUrl}">
-    <input type="submit" value="Список всех групп">
+    <input type="submit" value="Факультеты">
 </form>
 <br>
 <c:url value="/password.html" var="passwordUrl"/>
