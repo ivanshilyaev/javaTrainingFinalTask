@@ -19,7 +19,7 @@
 <br>
 ${requestScope.message}
 <br>
-<c:if test="${sessionScope.groupList.size() != 0}">
+<c:if test="${requestScope.groupList.size() != 0}">
     <table class="table table-bordered">
         <thead>
         <c:set var="index" value="1"/>
@@ -32,7 +32,7 @@ ${requestScope.message}
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="student" items="${sessionScope.groupList}">
+        <c:forEach var="student" items="${requestScope.groupList}">
             <tr>
                 <td><c:out value="${index}"/></td>
                 <td><c:out value="${ student.user.surname }"/></td>
@@ -42,7 +42,9 @@ ${requestScope.message}
                     <c:url value="/students/delete.html" var="deleteUrl"/>
                     <form name="deleteStudent" method="POST" action="${deleteUrl}">
                         <input type="hidden" name="studentId" value="${student.id}">
-                        <input type="hidden" name="groupNum" value="${student.subgroup.group.groupNumber}">
+                        <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
+                        <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+                        <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
                         <input type="submit" value="Удалить">
                     </form>
                 </td>
@@ -52,7 +54,7 @@ ${requestScope.message}
         </tbody>
     </table>
 </c:if>
-<c:if test="${sessionScope.groupList.size() == 0}">
+<c:if test="${requestScope.groupList.size() == 0}">
     Список пуст!<br>
 </c:if>
 <hr>
