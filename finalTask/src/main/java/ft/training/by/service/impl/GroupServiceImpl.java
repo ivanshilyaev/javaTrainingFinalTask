@@ -29,4 +29,24 @@ public class GroupServiceImpl extends ServiceImpl implements GroupService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Group> findByFacultyId(Integer id) throws ServiceException {
+        try {
+            GroupDao dao = transaction.createDao(GroupDao.class);
+            return dao.findByFacultyId(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<Group> findByGroupCourseFaculty(int groupNum, int courseNum, int facultyId) throws ServiceException {
+        try {
+            GroupDao dao = transaction.createDao(GroupDao.class);
+            return dao.findByGroupCourseFaculty(groupNum, courseNum, facultyId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

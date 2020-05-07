@@ -20,6 +20,7 @@
 <form name="addNewStudent" method="POST" action="${editUrl}">
     <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
     <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+    <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
     <input type="submit" value="Добавить нового студента">
 </form>
 <br>
@@ -27,6 +28,7 @@
 <form name="deleteStudent" method="POST" action="${deleteUrl}">
     <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
     <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+    <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
     <input type="submit" value="Удалить студента">
 </form>
 <br>

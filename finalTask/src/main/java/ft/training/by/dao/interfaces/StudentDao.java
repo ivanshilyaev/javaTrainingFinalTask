@@ -10,4 +10,6 @@ public interface StudentDao extends Dao<Integer, Student> {
     List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException;
 
     Optional<Student> findByUserId(Integer id) throws DAOException;
+
+    List<Student> findBySubgroupId(Integer id) throws DAOException;
 }

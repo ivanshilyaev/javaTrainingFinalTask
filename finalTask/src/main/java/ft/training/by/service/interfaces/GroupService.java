@@ -10,4 +10,9 @@ public interface GroupService extends Service {
     List<Group> read() throws ServiceException;
 
     Optional<Group> read(Integer id) throws ServiceException;
+
+    List<Group> findByFacultyId(Integer id) throws ServiceException;
+
+    Optional<Group> findByGroupCourseFaculty(int groupNum, int courseNum, int facultyId)
+            throws ServiceException;
 }

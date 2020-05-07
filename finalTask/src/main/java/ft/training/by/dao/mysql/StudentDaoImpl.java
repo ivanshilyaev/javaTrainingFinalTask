@@ -134,6 +134,13 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
         return Optional.ofNullable(student);
     }
 
+    @Override
+    public List<Student> findBySubgroupId(Integer id) throws DAOException {
+        List<Student> students = read();
+        students.removeIf(student -> student.getSubgroup().getId() != id);
+        return students;
+    }
+
     private void fillStudent(ResultSet resultSet, Student student) throws SQLException, DAOException {
         student.setId(resultSet.getInt(1));
         int subgroupID = resultSet.getInt(2);

@@ -61,7 +61,7 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws ServiceException {
+    public List<Student> findByGroupCourseFaculty(int groupNum, int courseNum) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.findByGroupAndCourse(groupNum, courseNum);
@@ -75,6 +75,16 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);
             return dao.findByUserId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Student> findBySubgroupId(Integer id) throws ServiceException {
+        try {
+            StudentDao dao = transaction.createDao(StudentDao.class);
+            return dao.findBySubgroupId(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

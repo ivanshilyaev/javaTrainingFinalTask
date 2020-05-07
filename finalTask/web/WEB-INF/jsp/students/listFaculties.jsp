@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>Список всех групп</title>
+    <title>Список факультетов</title>
     <style>
         table {
             border-collapse: collapse;

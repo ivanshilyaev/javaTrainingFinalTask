@@ -24,6 +24,10 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
             "SELECT id, group_number, course_number, faculty_id FROM ugroup" +
                     " WHERE id = ?;";
 
+    private static final String SQL_SELECT_GROUP_BY_FACULTY_ID =
+            "SELECT id, group_number, course_number, faculty_id FROM ugroup" +
+                    " WHERE faculty_id = ?;";
+
     @Override
     public Integer create(Group entity) {
         return BAD_CREATION_CODE;
@@ -79,12 +83,28 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public Optional<Group> findByGroupNumberAndCourseNumber(int groupNum, int courseNum) throws DAOException {
-        Group group = null;
-//        try (PreparedStatement statement = connection.prepareStatement()) {
-//
-//        }
-        return Optional.ofNullable(group);
+    public List<Group> findByFacultyId(Integer id) throws DAOException {
+        List<Group> groups = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_GROUP_BY_FACULTY_ID)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Group group = new Group();
+                fillGroup(resultSet, group);
+                groups.add(group);
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return groups;
+    }
+
+    @Override
+    public Optional<Group> findByGroupCourseFaculty(int groupNum, int courseNum, int facultyId) throws DAOException {
+        List<Group> groups = findByFacultyId(facultyId);
+        groups.removeIf(group -> group.getGroupNumber() != groupNum ||
+                group.getCourseNumber() != courseNum);
+        return Optional.ofNullable(groups.get(0));
     }
 
     private void fillGroup(ResultSet resultSet, Group group) throws SQLException {
