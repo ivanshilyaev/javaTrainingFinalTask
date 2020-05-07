@@ -6,6 +6,7 @@ import ft.training.by.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Comparator;
 import java.util.List;
 
 public class FindGroupStudentsAction extends StudentAction {
@@ -15,6 +16,7 @@ public class FindGroupStudentsAction extends StudentAction {
         Student student = (Student) request.getSession().getAttribute("authorizedStudent");
         List<Student> groupList = studentService.findByGroupCourseFaculty(student.getSubgroup().getGroup().getGroupNumber(),
                 student.getSubgroup().getGroup().getCourseNumber());
+        groupList.sort(Comparator.comparing(student1 -> student1.getUser().getSurname()));
         request.setAttribute("groupList", groupList);
         return null;
     }
