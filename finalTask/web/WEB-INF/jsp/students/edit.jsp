@@ -12,6 +12,9 @@
 
 <body>
 <c:url value="/students/edit.html" var="editUrl"/>
+<br>
+${requestScope.message}
+<br>
 <form name="loginForm" method="POST" action="${editUrl}">
     <label>
         Фамилия <br>
@@ -38,6 +41,9 @@
 <br>
 <c:url value="/index.html" var="indexUrl"/>
 <form name="findGroup" method="POST" action="${indexUrl}">
+    <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
+    <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+    <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
     <input type="submit" value="На главную">
 </form>
 ${requestScope.studentAddedMessage}

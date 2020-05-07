@@ -42,7 +42,9 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return resultSet.getInt(1);
+                int id = resultSet.getInt(1);
+                entity.setId(id);
+                return id;
             } else {
                 LOGGER.error("No autoincremented index after trying to add record into table student");
                 return BAD_CREATION_CODE;
