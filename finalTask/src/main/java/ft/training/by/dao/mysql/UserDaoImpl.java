@@ -125,11 +125,6 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(User entity) throws DAOException {
-        return delete(entity.getId());
-    }
-
-    @Override
     public Optional<User> read(String login, char[] password) {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD)) {

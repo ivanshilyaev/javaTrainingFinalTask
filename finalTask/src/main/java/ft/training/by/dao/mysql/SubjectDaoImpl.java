@@ -70,11 +70,6 @@ public class SubjectDaoImpl extends DaoImpl implements SubjectDao {
         return false;
     }
 
-    @Override
-    public boolean delete(Subject entity) {
-        return false;
-    }
-
     private void fillSubject(ResultSet resultSet, Subject subject) throws SQLException {
         subject.setId(resultSet.getInt(1));
         subject.setName(resultSet.getString(2));

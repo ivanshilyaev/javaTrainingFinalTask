@@ -107,11 +107,6 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     }
 
     @Override
-    public boolean delete(Tutor entity) {
-        return false;
-    }
-
-    @Override
     public Optional<Tutor> findByUserId(Integer id) throws DAOException {
         Tutor tutor = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_TUTOR_BY_USER_ID)) {

@@ -18,6 +18,4 @@ public interface UserService extends Service {
     void update(User user) throws ServiceException;
 
     boolean delete(Integer id) throws ServiceException;
-
-    boolean delete(User entity) throws ServiceException;
 }

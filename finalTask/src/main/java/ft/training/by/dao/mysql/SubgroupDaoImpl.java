@@ -80,12 +80,6 @@ public class SubgroupDaoImpl extends DaoImpl implements SubgroupDao {
     }
 
     @Override
-    public boolean delete(Subgroup entity) {
-        return false;
-    }
-
-
-    @Override
     public Optional<Subgroup> findBySubgroupNumberAndGroupId(char subgroupNum, Integer id) throws DAOException {
         Subgroup subgroup = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_SUBGROUP_BY_NUMBER_AND_GROUP_ID)) {

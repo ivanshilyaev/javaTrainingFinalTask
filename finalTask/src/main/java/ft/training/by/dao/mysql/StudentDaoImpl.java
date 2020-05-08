@@ -107,11 +107,6 @@ public class StudentDaoImpl extends DaoImpl implements StudentDao {
     }
 
     @Override
-    public boolean delete(Student entity) throws DAOException {
-        return delete(entity.getId());
-    }
-
-    @Override
     public List<Student> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException {
         List<Student> students = read();
         students.removeIf(student -> student.getSubgroup().getGroup().getGroupNumber() != groupNum

@@ -16,6 +16,4 @@ public interface Dao<K, T extends Entity> {
     void update(T entity);
 
     boolean delete(K id) throws DAOException;
-
-    boolean delete(T entity) throws DAOException;
 }

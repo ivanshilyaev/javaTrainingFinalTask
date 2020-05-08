@@ -51,16 +51,6 @@ public class StudentServiceImpl extends ServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean delete(Student entity) throws ServiceException {
-        try {
-            StudentDao dao = transaction.createDao(StudentDao.class);
-            return dao.delete(entity);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<Student> findByGroupCourseFaculty(int groupNum, int courseNum) throws ServiceException {
         try {
             StudentDao dao = transaction.createDao(StudentDao.class);

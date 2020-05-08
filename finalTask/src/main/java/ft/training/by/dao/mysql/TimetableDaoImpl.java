@@ -77,11 +77,6 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
         return false;
     }
 
-    @Override
-    public boolean delete(Timetable entity) {
-        return false;
-    }
-
     public void fillTimetable(ResultSet resultSet, Timetable timetable)
             throws SQLException, DAOException {
         timetable.setId(resultSet.getInt(1));

@@ -73,11 +73,6 @@ public class PerformanceDaoImpl extends DaoImpl implements PerformanceDao {
         return false;
     }
 
-    @Override
-    public boolean delete(Performance entity) throws DAOException {
-        return false;
-    }
-
     private void fillPerformance(ResultSet resultSet, Performance performance) throws SQLException, DAOException {
         performance.setId(resultSet.getInt(1));
         int studentID = resultSet.getInt(2);

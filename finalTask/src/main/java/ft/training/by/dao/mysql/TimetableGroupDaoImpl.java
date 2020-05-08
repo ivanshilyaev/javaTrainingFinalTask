@@ -78,11 +78,6 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     }
 
     @Override
-    public boolean delete(TimetableGroup entity) {
-        return false;
-    }
-
-    @Override
     public List<TimetableGroup> findBySubgroupId(Integer id) throws DAOException {
         List<TimetableGroup> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_SUBGROUP_ID)) {

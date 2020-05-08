@@ -73,11 +73,6 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public boolean delete(Group entity) {
-        return false;
-    }
-
-    @Override
     public Optional<Group> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException {
         List<Group> groups = read();
         groups.removeIf(group -> group.getGroupNumber() != groupNum ||

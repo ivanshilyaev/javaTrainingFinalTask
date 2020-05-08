@@ -69,14 +69,4 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
-
-    @Override
-    public boolean delete(User entity) throws ServiceException {
-        try {
-            UserDao dao = transaction.createDao(UserDao.class);
-            return dao.delete(entity);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
 }

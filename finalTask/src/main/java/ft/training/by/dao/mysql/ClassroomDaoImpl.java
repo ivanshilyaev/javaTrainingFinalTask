@@ -72,11 +72,6 @@ public class ClassroomDaoImpl extends DaoImpl implements ClassroomDao {
         return false;
     }
 
-    @Override
-    public boolean delete(Classroom entity) {
-        return false;
-    }
-
     public void fillClassroom(ResultSet resultSet, Classroom classroom)
             throws SQLException {
         classroom.setId(resultSet.getInt(1));
