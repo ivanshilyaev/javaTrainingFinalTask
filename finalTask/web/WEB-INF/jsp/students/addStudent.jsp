@@ -29,7 +29,10 @@ ${requestScope.message}
     </label> <br>
     <label>
         Подгруппа <br>
-        <input type="text" name="subgroup">
+        <select name="subgroup">
+            <option value="a">a</option>
+            <option value="b">b</option>
+        </select>
     </label> <br>
     <label>
         Логин <br>
