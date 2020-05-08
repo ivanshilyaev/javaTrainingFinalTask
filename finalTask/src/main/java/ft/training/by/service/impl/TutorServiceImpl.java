@@ -41,6 +41,16 @@ public class TutorServiceImpl extends ServiceImpl implements TutorService {
     }
 
     @Override
+    public boolean deleter(Integer id) throws ServiceException {
+        try {
+            TutorDao dao = transaction.createDao(TutorDao.class);
+            return dao.delete(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public Optional<Tutor> findByUserId(Integer userId) throws ServiceException {
         try {
             TutorDao dao = transaction.createDao(TutorDao.class);

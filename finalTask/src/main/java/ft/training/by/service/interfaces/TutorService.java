@@ -13,5 +13,7 @@ public interface TutorService extends Service {
 
     Optional<Tutor> read(Integer id) throws ServiceException;
 
+    boolean deleter(Integer id) throws ServiceException;
+
     Optional<Tutor> findByUserId(Integer userId) throws ServiceException;
 }

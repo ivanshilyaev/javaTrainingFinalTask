@@ -30,6 +30,9 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     private static final String SQL_INSERT =
             "INSERT INTO tutor (user_id, position, degree) VALUES (?, ?, ?);";
 
+    private static final String SQL_DELETE_TUTOR_BY_ID =
+            "DELETE FROM tutor WHERE id = ?;";
+
     @Override
     public Integer create(Tutor entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
@@ -92,7 +95,15 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
 
     @Override
     public boolean delete(Integer id) {
-        return false;
+        boolean deleted = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TUTOR_BY_ID)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            deleted = true;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return deleted;
     }
 
     @Override

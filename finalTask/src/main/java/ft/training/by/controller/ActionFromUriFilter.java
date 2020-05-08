@@ -49,6 +49,7 @@ public class ActionFromUriFilter implements Filter {
         actions.put("/students/deleteStudent", new DeleteStudentAction());
 
         actions.put("/tutors/addTutor", new AddTutorAction());
+        actions.put("/tutors/deleteTutor", new DeleteTutorAction());
 
         // tutor
         actions.put("/tutorCabinet", new TutorMainAction());

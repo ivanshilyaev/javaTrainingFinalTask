@@ -38,6 +38,7 @@ ${requestScope.message}
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
             <th scope="col">Должность</th>
+            <th scope="col">Степень</th>
         </tr>
         </thead>
         <tbody>
@@ -48,6 +49,7 @@ ${requestScope.message}
                 <td><c:out value="${ tutor.user.name }"/></td>
                 <td><c:out value="${ tutor.user.patronymic }"/></td>
                 <td><c:out value="${ tutor.position }"/></td>
+                <td><c:out value="${ tutor.degree }"/></td>
             </tr>
             <c:set var="index" value="${index + 1}"/>
         </c:forEach>
