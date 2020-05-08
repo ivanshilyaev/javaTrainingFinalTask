@@ -30,6 +30,11 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
                     ", classroom_id, tutor_id FROM timetable" +
                     " WHERE id = ?;";
 
+    private static final String SQL_SELECT_CLASS_BY_TUTOR_ID =
+            "SELECT id, day, pair_number, subject_id, type" +
+                    ", classroom_id, tutor_id FROM timetable" +
+                    " WHERE tutor_id = ?;";
+
     @Override
     public Integer create(Timetable entity) {
         return BAD_CREATION_CODE;
@@ -75,6 +80,17 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     @Override
     public boolean delete(Integer id) {
         return false;
+    }
+
+    @Override
+    public List<Timetable> findByTutorId(Integer tutorId) throws DAOException {
+        List<Timetable> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLASS_BY_TUTOR_ID)) {
+
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return list;
     }
 
     public void fillTimetable(ResultSet resultSet, Timetable timetable)

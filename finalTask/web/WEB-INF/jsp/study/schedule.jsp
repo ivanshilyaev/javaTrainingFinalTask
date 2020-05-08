@@ -77,10 +77,10 @@
                 <tr>
                     <td><c:out value="${ timetable.pairNumber }"/></td>
                     <td><c:out value="${ timetable.subject.name }"/></td>
-                    <td><c:out value="${ timetable.classType }"/></td>
+                    <td><c:out value="${ timetable.classType.getName() }"/></td>
                     <td><c:out value="${ timetable.classroom.number }"/></td>
-                    <td><c:out
-                            value="${ timetable.tutor.user.surname } ${fn:substring(timetable.tutor.user.name, 0, 1)}.${fn:substring(timetable.tutor.user.patronymic, 0, 1)}."/></td>
+                    <td><c:out value="${ timetable.tutor.user.surname }
+                    ${fn:substring(timetable.tutor.user.name, 0, 1)}.${fn:substring(timetable.tutor.user.patronymic, 0, 1)}."/></td>
                 </tr>
             </c:forEach>
             </tbody>
