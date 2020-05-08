@@ -21,7 +21,7 @@
     <input type="submit" value="Группы">
 </form>
 <br>
-<c:url value="/search/listTutors.html" var="listTutorsUrl"/>
+<c:url value="/tutors/listTutors.html" var="listTutorsUrl"/>
 <form name="findAllGroups" method="POST" action="${listTutorsUrl}">
     <input type="submit" value="Преподаватели">
 </form>

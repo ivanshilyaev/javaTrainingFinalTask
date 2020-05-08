@@ -11,6 +11,16 @@ import java.util.Optional;
 
 public class TutorServiceImpl extends ServiceImpl implements TutorService {
     @Override
+    public Integer create(Tutor entity) throws ServiceException {
+        try {
+            TutorDao dao = transaction.createDao(TutorDao.class);
+            return dao.create(entity);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<Tutor> read() throws ServiceException {
         try {
             TutorDao dao = transaction.createDao(TutorDao.class);

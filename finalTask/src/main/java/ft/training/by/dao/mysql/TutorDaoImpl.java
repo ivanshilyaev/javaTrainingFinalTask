@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +27,29 @@ public class TutorDaoImpl extends DaoImpl implements TutorDao {
     private static final String SQL_SELECT_TUTOR_BY_USER_ID =
             "SELECT id, position, degree, user_id FROM tutor WHERE user_id = ?;";
 
+    private static final String SQL_INSERT =
+            "INSERT INTO tutor (user_id, position, degree) VALUES (?, ?, ?);";
+
     @Override
     public Integer create(Tutor entity) {
-        return BAD_CREATION_CODE;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, entity.getUser().getId());
+            statement.setString(2, entity.getPosition());
+            statement.setString(3, entity.getDegree());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                entity.setId(id);
+                return id;
+            } else {
+                LOGGER.error("No autoincremented index after trying to add record into table student");
+                return BAD_CREATION_CODE;
+            }
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+            return BAD_CREATION_CODE;
+        }
     }
 
     @Override

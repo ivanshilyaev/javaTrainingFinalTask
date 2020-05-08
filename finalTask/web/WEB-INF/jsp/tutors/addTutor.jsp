@@ -7,14 +7,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title>Новый студент</title>
+    <title>Новый преподаватель</title>
 </head>
 
 <body>
 <br>
 ${requestScope.message}
 <br>
-<form name="addStudentForm" method="POST" action="${editUrl}">
+<form name="addTutorForm" method="POST" action="${editUrl}">
     <label>
         Фамилия <br>
         <input type="text" name="surname">
@@ -28,10 +28,23 @@ ${requestScope.message}
         <input type="text" name="patronymic">
     </label> <br>
     <label>
-        Подгруппа <br>
-        <select name="subgroup">
-            <option value="a">a</option>
-            <option value="b">b</option>
+        Должность <br>
+        <select name="position">
+            <option value="ассистент">ассистент</option>
+            <option value="преподаватель">преподаватель</option>
+            <option value="старший преподаватель">страший преподаватель</option>
+            <option value="доцент">доцент</option>
+            <option value="профессор">профессор</option>
+            <option value="">другое</option>
+        </select>
+    </label> <br>
+    <label>
+        Учёная степень <br>
+        <select name="degree">
+            <option value="кандидат наук">кандидат наук</option>
+            <option value="доктор наук">доктор наук</option>
+            <option value="магистр">магистр</option>
+            <option value="">другое</option>
         </select>
     </label> <br>
     <label>

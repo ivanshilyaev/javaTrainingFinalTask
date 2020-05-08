@@ -16,11 +16,11 @@
     </style>
 </head>
 <body>
-<c:url value="/students/addStudent.html" var="editUrl"/>
-<form name="addNewStudent" method="POST" action="${editUrl}">
+<c:url value="/students/addStudent.html" var="addUrl"/>
+<form name="addStudent" method="POST" action="${addUrl}">
     <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
     <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="submit" value="Добавить нового студента">
+    <input type="submit" value="Добавить студента">
 </form>
 <br>
 <c:url value="/students/deleteStudent.html" var="deleteUrl"/>

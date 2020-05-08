@@ -41,11 +41,14 @@ public class ActionFromUriFilter implements Filter {
         // administrator
         actions.put("/adminCabinet", new AdministratorMainAction());
         actions.put("/search/listUsers", new FindAllUsersAction());
-        actions.put("/search/listTutors", new FindAllTutorsAction());
+        actions.put("/tutors/listTutors", new FindAllTutorsAction());
+
         actions.put("/students/listGroups", new FindAllGroupsAction());
         actions.put("/students/concreteGroup", new FindConcreteGroupAction());
         actions.put("/students/addStudent", new AddStudentAction());
         actions.put("/students/deleteStudent", new DeleteStudentAction());
+
+        actions.put("/tutors/addTutor", new AddTutorAction());
 
         // tutor
         actions.put("/tutorCabinet", new TutorMainAction());

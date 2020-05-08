@@ -15,6 +15,12 @@ public class Tutor extends Entity {
         super(id);
     }
 
+    public Tutor(User user, String position, String degree) {
+        this.user = user;
+        this.position = position;
+        this.degree = degree;
+    }
+
     public Tutor(int id, User user, String position, String degree) {
         super(id);
         this.user = user;

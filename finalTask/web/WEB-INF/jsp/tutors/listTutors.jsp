@@ -16,6 +16,18 @@
     </style>
 </head>
 <body>
+<c:url value="/tutors/addTutor.html" var="addUrl"/>
+<form name="addTutor" method="POST" action="${addUrl}">
+    <input type="submit" value="Добавить преподавателя">
+</form>
+<br>
+<c:url value="/tutors/deleteTutor.html" var="deleteUrl"/>
+<form name="deleteTutor" method="POST" action="${deleteUrl}">
+    <input type="submit" value="Удалить преподавателя">
+</form>
+<br>
+${requestScope.message}
+<br>
 <c:if test="${requestScope.listTutors.size() != 0}">
     <table class="table table-bordered">
         <thead>
