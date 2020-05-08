@@ -25,7 +25,6 @@ ${requestScope.message}
         <form name="findGroup" method="POST" action="${concreteGroupUrl}">
             <input type="hidden" name="groupNum" value="${group.groupNumber}">
             <input type="hidden" name="courseNum" value="${group.courseNumber}">
-            <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
             <input type="submit" value="${group.courseNumber} курс ${group.groupNumber} группа">
         </form>
         <br>

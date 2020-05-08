@@ -44,7 +44,6 @@ ${requestScope.message}
                         <input type="hidden" name="studentId" value="${student.id}">
                         <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
                         <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-                        <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
                         <input type="submit" value="Удалить">
                     </form>
                 </td>

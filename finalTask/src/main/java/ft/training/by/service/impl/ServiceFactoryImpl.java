@@ -17,7 +17,6 @@ public final class ServiceFactoryImpl implements ServiceFactory {
             repository = new ConcurrentHashMap<>();
 
     static {
-        repository.put(FacultyService.class, new FacultyServiceImpl());
         repository.put(GroupService.class, new GroupServiceImpl());
         repository.put(SubgroupService.class, new SubgroupServiceImpl());
         repository.put(UserService.class, new UserServiceImpl());

@@ -13,12 +13,12 @@
 <hr>
 <c:url value="/search/list.html" var="listUrl"/>
 <form name="findAllUsersForm" method="POST" action="${listUrl}">
-    <input type="submit" value="Список всех пользователей">
+    <input type="submit" value="Пользователи">
 </form>
 <br>
-<c:url value="/students/listFaculties.html" var="listFaculties"/>
-<form name="findAllGroups" method="POST" action="${listFaculties}">
-    <input type="submit" value="Факультеты">
+<c:url value="/students/listGroups.html" var="listGroupsUrl"/>
+<form name="findAllGroups" method="POST" action="${listGroupsUrl}">
+    <input type="submit" value="Группы">
 </form>
 <br>
 <c:url value="/search/listTutors.html" var="listTutorsUrl"/>

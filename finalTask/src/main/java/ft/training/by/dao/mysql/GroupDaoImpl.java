@@ -1,6 +1,5 @@
 package ft.training.by.dao.mysql;
 
-import ft.training.by.bean.Faculty;
 import ft.training.by.bean.Group;
 import ft.training.by.dao.interfaces.GroupDao;
 import ft.training.by.dao.exception.DAOException;
@@ -18,15 +17,11 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SQL_SELECT_ALL_GROUPS =
-            "SELECT id, group_number, course_number, faculty_id FROM ugroup;";
+            "SELECT id, group_number, course_number FROM ugroup;";
 
     private static final String SQL_SELECT_GROUP_BY_ID =
-            "SELECT id, group_number, course_number, faculty_id FROM ugroup" +
+            "SELECT id, group_number, course_number FROM ugroup" +
                     " WHERE id = ?;";
-
-    private static final String SQL_SELECT_GROUP_BY_FACULTY_ID =
-            "SELECT id, group_number, course_number, faculty_id FROM ugroup" +
-                    " WHERE faculty_id = ?;";
 
     @Override
     public Integer create(Group entity) {
@@ -83,25 +78,8 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
     }
 
     @Override
-    public List<Group> findByFacultyId(Integer id) throws DAOException {
-        List<Group> groups = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_GROUP_BY_FACULTY_ID)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Group group = new Group();
-                fillGroup(resultSet, group);
-                groups.add(group);
-            }
-        } catch (SQLException throwables) {
-            LOGGER.error("DB connection error", throwables);
-        }
-        return groups;
-    }
-
-    @Override
-    public Optional<Group> findByGroupCourseFaculty(int groupNum, int courseNum, int facultyId) throws DAOException {
-        List<Group> groups = findByFacultyId(facultyId);
+    public Optional<Group> findByGroupAndCourse(int groupNum, int courseNum) throws DAOException {
+        List<Group> groups = read();
         groups.removeIf(group -> group.getGroupNumber() != groupNum ||
                 group.getCourseNumber() != courseNum);
         return Optional.ofNullable(groups.get(0));
@@ -111,10 +89,5 @@ public class GroupDaoImpl extends DaoImpl implements GroupDao {
         group.setId(resultSet.getInt(1));
         group.setGroupNumber(resultSet.getInt(2));
         group.setCourseNumber(resultSet.getInt(3));
-        int facultyID = resultSet.getInt(4);
-        FacultyDaoImpl facultyDao = new FacultyDaoImpl();
-        facultyDao.setConnection(connection);
-        Faculty faculty = facultyDao.read(facultyID).orElse(null);
-        group.setFaculty(faculty);
     }
 }

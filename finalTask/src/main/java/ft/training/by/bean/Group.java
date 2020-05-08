@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Group extends Entity {
     private int groupNumber;
     private int courseNumber;
-    private Faculty faculty;
 
     public Group() {
     }
@@ -14,11 +13,10 @@ public class Group extends Entity {
         super(id);
     }
 
-    public Group(int id, int groupNumber, int courseNumber, Faculty faculty) {
+    public Group(int id, int groupNumber, int courseNumber) {
         super(id);
         this.groupNumber = groupNumber;
         this.courseNumber = courseNumber;
-        this.faculty = faculty;
     }
 
     public int getGroupNumber() {
@@ -29,10 +27,6 @@ public class Group extends Entity {
         return courseNumber;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
     public void setGroupNumber(int groupNumber) {
         this.groupNumber = groupNumber;
     }
@@ -41,23 +35,18 @@ public class Group extends Entity {
         this.courseNumber = courseNumber;
     }
 
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
         return groupNumber == group.groupNumber &&
-                courseNumber == group.courseNumber &&
-                faculty.equals(group.faculty);
+                courseNumber == group.courseNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupNumber, courseNumber, faculty);
+        return Objects.hash(groupNumber, courseNumber);
     }
 
     @Override
@@ -66,7 +55,6 @@ public class Group extends Entity {
                 "id='" + getId() + '\'' +
                 ", groupNumber=" + groupNumber +
                 ", courseNumber=" + courseNumber +
-                ", faculty=" + faculty.toString() +
                 '}';
     }
 }

@@ -46,19 +46,12 @@ CREATE TABLE classroom (
  * конец таблиц-справочников
  */
 
-CREATE TABLE faculty (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_faculty PRIMARY KEY (id)
-);
-
 CREATE TABLE ugroup (
     id INTEGER NOT NULL AUTO_INCREMENT ,
     group_number INTEGER NOT NULL, 
     course_number INTEGER NOT NULL,
     faculty_id INTEGER NOT NULL,
     CONSTRAINT pk_group PRIMARY KEY (id),
-    CONSTRAINT fk_group_faculty FOREIGN KEY (faculty_id) REFERENCES faculty (id)
 );
 
 CREATE TABLE subgroup (

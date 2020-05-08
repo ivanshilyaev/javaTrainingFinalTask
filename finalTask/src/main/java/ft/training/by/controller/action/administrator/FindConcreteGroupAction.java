@@ -17,27 +17,22 @@ import java.util.List;
 public class FindConcreteGroupAction extends AdministratorAction {
     private static final String PARAM_NAME_GROUP_NUMBER = "groupNum";
     private static final String PARAM_NAME_COURSE_NUMBER = "courseNum";
-    private static final String PARAM_NAME_FACULTY_ID = "facultyId";
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         int groupNum;
         int courseNum;
-        int facultyId;
         try {
             groupNum = Integer.parseInt(request.getParameter(PARAM_NAME_GROUP_NUMBER));
             courseNum = Integer.parseInt(request.getParameter(PARAM_NAME_COURSE_NUMBER));
-            facultyId = Integer.parseInt(request.getParameter(PARAM_NAME_FACULTY_ID));
             request.setAttribute("groupNum", groupNum);
             request.setAttribute("courseNum", courseNum);
-            request.setAttribute("facultyId", facultyId);
         } catch (NumberFormatException e) {
             groupNum = (int) request.getAttribute(PARAM_NAME_GROUP_NUMBER);
             courseNum = (int) request.getAttribute(PARAM_NAME_COURSE_NUMBER);
-            facultyId = (int) request.getAttribute(PARAM_NAME_FACULTY_ID);
         }
         GroupService groupService = factory.createService(GroupService.class);
-        Group group = groupService.findByGroupCourseFaculty(groupNum, courseNum, facultyId).orElse(null);
+        Group group = groupService.findByGroupAndCourse(groupNum, courseNum).orElse(null);
         SubgroupService subgroupService = factory.createService(SubgroupService.class);
         List<Subgroup> subgroups = subgroupService.findByGroupId(group.getId());
         StudentService studentService = factory.createService(StudentService.class);

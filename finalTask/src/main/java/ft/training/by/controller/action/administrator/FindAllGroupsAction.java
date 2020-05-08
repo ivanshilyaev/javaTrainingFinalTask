@@ -9,18 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class FindAllGroupsAction extends AdministratorAction {
-    private static final String PARAM_GROUP_FACULTY_ID = "facultyId";
-
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        try {
-            int facultyId = Integer.parseInt(request.getParameter(PARAM_GROUP_FACULTY_ID));
-            request.setAttribute("facultyId", facultyId);
-            GroupService groupService = factory.createService(GroupService.class);
-            List<Group> groups = groupService.findByFacultyId(facultyId);
-            request.setAttribute("listGroups", groups);
-        } catch (NumberFormatException e) {
-        }
+        GroupService groupService = factory.createService(GroupService.class);
+        List<Group> groups = groupService.read();
+        request.setAttribute("listGroups", groups);
         return null;
     }
 }

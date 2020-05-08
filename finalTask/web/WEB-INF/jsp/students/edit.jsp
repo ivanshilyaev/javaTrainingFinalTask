@@ -43,10 +43,8 @@ ${requestScope.message}
 <form name="findGroup" method="POST" action="${indexUrl}">
     <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
     <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="hidden" name="facultyId" value="${requestScope.facultyId}">
     <input type="submit" value="На главную">
 </form>
-${requestScope.studentAddedMessage}
 <ctg:footer address="${sessionScope.address}"/>
 </body>
 </html>

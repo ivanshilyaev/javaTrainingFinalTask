@@ -27,25 +27,20 @@ public class AddStudentAction extends AdministratorAction {
 
     private static final String PARAM_NAME_GROUP_NUMBER = "groupNum";
     private static final String PARAM_NAME_COURSE_NUMBER = "courseNum";
-    private static final String PARAM_NAME_FACULTY_ID = "facultyId";
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         User authorizedUser = (User) request.getSession().getAttribute("authorizedUser");
         int groupNum;
         int courseNum;
-        int facultyId;
         try {
             groupNum = Integer.parseInt(request.getParameter(PARAM_NAME_GROUP_NUMBER));
             courseNum = Integer.parseInt(request.getParameter(PARAM_NAME_COURSE_NUMBER));
-            facultyId = Integer.parseInt(request.getParameter(PARAM_NAME_FACULTY_ID));
             request.getSession().setAttribute(PARAM_NAME_GROUP_NUMBER, groupNum);
             request.getSession().setAttribute(PARAM_NAME_COURSE_NUMBER, courseNum);
-            request.getSession().setAttribute(PARAM_NAME_FACULTY_ID, facultyId);
         } catch (Exception e) {
             groupNum = (int) request.getSession().getAttribute(PARAM_NAME_GROUP_NUMBER);
             courseNum = (int) request.getSession().getAttribute(PARAM_NAME_COURSE_NUMBER);
-            facultyId = (int) request.getSession().getAttribute(PARAM_NAME_FACULTY_ID);
         }
 
         String surname = request.getParameter(PARAM_NAME_SURNAME);
@@ -60,7 +55,7 @@ public class AddStudentAction extends AdministratorAction {
                 subgroupNum != null && login != null) {
             // группа
             GroupService groupService = factory.createService(GroupService.class);
-            Group group = groupService.findByGroupCourseFaculty(groupNum, courseNum, facultyId).orElse(null);
+            Group group = groupService.findByGroupAndCourse(groupNum, courseNum).orElse(null);
             // подгруппа
             SubgroupService subgroupService = factory.createService(SubgroupService.class);
             Subgroup subgroup = subgroupService.findBySubgroupNumberAndGroupId(subgroupNum.charAt(0), group.getId()).orElse(null);
@@ -78,14 +73,12 @@ public class AddStudentAction extends AdministratorAction {
                 if (studentId != -1) {
                     request.getSession().removeAttribute(PARAM_NAME_GROUP_NUMBER);
                     request.getSession().removeAttribute(PARAM_NAME_COURSE_NUMBER);
-                    request.getSession().removeAttribute(PARAM_NAME_FACULTY_ID);
 
                     Forward forward = new Forward("/students/concreteGroup.html");
                     forward.getAttributes().put("message",
                             "Новый студент был успешно добавлен");
                     forward.getAttributes().put("groupNum", groupNum);
                     forward.getAttributes().put("courseNum", courseNum);
-                    forward.getAttributes().put("facultyId", facultyId);
                     LOGGER.info(String.format("New student \"%s\" with identity %d has been added successfully",
                             student.getUser().getLogin(), student.getId()));
                     return forward;

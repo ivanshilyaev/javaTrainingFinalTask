@@ -17,7 +17,6 @@ public class TransactionImpl implements Transaction {
             repository = new ConcurrentHashMap<>();
 
     static {
-        repository.put(FacultyDao.class, new FacultyDaoImpl());
         repository.put(GroupDao.class, new GroupDaoImpl());
         repository.put(SubgroupDao.class, new SubgroupDaoImpl());
         repository.put(UserDao.class, new UserDaoImpl());
