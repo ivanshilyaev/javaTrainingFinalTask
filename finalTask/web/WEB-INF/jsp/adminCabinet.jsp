@@ -11,7 +11,7 @@
 <hr>
 Добро пожаловать, ${sessionScope.username}!
 <hr>
-<c:url value="/search/list.html" var="listUrl"/>
+<c:url value="/search/listUsers.html" var="listUrl"/>
 <form name="findAllUsersForm" method="POST" action="${listUrl}">
     <input type="submit" value="Пользователи">
 </form>

@@ -16,14 +16,14 @@
     <input type="submit" value="Моя группа">
 </form>
 <br>
-<c:url value="/password.html" var="passwordUrl"/>
-<form name="changePasswordForm" method="POST" action="${passwordUrl}">
-    <input type="submit" value="Изменить пароль">
-</form>
-<br>
 <c:url value="/study/schedule.html" var="scheduleUrl"/>
 <form name="schedule" method="POST" action="${scheduleUrl}">
     <input type="submit" value="Расписание">
+</form>
+<br>
+<c:url value="/password.html" var="passwordUrl"/>
+<form name="changePasswordForm" method="POST" action="${passwordUrl}">
+    <input type="submit" value="Изменить пароль">
 </form>
 <hr>
 <c:url value="/logout.html" var="logoutUrl"/>

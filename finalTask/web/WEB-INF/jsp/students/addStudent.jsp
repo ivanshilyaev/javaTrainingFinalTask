@@ -11,7 +11,6 @@
 </head>
 
 <body>
-<c:url value="/students/edit.html" var="editUrl"/>
 <br>
 ${requestScope.message}
 <br>

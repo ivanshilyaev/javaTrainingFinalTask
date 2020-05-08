@@ -4,7 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>${requestScope.courseNum} курс ${requestScope.groupNum} группа</title>
+    <title>Группа</title>
     <style>
         table {
             border-collapse: collapse;
@@ -16,19 +16,6 @@
     </style>
 </head>
 <body>
-<c:url value="/students/addStudent.html" var="editUrl"/>
-<form name="addNewStudent" method="POST" action="${editUrl}">
-    <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
-    <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="submit" value="Добавить нового студента">
-</form>
-<br>
-<c:url value="/students/deleteStudent.html" var="deleteUrl"/>
-<form name="deleteStudent" method="POST" action="${deleteUrl}">
-    <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
-    <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="submit" value="Удалить студента">
-</form>
 <br>
 ${requestScope.message}
 <br>
@@ -41,6 +28,7 @@ ${requestScope.message}
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +38,15 @@ ${requestScope.message}
                 <td><c:out value="${ student.user.surname }"/></td>
                 <td><c:out value="${ student.user.name }"/></td>
                 <td><c:out value="${ student.user.patronymic }"/></td>
+                <td>
+                    <c:url value="/students/deleteStudent.html" var="deleteUrl"/>
+                    <form name="deleteStudent" method="POST" action="${deleteUrl}">
+                        <input type="hidden" name="studentId" value="${student.id}">
+                        <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
+                        <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </td>
             </tr>
             <c:set var="index" value="${index + 1}"/>
         </c:forEach>
@@ -61,7 +58,7 @@ ${requestScope.message}
 </c:if>
 <hr>
 <c:url value="/index.html" var="indexUrl"/>
-<form name="mainPage" method="POST" action="${indexUrl}">
+<form name="findGroup" method="POST" action="${indexUrl}">
     <input type="submit" value="На главную">
 </form>
 <ctg:footer address="${sessionScope.address}"/>

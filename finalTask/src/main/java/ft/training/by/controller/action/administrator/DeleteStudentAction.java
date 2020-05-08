@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class DeleteStudentAction extends AdministratorAction {
@@ -46,6 +47,7 @@ public class DeleteStudentAction extends AdministratorAction {
         for (Subgroup subgroup : subgroups) {
             groupList.addAll(studentService.findBySubgroupId(subgroup.getId()));
         }
+        groupList.sort(Comparator.comparing(student -> student.getUser().getSurname()));
         request.setAttribute("groupList", groupList);
 
         String studentId = request.getParameter(PARAM_NAME_ID);

@@ -21,10 +21,10 @@
         <thead>
         <c:set var="index" value="1"/>
         <tr>
-            <th scope="col">Number</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Name</th>
-            <th scope="col">Patronymic</th>
+            <th scope="col">№</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
         </tr>
         </thead>
         <tbody>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
@@ -63,7 +64,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col">Номер пары</th>
+                <th scope="col">№ пары</th>
                     <%-- Время! (начала и окончания пары) --%>
                 <th scope="col">Диспиплина</th>
                 <th scope="col">Тип</th>
@@ -78,7 +79,8 @@
                     <td><c:out value="${ timetable.subject.name }"/></td>
                     <td><c:out value="${ timetable.classType }"/></td>
                     <td><c:out value="${ timetable.classroom.number }"/></td>
-                    <td><c:out value="${ timetable.tutor.user.surname }"/></td>
+                    <td><c:out
+                            value="${ timetable.tutor.user.surname } ${fn:substring(timetable.tutor.user.name, 0, 1)}.${fn:substring(timetable.tutor.user.patronymic, 0, 1)}."/></td>
                 </tr>
             </c:forEach>
             </tbody>
