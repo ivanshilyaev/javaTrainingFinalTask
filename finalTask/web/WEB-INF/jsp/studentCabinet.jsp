@@ -21,6 +21,11 @@
     <input type="submit" value="Расписание">
 </form>
 <br>
+<c:url value="/study/performance.html" var="performanceUrl"/>
+<form name="performance" method="POST" action="${performanceUrl}">
+    <input type="submit" value="Успеваемость">
+</form>
+<br>
 <c:url value="/password.html" var="passwordUrl"/>
 <form name="changePasswordForm" method="POST" action="${passwordUrl}">
     <input type="submit" value="Изменить пароль">
