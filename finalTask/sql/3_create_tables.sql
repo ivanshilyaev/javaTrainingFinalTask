@@ -124,6 +124,20 @@ CREATE TABLE tutor (
 	CONSTRAINT fk_tutor_user FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
+
+/* успеваемость */
+ CREATE TABLE performance (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    student_id INTEGER NOT NULL,
+    subject_id INTEGER NOT NULL,
+    semester TINYINT NOT NULL CHECK (semester IN (1, 2, 3, 4, 5, 6, 7, 8)),
+    credit CHAR(32), /* зачёт */
+    exam CHAR(32),
+    CONSTRAINT pk_performance PRIMARY KEY (id),
+    CONSTRAINT fk_performance_student FOREIGN KEY (student_id) REFERENCES student (id),
+    CONSTRAINT fk_performance_subject FOREIGN KEY (subject_id) REFERENCES subject (id)
+ );
+
 CREATE TABLE leader (
     id INTEGER NOT NULL AUTO_INCREMENT,
     student_id INTEGER NOT NULL,

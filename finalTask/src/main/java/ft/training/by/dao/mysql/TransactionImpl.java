@@ -27,6 +27,7 @@ public class TransactionImpl implements Transaction {
         repository.put(ClassroomDao.class, new ClassroomDaoImpl());
         repository.put(TimetableDao.class, new TimetableDaoImpl());
         repository.put(TimetableGroupDao.class, new TimetableGroupDaoImpl());
+        repository.put(PerformanceDao.class, new PerformanceDaoImpl());
     }
 
     private Connection connection;

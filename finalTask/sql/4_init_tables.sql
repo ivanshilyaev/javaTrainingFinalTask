@@ -218,3 +218,23 @@ VALUES
 
 INSERT INTO administrator (position, user_id)
 VALUES ("ведущий специалист", 30);
+
+
+INSERT INTO performance (student_id, subject_id, semester, credit, exam)
+VALUES
+(26, 1, 4, "зачёт", "экзамен"),
+(26, 2, 4, "зачёт", "экзамен"),
+(26, 3, 4, "зачёт", "экзамен");
+
+INSERT INTO performance (student_id, subject_id, semester, credit)
+VALUES
+(26, 4, 4, "зачёт"),
+(26, 5, 4, "зачёт"),
+(26, 6, 4, "зачёт"),
+(26, 7, 4, "зачёт"),
+(26, 8, 4, "зачёт");
+
+INSERT INTO performance (student_id, subject_id, semester, exam)
+VALUES
+(26, 9, 4, "экзамен"),
+(26, 10, 4, "экзамен");
