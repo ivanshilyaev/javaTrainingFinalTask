@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<c:if test="${requestScope.listUsers.size() != 0}">
+<c:if test="${requestScope.timetableList.size() != 0}">
     <table class="table table-bordered">
         <thead>
         <c:set var="index" value="1"/>
@@ -28,27 +28,25 @@
             <th scope="col">Тип</th>
             <th scope="col">Аудитория</th>
             <th scope="col">Группа</th>
-            <th scope="col">Подгруппа</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="user" items="${requestScope.listUsers}">
+        <c:forEach var="timetable" items="${requestScope.timetableList}">
             <tr>
                 <td><c:out value="${index}"/></td>
-                <td><c:out value="${ user.id }"/></td>
-                <td><c:out value="${ user.login }"/></td>
-                <td><c:out value="${ user.surname }"/></td>
-                <td><c:out value="${ user.name }"/></td>
-                <td><c:out value="${ user.patronymic }"/></td>
-                <td><c:out value="${ user.patronymic }"/></td
-                <td><c:out value="${ user.patronymic }"/></td
+                <td><c:out value="${ timetable.day.getName() }"/></td>
+                <td><c:out value="${ timetable.pairNumber }"/></td>
+                <td><c:out value="${ timetable.subject.name }"/></td>
+                <td><c:out value="${ timetable.classType.getName() }"/></td>
+                <td><c:out value="${ timetable.classroom.number }"/></td>
+                <td><c:out value="${ requestScope.groupList.get(index-1).groupNumber }"/></td
             </tr>
             <c:set var="index" value="${index + 1}"/>
         </c:forEach>
         </tbody>
     </table>
 </c:if>
-<c:if test="${requestScope.listUsers.size() == 0}">
+<c:if test="${requestScope.timetableList.size() == 0}">
     Список пуст!<br>
 </c:if>
 <hr>

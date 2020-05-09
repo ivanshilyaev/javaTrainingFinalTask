@@ -10,4 +10,6 @@ public interface TimetableService extends Service {
     List<Timetable> read() throws ServiceException;
 
     Optional<Timetable> read(Integer id) throws ServiceException;
+
+    List<Timetable> findByTutorId(Integer tutorId) throws ServiceException;
 }

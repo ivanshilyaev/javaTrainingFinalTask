@@ -11,6 +11,11 @@
 <hr>
 Добро пожаловать, ${sessionScope.username}!
 <hr>
+<c:url value="/search/listClasses.html" var="listClassesUrl"/>
+<form name="listClassesForm" method="POST" action="${listClassesUrl}">
+    <input type="submit" value="Список всех пар">
+</form>
+<br>
 <c:url value="/password.html" var="passwordUrl"/>
 <form name="changePasswordForm" method="POST" action="${passwordUrl}">
     <input type="submit" value="Изменить пароль">

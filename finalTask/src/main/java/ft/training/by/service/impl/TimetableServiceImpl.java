@@ -29,4 +29,14 @@ public class TimetableServiceImpl extends ServiceImpl implements TimetableServic
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Timetable> findByTutorId(Integer tutorId) throws ServiceException {
+        try {
+            TimetableDao dao = transaction.createDao(TimetableDao.class);
+            return dao.findByTutorId(tutorId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

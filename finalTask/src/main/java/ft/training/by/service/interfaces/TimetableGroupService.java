@@ -11,5 +11,7 @@ public interface TimetableGroupService extends Service {
 
     Optional<TimetableGroup> read(Integer id) throws ServiceException;
 
-    List<TimetableGroup> findBySubgroupId(Integer id) throws ServiceException;
+    List<TimetableGroup> findByTimetableId(Integer timetableId) throws ServiceException;
+
+    List<TimetableGroup> findBySubgroupId(Integer subgroupId) throws ServiceException;
 }

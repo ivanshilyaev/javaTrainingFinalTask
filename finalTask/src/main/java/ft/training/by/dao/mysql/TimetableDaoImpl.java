@@ -86,7 +86,13 @@ public class TimetableDaoImpl extends DaoImpl implements TimetableDao {
     public List<Timetable> findByTutorId(Integer tutorId) throws DAOException {
         List<Timetable> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_CLASS_BY_TUTOR_ID)) {
-
+            statement.setInt(1, tutorId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Timetable timetable = new Timetable();
+                fillTimetable(resultSet, timetable);
+                list.add(timetable);
+            }
         } catch (SQLException throwables) {
             LOGGER.error("DB connection error", throwables);
         }

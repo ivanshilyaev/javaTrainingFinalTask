@@ -31,10 +31,20 @@ public class TimetableGroupServiceImpl extends ServiceImpl implements TimetableG
     }
 
     @Override
-    public List<TimetableGroup> findBySubgroupId(Integer id) throws ServiceException {
+    public List<TimetableGroup> findByTimetableId(Integer timetableId) throws ServiceException {
         try {
             TimetableGroupDao dao = transaction.createDao(TimetableGroupDao.class);
-            return dao.findBySubgroupId(id);
+            return dao.findByTimetableId(timetableId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<TimetableGroup> findBySubgroupId(Integer subgroupId) throws ServiceException {
+        try {
+            TimetableGroupDao dao = transaction.createDao(TimetableGroupDao.class);
+            return dao.findBySubgroupId(subgroupId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

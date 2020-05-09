@@ -25,6 +25,10 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
             "SELECT id, timetable_id, subgroup_id FROM timetable_group" +
                     " WHERE id = ?;";
 
+    public static final String SQL_SELECT_ITEM_BY_TIMETABLE_ID =
+            "SELECT id, timetable_id, subgroup_id FROM timetable_group" +
+                    " WHERE timetable_id = ?;";
+
     public static final String SQL_SELECT_ITEM_BY_SUBGROUP_ID =
             "SELECT id, timetable_id, subgroup_id FROM timetable_group" +
                     " WHERE subgroup_id = ?;";
@@ -78,10 +82,28 @@ public class TimetableGroupDaoImpl extends DaoImpl implements TimetableGroupDao 
     }
 
     @Override
-    public List<TimetableGroup> findBySubgroupId(Integer id) throws DAOException {
+    public List<TimetableGroup> findByTimetableId(Integer timetableId) throws DAOException {
+        List<TimetableGroup> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_TIMETABLE_ID)) {
+            statement.setInt(1, timetableId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                TimetableGroup timetableGroup = new TimetableGroup();
+                fillTimetableGroup(resultSet, timetableGroup);
+                list.add(timetableGroup);
+            }
+            resultSet.close();
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return list;
+    }
+
+    @Override
+    public List<TimetableGroup> findBySubgroupId(Integer subgroupId) throws DAOException {
         List<TimetableGroup> list = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ITEM_BY_SUBGROUP_ID)) {
-            statement.setInt(1, id);
+            statement.setInt(1, subgroupId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 TimetableGroup timetableGroup = new TimetableGroup();
