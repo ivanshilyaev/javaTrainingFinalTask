@@ -3,22 +3,21 @@
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/start.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css"/>
     <title>Авторизация</title>
 </head>
 
 <body>
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <!-- Tabs Titles -->
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="http://icons.iconarchive.com/icons/graphicloads/100-flat/256/home-icon.png" id="icon"
-                 alt="User Icon"/>
+            <img src="${pageContext.request.contextPath}/img/bsu.png" width="60" alt="bsu-logo"/>
         </div>
 
         <!-- Login Form -->
@@ -28,13 +27,8 @@
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="Пароль">
             <input type="submit" class="fadeIn fourth" value="Войти">
         </form>
-        ${sessionScope.message}
+        ${requestScope.message}
         <br>
-
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Забыли пароль?</a>
-        </div>
 
     </div>
 </div>
