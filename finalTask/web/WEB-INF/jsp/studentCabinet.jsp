@@ -4,7 +4,7 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/studentCabinet.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>Кабинет студента</title>
 </head>
 <body>
@@ -16,6 +16,12 @@
         <nav>
             <ul>
                 <li>
+                    <c:url value="/studentCabinet.html" var="cabinetUrl"/>
+                    <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${cabinetUrl}">
+                        <input type="submit" value="Мой профиль">
+                    </form>
+                </li>
+                <li>
                     <c:url value="/search/group.html" var="groupUrl"/>
                     <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
                         <input type="submit" value="Моя группа">
@@ -23,25 +29,25 @@
                 </li>
                 <li>
                     <c:url value="/study/schedule.html" var="scheduleUrl"/>
-                    <form name="schedule" method="POST" action="${scheduleUrl}">
+                    <form class="menu-form" name="schedule" method="POST" action="${scheduleUrl}">
                         <input type="submit" value="Расписание">
                     </form>
                 </li>
                 <li>
                     <c:url value="/study/performance.html" var="performanceUrl"/>
-                    <form name="performance" method="POST" action="${performanceUrl}">
+                    <form class="menu-form" name="performance" method="POST" action="${performanceUrl}">
                         <input type="submit" value="Успеваемость">
                     </form>
                 </li>
                 <li>
                     <c:url value="/password.html" var="passwordUrl"/>
-                    <form name="changePasswordForm" method="POST" action="${passwordUrl}">
+                    <form class="menu-form" name="changePasswordForm" method="POST" action="${passwordUrl}">
                         <input type="submit" value="Изменить пароль">
                     </form>
                 </li>
                 <li>
                     <c:url value="/logout.html" var="logoutUrl"/>
-                    <form name="logoutForm" method="POST" action="${logoutUrl}">
+                    <form class="menu-form" name="logoutForm" method="POST" action="${logoutUrl}">
                         <input type="submit" value="Выйти">
                     </form>
                 </li>
@@ -50,11 +56,10 @@
     </div>
 </header>
 
-
 <div class="profile">
     <div class="container">
-        <h2>Мой профиль</h2>
-        <h2>${sessionScope.authorizedUser.surname} ${sessionScope.authorizedUser.name} ${sessionScope.authorizedUser.patronymic}</h2>
+        <h2>Добро
+            пожаловать, ${sessionScope.authorizedUser.surname} ${sessionScope.authorizedUser.name} ${sessionScope.authorizedUser.patronymic}!</h2>
     </div>
 </div>
 
