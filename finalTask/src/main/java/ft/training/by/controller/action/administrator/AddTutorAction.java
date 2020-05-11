@@ -6,6 +6,9 @@ import ft.training.by.bean.enums.Role;
 import ft.training.by.service.exception.ServiceException;
 import ft.training.by.service.interfaces.TutorService;
 import ft.training.by.service.interfaces.UserService;
+import ft.training.by.validator.ValidationFactory;
+import ft.training.by.validator.Validator;
+import ft.training.by.validator.exception.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,36 +18,29 @@ import javax.servlet.http.HttpServletResponse;
 public class AddTutorAction extends AdministratorAction {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final String PARAM_NAME_SURNAME = "surname";
-    private static final String PARAM_NAME_NAME = "name";
-    private static final String PARAM_NAME_PATRONYMIC = "patronymic";
     private static final String PARAM_NAME_POSITION = "position";
     private static final String PARAM_NAME_DEGREE = "degree";
-    private static final String PARAM_NAME_LOGIN = "login";
 
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        String surname = request.getParameter(PARAM_NAME_SURNAME);
-        String name = request.getParameter(PARAM_NAME_NAME);
-        String patronymic = request.getParameter(PARAM_NAME_PATRONYMIC);
         String position = request.getParameter(PARAM_NAME_POSITION);
         String degree = request.getParameter(PARAM_NAME_DEGREE);
-        String login = request.getParameter(PARAM_NAME_LOGIN);
 
-        // валидация
-
-        if (surname != null && name != null && patronymic != null &&
-                position != null && degree != null && login != null) {
-            User user = new User(login, new char[]{'1', '1', '1', '1', '1'}, Role.TUTOR,
-                    surname, name, patronymic);
+        try {
+            Validator<User> userValidator = ValidationFactory.createValidator(User.class);
+            User user = userValidator.validate(request);
             UserService userService = factory.createService(UserService.class);
-            int userId = userService.create(user);
-            int tutorId = -1;
-            if (userId != -1) {
+            if (userService.isLoginPresented(user.getLogin())) {
+                request.setAttribute("message", "Пользователь с таким логином уже существует");
+                LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add user: login %s is already presented", getAuthorizedUser().getLogin(), user.getLogin()));
+                return null;
+            }
+            user.setRole(Role.TUTOR);
+            user.setPassword(new char[]{'1', '1', '1', '1', '1'});
+            if (userService.create(user) != -1) {
                 Tutor tutor = new Tutor(user, position, degree);
                 TutorService tutorService = factory.createService(TutorService.class);
-                tutorId = tutorService.create(tutor);
-                if (tutorId != -1) {
+                if (tutorService.create(tutor) != -1) {
                     Forward forward = new Forward("/tutors/listTutors.html");
                     forward.getAttributes().put("message",
                             "Новый преподаватель был успешно добавлен");
@@ -53,11 +49,15 @@ public class AddTutorAction extends AdministratorAction {
                     return forward;
                 }
             }
-            request.setAttribute("message",
-                    "Произошла ошибка ввода данных");
-            LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add new tutor",
-                    getAuthorizedUser().getLogin()));
+        } catch (ValidationException e) {
+            request.setAttribute("message", "Некорректные данные");
+            LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add user: validation error", getAuthorizedUser().getLogin()), e);
+            return null;
         }
+        request.setAttribute("message",
+                "Произошла ошибка ввода данных");
+        LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add new tutor",
+                getAuthorizedUser().getLogin()));
         return null;
     }
 }
