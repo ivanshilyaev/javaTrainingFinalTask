@@ -6,15 +6,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>Моя группа</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table, tr, td {
-            border: 1px solid rgb(0, 0, 0);
-        }
-    </style>
 </head>
 <body>
 

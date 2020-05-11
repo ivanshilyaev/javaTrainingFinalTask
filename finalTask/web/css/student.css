@@ -113,6 +113,14 @@ nav li:first-child::before {
     letter-spacing: -0.2px;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table, tr, td {
+    border: 1px solid black;
+}
+
 .schedule {
     color: #666d89;
     height: 90%;

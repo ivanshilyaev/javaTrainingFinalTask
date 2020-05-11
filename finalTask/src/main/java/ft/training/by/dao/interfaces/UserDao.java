@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface UserDao extends Dao<Integer, User> {
     Optional<User> read(String login, char[] password);
+
+    boolean isLoginPresented(String login);
 }

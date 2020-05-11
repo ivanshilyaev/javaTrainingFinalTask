@@ -18,4 +18,6 @@ public interface UserService extends Service {
     void update(User user) throws ServiceException;
 
     boolean delete(Integer id) throws ServiceException;
+
+    boolean isLoginPresented(String login) throws ServiceException;
 }

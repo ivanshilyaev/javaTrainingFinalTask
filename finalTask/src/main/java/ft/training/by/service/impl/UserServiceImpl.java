@@ -69,4 +69,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean isLoginPresented(String login) throws ServiceException {
+        try {
+            UserDao dao = transaction.createDao(UserDao.class);
+            return dao.isLoginPresented(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

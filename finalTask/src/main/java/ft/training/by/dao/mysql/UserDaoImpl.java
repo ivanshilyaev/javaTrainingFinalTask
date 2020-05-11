@@ -36,6 +36,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     private static final String SQL_DELETE_USER_BY_ID =
             "DELETE FROM user WHERE id = ?;";
 
+    private static final String SQL_SELECT_BY_LOGIN =
+            "SELECT id FROM user WHERE login = ?";
+
     @Override
     public Integer create(User entity) throws DAOException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
@@ -146,6 +149,18 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             LOGGER.error("DB connection error", e);
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public boolean isLoginPresented(String login) {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) return true;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return false;
     }
 
     private void fillUser(ResultSet resultSet, User user) throws SQLException {
