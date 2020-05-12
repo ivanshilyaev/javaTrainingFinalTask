@@ -130,13 +130,14 @@ header {
 }
 
 .add-form > input[type=submit] {
+    width: 100%;
     background-color: #1177d1;
     border: none;
     color: white;
     padding: 16px 32px;
     text-decoration: none;
     text-transform: uppercase;
-    margin: 4px 2px;
+    margin: 4px 0px;
     cursor: pointer;
 }
 

@@ -25,15 +25,15 @@ public class ChangePasswordAction extends AuthorizedUserAction {
         if (oldPassword != null && newPassword != null && newPasswordAgain != null) {
             User currentUser = (User) request.getSession().getAttribute("authorizedUser");
             if (!Arrays.equals(currentUser.getPassword(), oldPassword.toCharArray())) {
-                request.getSession().setAttribute("passwordMessage", "Old password was entered incorrectly");
+                request.setAttribute("passwordMessage", "Old password was entered incorrectly");
                 return null;
             }
             if (!newPassword.equals(newPasswordAgain)) {
-                request.getSession().setAttribute("passwordMessage", "New password was repeated incorrectly");
+                request.setAttribute("passwordMessage", "New password was repeated incorrectly");
                 return null;
             }
             if (oldPassword.equals(newPassword)) {
-                request.getSession().setAttribute("passwordMessage", "You've entered the same password");
+                request.setAttribute("passwordMessage", "You've entered the same password");
                 return null;
             }
             currentUser.setPassword(newPassword.toCharArray());

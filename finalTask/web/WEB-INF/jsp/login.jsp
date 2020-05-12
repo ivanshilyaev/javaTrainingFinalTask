@@ -32,6 +32,6 @@
 
     </div>
 </div>
-<ctg:footer address="${sessionScope.address}"/>
+
 </body>
 </html>
