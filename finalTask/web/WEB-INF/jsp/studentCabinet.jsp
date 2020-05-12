@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<header>
+<header id="appHeader">
     <div class="navbar">
         <a href="https://bsu.by/">БГУ</a>
         <c:url value="/studentCabinet.html" var="cabinetUrl"/>
@@ -60,5 +60,23 @@
     <p>Адрес: ул. Октябрьская, 10, 220030, г. Минск, Республика Беларусь</p>
 </div>
 <%--<ctg:footer address="${sessionScope.address}"/>--%>
+
+<script>
+    window.onscroll = function () {
+        myFunction()
+    };
+
+    var header = document.getElementById("appHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+</script>
+
 </body>
 </html>

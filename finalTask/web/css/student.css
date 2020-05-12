@@ -8,13 +8,22 @@ body {
 }
 
 header {
-    position: fixed;
     width: 100%;
     height: auto;
     padding: 0px;
     text-align: center;
     background: #1177d1;
     justify-content: space-between;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
+.sticky + .content {
+    padding-top: 102px;
 }
 
 .navbar {
@@ -64,14 +73,19 @@ header {
 }
 
 .content {
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     background-color: #73B1E8;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
 
 table {
+    min-width: 60vw;
+    width: auto;
+    margin: 10px;
     color: #489CE8;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 16px;
