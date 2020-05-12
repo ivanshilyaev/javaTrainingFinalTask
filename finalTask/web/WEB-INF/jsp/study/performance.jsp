@@ -6,7 +6,6 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js"></script>
     <title>Успеваемость</title>
 </head>
 <body>
@@ -14,7 +13,7 @@
 <%@ include file="../header/studentHeader.jsp" %>
 
 <div class="content">
-    <div class="button-group">
+    <div class="button-group-horizontal">
         <c:url value="/study/performance.html" var="performanceUrl"/>
         <form class="content-form" name="sem1" method="POST" action="${performanceUrl}">
             <input type="hidden" name="semester" value="1">
@@ -44,7 +43,7 @@
             Список пуст!<br>
         </c:if>
         <c:if test="${requestScope.performance.size() != 0}">
-            <table class="table table-bordered">
+            <table>
                 <thead>
                 <c:set var="index" value="1"/>
                 <tr>

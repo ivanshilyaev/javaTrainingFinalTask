@@ -3,41 +3,38 @@
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>Список групп</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table, tr, td {
-            border: 1px solid black;
-        }
-    </style>
 </head>
 <body>
-<br>
-${requestScope.message}
-<br>
-<c:if test="${requestScope.listGroups.size() != 0}">
-    <c:forEach var="group" items="${requestScope.listGroups}">
-        <c:url value="/students/concreteGroup.html" var="concreteGroupUrl"/>
-        <form name="findGroup" method="POST" action="${concreteGroupUrl}">
-            <input type="hidden" name="groupNum" value="${group.groupNumber}">
-            <input type="hidden" name="courseNum" value="${group.courseNumber}">
-            <input type="submit" value="${group.courseNumber} курс ${group.groupNumber} группа">
-        </form>
-        <br>
-    </c:forEach>
-</c:if>
-<c:if test="${requestScope.listGroups.size() == 0}">
-    Список пуст!<br>
-</c:if>
-<hr>
-<c:url value="/index.html" var="indexUrl"/>
-<form name="mainPage" method="POST" action="${indexUrl}">
-    <input type="submit" value="На главную">
-</form>
-<ctg:footer address="${sessionScope.address}"/>
+
+<%@ include file="../header/adminHeader.jsp" %>
+
+<div class="content">
+    <div class="button-group-horizontal">
+        <c:if test="${requestScope.listGroups.size() != 0}">
+            <c:forEach var="group" items="${requestScope.listGroups}">
+                <c:url value="/students/concreteGroup.html" var="concreteGroupUrl"/>
+                <form class="content-form" name="findGroup" method="POST" action="${concreteGroupUrl}">
+                    <input type="hidden" name="groupNum" value="${group.groupNumber}">
+                    <input type="hidden" name="courseNum" value="${group.courseNumber}">
+                    <input type="submit" value="${group.courseNumber} курс ${group.groupNumber} группа">
+                </form>
+                <br>
+            </c:forEach>
+        </c:if>
+        <c:if test="${requestScope.listGroups.size() == 0}">
+            Список пуст!<br>
+        </c:if>
+    </div>
+    <br>
+    ${requestScope.message}
+    <br>
+</div>
+
+<%@ include file="../footer/footer.jsp" %>
+
+<%--<ctg:footer address="${sessionScope.address}"/>--%>
 </body>
 </html>

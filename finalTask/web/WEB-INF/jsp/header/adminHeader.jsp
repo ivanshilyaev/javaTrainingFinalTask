@@ -11,22 +11,22 @@
 <header id="appHeader">
     <div class="navbar">
         <a href="https://bsu.by/">БГУ</a>
-        <c:url value="/studentCabinet.html" var="cabinetUrl"/>
+        <c:url value="/adminCabinet.html" var="cabinetUrl"/>
         <form style="margin-left: auto" class="menu-form" name="findAllStudentsFromTheGroup" method="POST"
               action="${cabinetUrl}">
             <input type="submit" value="Мой профиль">
         </form>
-        <c:url value="/search/group.html" var="groupUrl"/>
-        <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
-            <input type="submit" value="Моя группа">
+        <c:url value="/search/listUsers.html" var="listUrl"/>
+        <form class="menu-form" name="findAllUsersForm" method="POST" action="${listUrl}">
+            <input type="submit" value="Пользователи">
         </form>
-        <c:url value="/study/schedule.html" var="scheduleUrl"/>
-        <form class="menu-form" name="schedule" method="POST" action="${scheduleUrl}">
-            <input type="submit" value="Расписание">
+        <c:url value="/students/listGroups.html" var="listGroupsUrl"/>
+        <form class="menu-form" name="findAllGroups" method="POST" action="${listGroupsUrl}">
+            <input type="submit" value="Группы">
         </form>
-        <c:url value="/study/performance.html" var="performanceUrl"/>
-        <form class="menu-form" name="performance" method="POST" action="${performanceUrl}">
-            <input type="submit" value="Успеваемость">
+        <c:url value="/tutors/listTutors.html" var="listTutorsUrl"/>
+        <form class="menu-form" name="findAllGroups" method="POST" action="${listTutorsUrl}">
+            <input type="submit" value="Преподаватели">
         </form>
         <c:url value="/password.html" var="passwordUrl"/>
         <form class="menu-form" name="changePasswordForm" method="POST" action="${passwordUrl}">

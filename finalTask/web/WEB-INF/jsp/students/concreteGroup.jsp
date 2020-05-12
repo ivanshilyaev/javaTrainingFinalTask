@@ -3,67 +3,63 @@
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>${requestScope.courseNum} курс ${requestScope.groupNum} группа</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table, tr, td {
-            border: 1px solid rgb(0, 0, 0);
-        }
-    </style>
 </head>
 <body>
-<c:url value="/students/addStudent.html" var="addUrl"/>
-<form name="addStudent" method="POST" action="${addUrl}">
-    <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
-    <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="submit" value="Добавить студента">
-</form>
-<br>
-<c:url value="/students/deleteStudent.html" var="deleteUrl"/>
-<form name="deleteStudent" method="POST" action="${deleteUrl}">
-    <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
-    <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
-    <input type="submit" value="Удалить студента">
-</form>
-<br>
-${requestScope.message}
-<br>
-<c:if test="${requestScope.groupList.size() != 0}">
-    <table class="table table-bordered">
-        <thead>
-        <c:set var="index" value="1"/>
-        <tr>
-            <th scope="col">№</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="student" items="${requestScope.groupList}">
+
+<%@ include file="../header/adminHeader.jsp" %>
+
+<div class="content">
+    <div class="button-group-horizontal">
+        <c:url value="/students/addStudent.html" var="addUrl"/>
+        <form class="content-form" name="addStudent" method="POST" action="${addUrl}">
+            <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
+            <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+            <input type="submit" value="Добавить студента">
+        </form>
+        <c:url value="/students/deleteStudent.html" var="deleteUrl"/>
+        <form class="content-form" name="deleteStudent" method="POST" action="${deleteUrl}">
+            <input type="hidden" name="groupNum" value="${requestScope.groupNum}">
+            <input type="hidden" name="courseNum" value="${requestScope.courseNum}">
+            <input type="submit" value="Удалить студента">
+        </form>
+    </div>
+    <br>
+    ${requestScope.message}
+    <br>
+    <c:if test="${requestScope.groupList.size() != 0}">
+        <table>
+            <thead>
+            <c:set var="index" value="1"/>
             <tr>
-                <td><c:out value="${index}"/></td>
-                <td><c:out value="${ student.user.surname }"/></td>
-                <td><c:out value="${ student.user.name }"/></td>
-                <td><c:out value="${ student.user.patronymic }"/></td>
+                <th scope="col">№</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Отчество</th>
             </tr>
-            <c:set var="index" value="${index + 1}"/>
-        </c:forEach>
-        </tbody>
-    </table>
-</c:if>
-<c:if test="${requestScope.groupList.size() == 0}">
-    Список пуст!<br>
-</c:if>
-<hr>
-<c:url value="/index.html" var="indexUrl"/>
-<form name="mainPage" method="POST" action="${indexUrl}">
-    <input type="submit" value="На главную">
-</form>
-<ctg:footer address="${sessionScope.address}"/>
+            </thead>
+            <tbody>
+            <c:forEach var="student" items="${requestScope.groupList}">
+                <tr>
+                    <td><c:out value="${index}"/></td>
+                    <td><c:out value="${ student.user.surname }"/></td>
+                    <td><c:out value="${ student.user.name }"/></td>
+                    <td><c:out value="${ student.user.patronymic }"/></td>
+                </tr>
+                <c:set var="index" value="${index + 1}"/>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
+    <c:if test="${requestScope.groupList.size() == 0}">
+        Список пуст!<br>
+    </c:if>
+</div>
+
+<%@ include file="../footer/footer.jsp" %>
+
+<%--<ctg:footer address="${sessionScope.address}"/>--%>
 </body>
 </html>

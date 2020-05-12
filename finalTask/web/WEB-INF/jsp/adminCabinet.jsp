@@ -3,38 +3,23 @@
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>Кабинет администратора</title>
 </head>
 <body>
-<h2>Account</h2>
-<hr>
-Добро пожаловать, ${sessionScope.username}!
-<hr>
-<c:url value="/search/listUsers.html" var="listUrl"/>
-<form name="findAllUsersForm" method="POST" action="${listUrl}">
-    <input type="submit" value="Пользователи">
-</form>
-<br>
-<c:url value="/students/listGroups.html" var="listGroupsUrl"/>
-<form name="findAllGroups" method="POST" action="${listGroupsUrl}">
-    <input type="submit" value="Группы">
-</form>
-<br>
-<c:url value="/tutors/listTutors.html" var="listTutorsUrl"/>
-<form name="findAllGroups" method="POST" action="${listTutorsUrl}">
-    <input type="submit" value="Преподаватели">
-</form>
-<br>
-<c:url value="/password.html" var="passwordUrl"/>
-<form name="changePasswordForm" method="POST" action="${passwordUrl}">
-    <input type="submit" value="Изменить пароль">
-</form>
-<hr>
-<c:url value="/logout.html" var="logoutUrl"/>
-<form name="logoutForm" method="POST" action="${logoutUrl}">
-    <input type="submit" value="Выйти">
-</form>
-<ctg:footer address="${sessionScope.address}"/>
+
+<%@ include file="header/adminHeader.jsp" %>
+
+<div class="content">
+    <%--Для полного имени нужен свой пользовательский тег!--%>
+    <h2>Добро пожаловать, ${sessionScope.authorizedUser.surname}
+        ${sessionScope.authorizedUser.name}
+        ${sessionScope.authorizedUser.patronymic}!</h2>
+</div>
+
+<%@ include file="footer/footer.jsp" %>
+
+<%--<ctg:footer address="${sessionScope.address}"/>--%>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js"></script>
     <title>Моя группа</title>
 </head>
 <body>

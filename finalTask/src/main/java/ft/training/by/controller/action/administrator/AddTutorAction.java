@@ -50,8 +50,10 @@ public class AddTutorAction extends AdministratorAction {
                 }
             }
         } catch (ValidationException e) {
-            request.setAttribute("message", "Некорректные данные");
-            LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add user: validation error", getAuthorizedUser().getLogin()), e);
+            if (request.getParameter("surname") != null) {
+                request.setAttribute("message", "Некорректные данные");
+                LOGGER.warn(String.format("Incorrect data was found when user \"%s\" tried to add user: validation error", getAuthorizedUser().getLogin()), e);
+            }
             return null;
         }
         request.setAttribute("message",

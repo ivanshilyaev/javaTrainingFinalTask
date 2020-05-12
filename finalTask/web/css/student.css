@@ -83,10 +83,16 @@ header {
     justify-content: space-around;
 }
 
-.button-group {
+.button-group-horizontal {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.button-group-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /* Для основных кнопок в контенте */
@@ -104,6 +110,37 @@ header {
 }
 
 .content-form > input[value]:hover {
+    background-color: #fff;
+    color: #1177d1;
+}
+
+.add-form {
+    font-size: 11pt;
+}
+
+.add-form > input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.add-form > input[type=text]:focus {
+    border: 3px solid #555;
+}
+
+.add-form > input[type=submit] {
+    background-color: #1177d1;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.add-form > input[value]:hover {
     background-color: #fff;
     color: #1177d1;
 }

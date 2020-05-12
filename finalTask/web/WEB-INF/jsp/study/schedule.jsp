@@ -6,7 +6,6 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js"></script>
     <title>Расписание</title>
 </head>
 <body>
@@ -14,7 +13,7 @@
 <%@ include file="../header/studentHeader.jsp" %>
 
 <div class="content">
-    <div class="button-group">
+    <div class="button-group-horizontal">
         <c:url value="/study/schedule.html" var="scheduleUrl"/>
         <form class="content-form" name="schedule" method="POST" action="${scheduleUrl}">
             <input type="hidden" name="day" value="0">
@@ -54,7 +53,7 @@
             Список пуст!<br>
         </c:if>
         <c:if test="${requestScope.schedule.size() != 0}">
-            <table class="table table-bordered">
+            <table>
                 <thead>
                 <tr>
                     <th scope="col">№ пары</th>
