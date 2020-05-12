@@ -10,7 +10,7 @@ body {
     overflow-x: hidden;
 }
 
-.container {
+.wrapper {
     margin: 0 auto;
     padding: 0 40px;
     width: calc(1020px - 80px);
@@ -27,7 +27,7 @@ header {
     z-index: 10;
 }
 
-header .container {
+header .wrapper {
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -104,7 +104,7 @@ nav li > a:hover {
     background-color: #489CE8;
 }
 
-.galery .container {
+.galery .wrapper {
     height: 100%;
     width: 940px;
     padding: 0 40px;
@@ -130,7 +130,7 @@ nav li > a:hover {
     background-color: #73B1E8;
 }
 
-.news .container {
+.news .wrapper {
     height: calc(100% - 80px);
     width: 940px;
     padding: 40px;
@@ -175,7 +175,7 @@ nav li > a:hover {
     background-color: #fff;
 }
 
-.FAQ .container {
+.FAQ .wrapper {
     height: calc(100% - 80px);
     width: 940px;
     padding: 40px;
@@ -200,7 +200,7 @@ nav li > a:hover {
     color: #666d89;
 }
 
-.contact .container {
+.contact .wrapper {
     height: calc(100% - 80px);
     width: 940px;
     padding: 40px;

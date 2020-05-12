@@ -10,72 +10,55 @@
 <body>
 
 <header>
-    <div class="container">
-        <h1 class="BSU"><a href="https://www.bsu.by"><img src="${pageContext.request.contextPath}/img/bsu.png"
-                                                          width="60" alt="bsu-logo"></a>БГУ</h1>
-        <nav>
-            <ul>
-                <li>
-                    <c:url value="/studentCabinet.html" var="cabinetUrl"/>
-                    <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${cabinetUrl}">
-                        <input type="submit" value="Мой профиль">
-                    </form>
-                </li>
-                <li>
-                    <c:url value="/search/group.html" var="groupUrl"/>
-                    <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
-                        <input type="submit" value="Моя группа">
-                    </form>
-                </li>
-                <li>
-                    <c:url value="/study/schedule.html" var="scheduleUrl"/>
-                    <form class="menu-form" name="schedule" method="POST" action="${scheduleUrl}">
-                        <input type="submit" value="Расписание">
-                    </form>
-                </li>
-                <li>
-                    <c:url value="/study/performance.html" var="performanceUrl"/>
-                    <form class="menu-form" name="performance" method="POST" action="${performanceUrl}">
-                        <input type="submit" value="Успеваемость">
-                    </form>
-                </li>
-                <li>
-                    <c:url value="/password.html" var="passwordUrl"/>
-                    <form class="menu-form" name="changePasswordForm" method="POST" action="${passwordUrl}">
-                        <input type="submit" value="Изменить пароль">
-                    </form>
-                </li>
-                <li>
-                    <c:url value="/logout.html" var="logoutUrl"/>
-                    <form class="menu-form" name="logoutForm" method="POST" action="${logoutUrl}">
-                        <input type="submit" value="Выйти">
-                    </form>
-                </li>
-            </ul>
-        </nav>
+    <div class="navbar">
+        <a href="https://bsu.by/">БГУ</a>
+        <c:url value="/studentCabinet.html" var="cabinetUrl"/>
+        <form style="margin-left: auto" class="menu-form" name="findAllStudentsFromTheGroup" method="POST"
+              action="${cabinetUrl}">
+            <input type="submit" value="Мой профиль">
+        </form>
+        <c:url value="/search/group.html" var="groupUrl"/>
+        <form class="menu-form" name="findAllStudentsFromTheGroup" method="POST" action="${groupUrl}">
+            <input type="submit" value="Моя группа">
+        </form>
+        <c:url value="/study/schedule.html" var="scheduleUrl"/>
+        <form class="menu-form" name="schedule" method="POST" action="${scheduleUrl}">
+            <input type="submit" value="Расписание">
+        </form>
+        <c:url value="/study/performance.html" var="performanceUrl"/>
+        <form class="menu-form" name="performance" method="POST" action="${performanceUrl}">
+            <input type="submit" value="Успеваемость">
+        </form>
+        <c:url value="/password.html" var="passwordUrl"/>
+        <form class="menu-form" name="changePasswordForm" method="POST" action="${passwordUrl}">
+            <input type="submit" value="Изменить пароль">
+        </form>
+        <c:url value="/logout.html" var="logoutUrl"/>
+        <form class="menu-form" name="logoutForm" method="POST" action="${logoutUrl}">
+            <input type="submit" value="Выйти">
+        </form>
     </div>
 </header>
 
-<div class="profile">
-    <div class="container">
-        <h2>Добро
-            пожаловать, ${sessionScope.authorizedUser.surname} ${sessionScope.authorizedUser.name} ${sessionScope.authorizedUser.patronymic}!</h2>
-    </div>
+<div class="content">
+    <%--Для полного имени нужен свой пользовательский тег!--%>
+    <h2>Добро пожаловать, ${sessionScope.authorizedUser.surname}
+        ${sessionScope.authorizedUser.name}
+        ${sessionScope.authorizedUser.patronymic}!</h2>
 </div>
 
-<footer>
-    <div class="wrapper">
-        <span class="copyright">&copy; Copyright 2020</span>
-        <div class="links">
-            <a href="https://www.facebook.com/bsuby"><img src="${pageContext.request.contextPath}/img/facebook.svg"
-                                                          alt="facebook"></a>
-            <a href="https://twitter.com/BSU_official"><img src="${pageContext.request.contextPath}/img/twitter.svg"
-                                                            alt="twitter"></a>
-            <a href="https://www.linkedin.com/school/belarusian-state-university/"><img
-                    src="${pageContext.request.contextPath}/img/linkedin.svg" alt="linked-in"></a>
-        </div>
-    </div>
-</footer>
+<div class="links">
+    <a href="https://vk.com/bsu_by">VK</a>
+    <a href="https://www.instagram.com/official.bsu/?hl=ru">Instagram</a>
+    <a href="https://www.facebook.com/bsuby">Facebook</a>
+    <a href="https://twitter.com/BSU_official">Twitter</a>
+    <a href="https://www.linkedin.com/school/belarusian-state-university/">Linked-in</a>
+</div>
+
+<div class="footer">
+    <span class="copyright">&copy; Copyright 2020</span>
+    <p>Адрес: ул. Октябрьская, 10, 220030, г. Минск, Республика Беларусь</p>
+</div>
 <%--<ctg:footer address="${sessionScope.address}"/>--%>
 </body>
 </html>

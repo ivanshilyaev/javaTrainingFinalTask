@@ -56,7 +56,7 @@
     </div>
 </header>
 
-<div class="schedule" id="schedule">
+<div class="profile">
     <div class="container">
         <c:if test="${requestScope.groupList.size() != 0}">
             <table class="table table-bordered">
