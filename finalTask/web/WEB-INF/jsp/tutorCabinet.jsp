@@ -3,28 +3,22 @@
 <%@taglib prefix="ctg" uri="customTags" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/student.css"/>
     <title>Кабинет преподавателя</title>
 </head>
 <body>
-<h2>Account</h2>
-<hr>
-Добро пожаловать, ${sessionScope.username}!
-<hr>
-<c:url value="/search/listClasses.html" var="listClassesUrl"/>
-<form name="listClassesForm" method="POST" action="${listClassesUrl}">
-    <input type="submit" value="Список всех пар">
-</form>
-<br>
-<c:url value="/password.html" var="passwordUrl"/>
-<form name="changePasswordForm" method="POST" action="${passwordUrl}">
-    <input type="submit" value="Изменить пароль">
-</form>
-<hr>
-<c:url value="/logout.html" var="logoutUrl"/>
-<form name="logoutForm" method="POST" action="${logoutUrl}">
-    <input type="submit" value="Выйти">
-</form>
-<ctg:footer address="${sessionScope.address}"/>
+
+<%@ include file="header/tutorHeader.jsp" %>
+
+<div class="content">
+    <%--Для полного имени нужен свой пользовательский тег!--%>
+    <h2>Добро пожаловать, ${sessionScope.authorizedUser.surname}
+        ${sessionScope.authorizedUser.name}
+        ${sessionScope.authorizedUser.patronymic}!</h2>
+</div>
+
+<%@ include file="footer/footer.jsp" %>
+
 </body>
 </html>
