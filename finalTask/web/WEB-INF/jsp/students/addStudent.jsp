@@ -12,7 +12,8 @@
 <%@ include file="../header/adminHeader.jsp" %>
 
 <div class="content">
-    <form class="add-form" name="addStudentForm" method="POST" action="${editUrl}">
+    <c:url value="/students/addStudent.html" var="addUrl"/>
+    <form class="add-form" name="addStudentForm" method="POST" action="${addUrl}">
         <label>
             Фамилия <br>
             <input type="text" name="surname">

@@ -7,6 +7,8 @@
     <title>Error page</title>
 </head>
 <body>
+<%@page isErrorPage="true" %>
+
 <c:choose>
     <c:when test="${not empty error}">
         ${error}
